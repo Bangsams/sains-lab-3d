@@ -1,0 +1,16 @@
+{
+  "name": "sains-lab-3d",
+  "version": "1.0.0",
+  "description": "Aplikasi pembelajaran sains 3D: fisika, kimia, biologi, dan teknik roket dengan konteks energi, industri, dan keberlanjutan.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx --yes serve -l 5173 .",
+    "check": "node scripts/check-topics.mjs",
+    "build:single": "node scripts/build-single.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.23.1",
+    "three": "0.160.0"
+  }
+}

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lab Sains 3D</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Simulasi 3D interaktif dan soal studi kasus fisika, kimia, biologi, dan teknik roket tentang energi, industri, dan keberlanjutan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Familjen+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Tata letak: rak instrumen — kanvas 3D besar di kiri, panel kontrol seperti meja lab di kanan. */
+:root {
+  --bg: #eef1ec; --surface: #fbfcf9; --ink: #14231d; --muted: #56675e; --line: #d2dbd4;
+  --accent: #0f6e62; --accent-ink: #ffffff; --warm: #c4561f;
+  --good: #23784a; --good-bg: #e2f2e7; --bad: #a3321f; --bad-bg: #f8e6e1;
+  --fis: #2f62c4; --kim: #9c3f86; --bio: #3d8536; --aer: #c4561f;
+  --stage-a: #f7faf6; --stage-b: #dfe7e1;
+  --font-display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-data: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e1613; --surface: #15201c; --ink: #e2ebe5; --muted: #9aaca3; --line: #2a3832;
+  --accent: #52c2ad; --accent-ink: #062b25; --warm: #ff9a63;
+  --good: #7fd6a0; --good-bg: #183327; --bad: #ff9d87; --bad-bg: #3a1e18;
+  --fis: #86a9ff; --kim: #e293d3; --bio: #8fd37d; --aer: #ff9a63;
+  --stage-a: #1c2a25; --stage-b: #0b120f; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0e1613; --surface: #15201c; --ink: #e2ebe5; --muted: #9aaca3; --line: #2a3832;
+  --accent: #52c2ad; --accent-ink: #062b25; --warm: #ff9a63;
+  --good: #7fd6a0; --good-bg: #183327; --bad: #ff9d87; --bad-bg: #3a1e18;
+  --fis: #86a9ff; --kim: #e293d3; --bio: #8fd37d; --aer: #ff9a63;
+  --stage-a: #1c2a25; --stage-b: #0b120f; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 var(--font-body); -webkit-font-smoothing: antialiased; }
+a { color: var(--accent); }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+.site-head { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+.site-head .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; font: 700 1.1rem/1 var(--font-display); color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+.brand svg { flex: none; }
+.site-head small { color: var(--muted); font-size: 0.85rem; }
+.wrap { max-width: 1280px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+main.wrap { padding-block: 28px 64px; }
+
+h1, h2 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -0.015em; margin: 0; }
+.eyebrow { font: 600 0.78rem/1 var(--font-data); text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin: 0 0 14px; }
+
+.hero { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 32px; align-items: end; margin-bottom: 28px; }
+.hero h1 { font-size: clamp(1.9rem, 4.2vw, 3.1rem); line-height: 1.05; font-weight: 700; }
+.lede { max-width: 62ch; color: var(--muted); font-size: 1.05rem; margin: 16px 0 0; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin: 0; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.stats div { background: var(--surface); padding: 14px 16px; display: flex; flex-direction: column-reverse; gap: 4px; }
+.stats dt { font-size: 0.8rem; color: var(--muted); line-height: 1.3; }
+.stats dd { margin: 0; font: 600 1.8rem/1 var(--font-data); font-variant-numeric: tabular-nums; }
+
+.filters { display: grid; gap: 10px; margin-bottom: 22px; }
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 14px; cursor: pointer; font-size: 0.92rem; }
+.chip:hover { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.card { --c: var(--accent); display: flex; flex-direction: column; gap: 10px; padding: 18px 18px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; text-decoration: none; color: inherit; transition: border-color .15s, transform .15s; }
+.card:hover { border-color: var(--c); transform: translateY(-2px); }
+[data-subject="fisika"] { --c: var(--fis); } [data-subject="kimia"] { --c: var(--kim); }
+[data-subject="biologi"] { --c: var(--bio); } [data-subject="aerospace"] { --c: var(--aer); }
+.subj { font: 600 0.75rem/1 var(--font-data); text-transform: uppercase; letter-spacing: 0.07em; color: var(--c); }
+.card h2 { font-size: 1.3rem; line-height: 1.15; }
+.card p { margin: 0; color: var(--muted); font-size: 0.95rem; flex: 1; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tags span { font-size: 0.75rem; border: 1px solid var(--line); border-radius: 4px; padding: 2px 7px; color: var(--muted); }
+.progress { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.progress span { display: block; height: 100%; background: var(--c); }
+.progress-text { font: 0.75rem/1 var(--font-data); color: var(--muted); }
+.empty { color: var(--muted); }
+
+.crumbs { display: flex; gap: 14px; align-items: center; font-size: 0.92rem; margin-bottom: 12px; }
+.crumbs a { text-decoration: none; font-weight: 700; }
+.crumbs span { color: var(--muted); }
+.topic-head { margin-bottom: 18px; }
+.topic-head h1 { font-size: clamp(1.7rem, 3.4vw, 2.5rem); line-height: 1.08; border-left: 5px solid var(--c); padding-left: 14px; }
+.topic-head p { margin: 10px 0 0; color: var(--muted); max-width: 70ch; }
+
+.topic { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.stage { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 70px); height: min(72vh, 680px); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: radial-gradient(120% 90% at 50% 20%, var(--stage-a), var(--stage-b)); }
+.stage-canvas, .stage-canvas canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+.stage-tools { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; z-index: 2; }
+.stage-tools button { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; font-size: 0.82rem; cursor: pointer; }
+.stage-hint { position: absolute; left: 12px; bottom: 8px; margin: 0; font: 0.75rem var(--font-data); color: var(--muted); pointer-events: none; }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; min-width: 0; }
+.tabs { display: flex; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.tabs button { flex: 1; background: none; border: 0; border-bottom: 3px solid transparent; padding: 13px 12px 10px; cursor: pointer; font-weight: 700; color: var(--muted); white-space: nowrap; }
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+[role="tabpanel"] { padding: 18px; display: grid; gap: 16px; }
+[role="tabpanel"][hidden] { display: none; }
+
+.formula { font: 0.95rem/1.6 var(--font-data); background: var(--bg); border: 1px dashed var(--line); border-radius: 8px; padding: 10px 12px; overflow-x: auto; }
+.outputs { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.out { background: var(--surface); padding: 10px 12px; display: grid; gap: 2px; min-width: 0; }
+.out.main { grid-column: 1 / -1; background: var(--bg); }
+.out-label { font-size: 0.8rem; color: var(--muted); }
+.out-value { font: 600 1.05rem/1.25 var(--font-data); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.out.main .out-value { font-size: 1.8rem; color: var(--accent); }
+.out-value small { font-size: 0.75em; font-weight: 400; color: var(--muted); }
+
+.controls { display: grid; gap: 14px; }
+.ctl { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: baseline; }
+.ctl-label { font-weight: 700; font-size: 0.92rem; }
+.ctl output { font: 600 0.92rem var(--font-data); font-variant-numeric: tabular-nums; color: var(--accent); }
+.ctl input[type="range"], .ctl select { grid-column: 1 / -1; width: 100%; accent-color: var(--accent); }
+.ctl select { padding: 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); }
+.range-ends { grid-column: 1 / -1; display: flex; justify-content: space-between; font: 0.72rem var(--font-data); color: var(--muted); }
+
+.primary, .ghost { border-radius: 8px; padding: 9px 16px; cursor: pointer; font-weight: 700; justify-self: start; }
+.primary { background: var(--accent); color: var(--accent-ink); border: 1px solid var(--accent); }
+.ghost { background: none; border: 1px solid var(--line); color: var(--ink); }
+.ghost:hover { border-color: var(--accent); }
+
+.story p { margin: 0 0 12px; max-width: 65ch; }
+.note { margin: 0; color: var(--muted); font-size: 0.92rem; }
+
+.quiz { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: q; }
+.q { border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 10px; counter-increment: q; }
+.q-head { display: flex; gap: 8px; align-items: center; }
+.q-head::before { content: "Soal " counter(q); font: 600 0.78rem var(--font-data); color: var(--muted); }
+.kind { font: 600 0.72rem/1 var(--font-data); text-transform: uppercase; letter-spacing: 0.06em; padding: 4px 7px; border-radius: 4px; background: var(--bg); border: 1px solid var(--line); }
+.ok-badge { margin-left: auto; font-size: 0.78rem; font-weight: 700; color: var(--good); }
+.q-prompt { margin: 0; }
+.answer { display: grid; gap: 10px; }
+.answer fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 6px; }
+.opt { display: flex; gap: 10px; align-items: flex-start; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; }
+.opt:has(input:checked) { border-color: var(--accent); background: var(--bg); }
+.opt input { margin-top: 4px; accent-color: var(--accent); }
+.num { display: flex; gap: 8px; align-items: center; }
+.num input { width: 12rem; max-width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); font-family: var(--font-data); }
+.unit { color: var(--muted); font-family: var(--font-data); font-size: 0.9rem; }
+.feedback { padding: 10px 12px; border-radius: 8px; background: var(--bg); font-size: 0.95rem; }
+.feedback.good { background: var(--good-bg); color: var(--good); }
+.feedback.bad { background: var(--bad-bg); color: var(--bad); }
+.next { font-weight: 700; text-decoration: none; }
+.site-foot { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; }
+.site-foot .wrap { padding-block: 18px; }
+
+@media (max-width: 900px) {
+  .hero, .topic { grid-template-columns: minmax(0, 1fr); }
+  .stage { position: relative; top: 0; height: 58vh; min-height: 300px; }
+}
+@media (max-width: 480px) {
+  .stats dd { font-size: 1.4rem; }
+  .outputs { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="3.2" fill="var(--accent)"/><ellipse cx="13" cy="13" rx="11" ry="4.6" fill="none" stroke="var(--ink)" stroke-width="1.6"/><ellipse cx="13" cy="13" rx="11" ry="4.6" fill="none" stroke="var(--ink)" stroke-width="1.6" transform="rotate(60 13 13)"/><ellipse cx="13" cy="13" rx="11" ry="4.6" fill="none" stroke="var(--ink)" stroke-width="1.6" transform="rotate(-60 13 13)"/></svg>
+      Lab Sains 3D
+    </a>
+    <small>Energi · Industri · Keberlanjutan</small>
+  </div>
+</header>
+<main class="wrap" id="app"><p>Memuat simulasi…</p></main>
+<footer class="site-foot"><div class="wrap">Angka dalam soal memakai pembulatan dan model yang disederhanakan untuk pembelajaran. Progres soal disimpan di peramban ini.</div></footer>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
