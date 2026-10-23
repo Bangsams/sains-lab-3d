@@ -16,6 +16,65 @@ export default {
     <p>Itulah sebabnya roket dibuat bertingkat: tangki kosong dibuang supaya mesin tidak perlu mendorong massa mati.</p>`,
   concept: 'Δv = I<sub>sp</sub> · g₀ · ln(m₀ / m<sub>f</sub>)',
   conceptNote: 'I<sub>sp</sub> adalah impuls spesifik (detik), g₀ = 9,80665 m/s². m₀ = massa awal (penuh), m<sub>f</sub> = massa akhir (propelan habis).',
+  equations: [
+    {
+      "f": "Δv = I<sub>sp</sub> · g₀ · ln(m₀ / m<sub>f</sub>)",
+      "meaning": "Tambahan kecepatan yang bisa dicapai roket bergantung pada seberapa irit mesinnya (Isp) dan seberapa besar bagian roket yang berupa bahan bakar. Karena memakai logaritma, menambah bahan bakar makin lama makin kurang berpengaruh.",
+      "symbols": [
+        [
+          "Δv",
+          "Perubahan kecepatan yang bisa dicapai roket",
+          "m/s"
+        ],
+        [
+          "I<sub>sp</sub>",
+          "Impuls spesifik: ukuran keiritan mesin, makin besar makin baik",
+          "s (detik)"
+        ],
+        [
+          "g₀",
+          "Percepatan gravitasi standar = 9,81",
+          "m/s²"
+        ],
+        [
+          "m₀",
+          "Massa roket saat penuh bahan bakar",
+          "ton"
+        ],
+        [
+          "m<sub>f</sub>",
+          "Massa roket saat bahan bakar habis",
+          "ton"
+        ],
+        [
+          "ln",
+          "Logaritma natural",
+          "fungsi"
+        ]
+      ]
+    },
+    {
+      "f": "m₀ = m<sub>kering</sub> + m<sub>propelan</sub> + m<sub>muatan</sub> &nbsp;·&nbsp; m<sub>f</sub> = m<sub>kering</sub> + m<sub>muatan</sub>",
+      "meaning": "Massa awal adalah seluruh roket. Massa akhir adalah roket setelah bahan bakarnya terbakar habis: hanya badan roket dan muatannya yang tersisa.",
+      "symbols": [
+        [
+          "m<sub>kering</sub>",
+          "Massa badan roket, tangki, dan mesin",
+          "ton"
+        ],
+        [
+          "m<sub>propelan</sub>",
+          "Massa bahan bakar dan oksidator",
+          "ton"
+        ],
+        [
+          "m<sub>muatan</sub>",
+          "Massa satelit atau barang yang dibawa",
+          "ton"
+        ]
+      ]
+    }
+  ],
   params: [
     { key: 'isp', label: 'Impuls spesifik Isp', min: 200, max: 460, step: 1, value: 311, unit: 's' },
     { key: 'dry', label: 'Massa kering roket', min: 2, max: 60, step: 0.5, value: 25, unit: 'ton' },

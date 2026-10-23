@@ -15,6 +15,61 @@ export default {
     <p>Di lalu lintas kota yang padat, rem regeneratif bisa menambah jangkauan 10–25%.</p>`,
   concept: 'E<sub>k</sub> = ½ · m · v² &nbsp;·&nbsp; E<sub>kembali</sub> = η · E<sub>k</sub> &nbsp;·&nbsp; s = v² / 2a',
   conceptNote: 'Kecepatan harus diubah ke m/s (bagi 3,6). 1 Wh = 3600 J.',
+  equations: [
+    {
+      "f": "E<sub>k</sub> = ½ · m · v²",
+      "meaning": "Energi gerak kendaraan. Makin berat dan makin cepat kendaraan, makin besar energinya. Kecepatan dikuadratkan, jadi 2× lebih cepat berarti energinya 4× lebih besar.",
+      "symbols": [
+        [
+          "E<sub>k</sub>",
+          "Energi kinetik (energi gerak)",
+          "J (joule)"
+        ],
+        [
+          "m",
+          "Massa kendaraan",
+          "kg"
+        ],
+        [
+          "v",
+          "Kecepatan, harus dalam m/s (km/jam dibagi 3,6)",
+          "m/s"
+        ]
+      ]
+    },
+    {
+      "f": "E<sub>kembali</sub> = η · E<sub>k</sub>",
+      "meaning": "Tidak semua energi gerak bisa disimpan lagi. Hanya sebagian yang masuk ke baterai; sisanya berubah menjadi panas.",
+      "symbols": [
+        [
+          "E<sub>kembali</sub>",
+          "Energi yang masuk lagi ke baterai",
+          "J atau Wh (1 Wh = 3600 J)"
+        ],
+        [
+          "η",
+          "Efisiensi regeneratif: persentase energi yang berhasil diselamatkan",
+          "%"
+        ]
+      ]
+    },
+    {
+      "f": "s = v² / (2a)",
+      "meaning": "Jarak yang ditempuh sampai kendaraan berhenti. Makin cepat, jaraknya naik berlipat; makin kuat pengereman, makin pendek jaraknya.",
+      "symbols": [
+        [
+          "s",
+          "Jarak pengereman",
+          "m"
+        ],
+        [
+          "a",
+          "Perlambatan: berapa m/s kecepatan berkurang setiap detik",
+          "m/s²"
+        ]
+      ]
+    }
+  ],
   params: [
     { key: 'm', label: 'Massa kendaraan', min: 150, max: 15000, step: 50, value: 1800, unit: 'kg' },
     { key: 'v', label: 'Kecepatan awal', min: 10, max: 120, step: 1, value: 60, unit: 'km/jam' },

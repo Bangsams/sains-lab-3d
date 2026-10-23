@@ -44,7 +44,10 @@ export default {
   summary: 'Ringkasan satu kalimat.',
   story: '<p>Cerita atau studi kasus (HTML).</p>',
   concept: 'Rumus utama (HTML)',
-  conceptNote: 'Keterangan simbol.',
+  conceptNote: 'Catatan tambahan.',
+  equations: [                    // setiap rumus + artinya dalam bahasa mudah
+    { f: 's = v · t', meaning: 'Jarak = kecepatan dikali waktu.', symbols: [['s', 'Jarak', 'm'], ['v', 'Kecepatan', 'm/s'], ['t', 'Waktu', 's']] },
+  ],
   params: [{ key: 'v', label: 'Kecepatan', min: 0, max: 10, step: 0.1, value: 5, unit: 'm/s' }],
   compute(p) { return [{ label: 'Hasil', value: p.v * 2, unit: 'm', digits: 1, main: true }]; },
   view: { camera: [6, 4, 8], target: [0, 1, 0] },

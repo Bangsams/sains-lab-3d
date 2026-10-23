@@ -20,6 +20,65 @@ export default {
     <p>Pertanyaan untuk dipikirkan: berapa panel yang dibutuhkan agar tagihannya turun separuh, dan berapa ton CO₂ yang tidak jadi dilepas pembangkit batu bara?</p>`,
   concept: `P = G · A · n · η · cos θ &nbsp;·&nbsp; E<sub>harian</sub> ≈ n · A · η · PSH · PR`,
   conceptNote: 'θ adalah sudut antara sinar dan garis normal panel. PR (performance ratio) ≈ 0,8 mewakili rugi panas, kabel, dan inverter.',
+  equations: [
+    {
+      "f": "P = G · A · n · η · cos θ",
+      "meaning": "Daya listrik panel = jumlah cahaya matahari yang jatuh di permukaan panel, lalu dikali bagian kecilnya yang berhasil diubah menjadi listrik. Sinar yang miring membuat cahaya yang diterima berkurang.",
+      "symbols": [
+        [
+          "P",
+          "Daya listrik yang dihasilkan saat itu",
+          "W (watt)"
+        ],
+        [
+          "G",
+          "Kuat cahaya matahari yang jatuh di setiap 1 m²",
+          "W/m²"
+        ],
+        [
+          "A",
+          "Luas satu panel",
+          "m²"
+        ],
+        [
+          "n",
+          "Jumlah panel",
+          "buah"
+        ],
+        [
+          "η",
+          "Efisiensi: persentase cahaya yang berubah menjadi listrik (20% artinya 20 dari 100 bagian)",
+          "%"
+        ],
+        [
+          "cos θ",
+          "Faktor sudut: bernilai 1 jika sinar tegak lurus panel, makin kecil jika sinar makin miring",
+          "tanpa satuan"
+        ]
+      ]
+    },
+    {
+      "f": "E<sub>harian</sub> ≈ n · A · η · PSH · PR",
+      "meaning": "Energi listrik dalam sehari dihitung seolah-olah matahari bersinar penuh (1000 W/m²) selama beberapa jam, lalu dikurangi rugi-rugi di sistem.",
+      "symbols": [
+        [
+          "E<sub>harian</sub>",
+          "Energi listrik yang dihasilkan dalam satu hari",
+          "kWh"
+        ],
+        [
+          "PSH",
+          "Jam matahari puncak: lama penyinaran sehari jika disetarakan dengan cahaya penuh",
+          "jam"
+        ],
+        [
+          "PR",
+          "Rasio kinerja: bagian energi yang tersisa setelah rugi panas, kabel, dan inverter (≈0,8)",
+          "tanpa satuan"
+        ]
+      ]
+    }
+  ],
   params: [
     { key: 'G', label: 'Iradiasi matahari', min: 100, max: 1100, step: 10, value: 800, unit: 'W/m²' },
     { key: 'n', label: 'Jumlah panel', min: 1, max: 20, step: 1, value: 8, unit: 'modul' },

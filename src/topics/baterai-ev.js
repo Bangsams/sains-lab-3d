@@ -14,6 +14,56 @@ export default {
     <p>Reaksi di dalamnya: saat dipakai, ion Li⁺ berpindah dari anoda grafit ke katoda melalui elektrolit, sementara elektron mengalir lewat motor.</p>`,
   concept: 'V<sub>pack</sub> = s · V<sub>sel</sub> &nbsp;·&nbsp; Ah<sub>pack</sub> = p · Ah<sub>sel</sub> &nbsp;·&nbsp; E = V · Ah',
   conceptNote: 'Energi dalam Wh = tegangan (V) × kapasitas (Ah). 1 kWh = 1000 Wh.',
+  equations: [
+    {
+      "f": "V<sub>pack</sub> = s · V<sub>sel</sub>",
+      "meaning": "Sel yang disusun berderet (seri) menjumlahkan tegangannya, seperti baterai senter yang disusun memanjang.",
+      "symbols": [
+        [
+          "V<sub>pack</sub>",
+          "Tegangan seluruh paket baterai",
+          "V"
+        ],
+        [
+          "s",
+          "Jumlah sel yang dirangkai seri",
+          "sel"
+        ],
+        [
+          "V<sub>sel</sub>",
+          "Tegangan satu sel",
+          "V"
+        ]
+      ]
+    },
+    {
+      "f": "Ah<sub>pack</sub> = p · Ah<sub>sel</sub>",
+      "meaning": "Sel yang disusun berdampingan (paralel) menjumlahkan kapasitasnya, sehingga baterai bisa dipakai lebih lama.",
+      "symbols": [
+        [
+          "Ah",
+          "Kapasitas: berapa ampere yang bisa dialirkan selama 1 jam",
+          "Ah (ampere-jam)"
+        ],
+        [
+          "p",
+          "Jumlah sel yang dirangkai paralel",
+          "sel"
+        ]
+      ]
+    },
+    {
+      "f": "E = V · Ah",
+      "meaning": "Total energi yang tersimpan sama dengan tegangan dikali kapasitas. Energi inilah yang menentukan jarak tempuh kendaraan.",
+      "symbols": [
+        [
+          "E",
+          "Energi tersimpan",
+          "Wh (1 kWh = 1000 Wh)"
+        ]
+      ]
+    }
+  ],
   params: [
     { key: 'vc', label: 'Tegangan nominal sel', min: 3.2, max: 3.7, step: 0.05, value: 3.6, unit: 'V' },
     { key: 'ah', label: 'Kapasitas sel', min: 2, max: 10, step: 0.1, value: 5, unit: 'Ah' },

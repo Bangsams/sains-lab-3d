@@ -42,6 +42,67 @@ export default {
     <p>Kecepatan orbit berasal dari keseimbangan antara gaya gravitasi dan gaya sentripetal: semakin tinggi orbit, semakin lambat satelit bergerak.</p>`,
   concept: 'v = √(GM / r) &nbsp;·&nbsp; T = 2π √(r³ / GM) &nbsp;·&nbsp; r = R<sub>Bumi</sub> + h',
   conceptNote: 'GM Bumi = 398.600 km³/s², R<sub>Bumi</sub> = 6.371 km. Jeda sinyal pulang-pergi minimum = 2h / c.',
+  equations: [
+    {
+      "f": "v = √(GM / r)",
+      "meaning": "Kecepatan yang dibutuhkan agar satelit terus jatuh mengelilingi Bumi tanpa menabraknya. Makin jauh dari Bumi, gravitasi makin lemah, sehingga kecepatan yang dibutuhkan makin kecil.",
+      "symbols": [
+        [
+          "v",
+          "Kecepatan orbit",
+          "km/s"
+        ],
+        [
+          "GM",
+          "Konstanta gravitasi × massa Bumi = 398.600",
+          "km³/s²"
+        ],
+        [
+          "r",
+          "Jarak satelit dari pusat Bumi",
+          "km"
+        ]
+      ]
+    },
+    {
+      "f": "T = 2π · √(r³ / GM)",
+      "meaning": "Waktu satu putaran penuh. Orbit yang lebih tinggi lintasannya lebih panjang dan geraknya lebih lambat, sehingga satu putaran memakan waktu jauh lebih lama.",
+      "symbols": [
+        [
+          "T",
+          "Periode: waktu satu kali mengelilingi Bumi",
+          "s, menit, atau jam"
+        ]
+      ]
+    },
+    {
+      "f": "r = R<sub>Bumi</sub> + h",
+      "meaning": "Jarak dihitung dari pusat Bumi, bukan dari permukaan, jadi jari-jari Bumi harus ditambahkan.",
+      "symbols": [
+        [
+          "R<sub>Bumi</sub>",
+          "Jari-jari Bumi = 6.371",
+          "km"
+        ],
+        [
+          "h",
+          "Ketinggian satelit di atas permukaan Bumi",
+          "km"
+        ]
+      ]
+    },
+    {
+      "f": "jeda = 2h / c",
+      "meaning": "Waktu yang dibutuhkan sinyal untuk naik ke satelit lalu turun lagi. Satelit yang lebih rendah membuat internet terasa lebih responsif.",
+      "symbols": [
+        [
+          "c",
+          "Kecepatan cahaya = 299.792",
+          "km/s"
+        ]
+      ]
+    }
+  ],
   params: [
     { key: 'h', label: 'Ketinggian orbit', min: 200, max: 40000, step: 10, value: 550, unit: 'km' },
   ],

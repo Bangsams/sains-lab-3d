@@ -16,6 +16,55 @@ export default {
     <p>Ada batas teoretis yang tidak bisa dilampaui turbin mana pun: <strong>batas Betz</strong>, yaitu 59,3% energi kinetik angin. Turbin modern mencapai sekitar 45–50%.</p>`,
   concept: 'P = ½ · ρ · A · v³ · C<sub>p</sub> &nbsp;·&nbsp; A = πR²',
   conceptNote: 'ρ = 1,2 kg/m³ (massa jenis udara). Cp adalah koefisien daya, maksimum 16/27 ≈ 0,593 (batas Betz).',
+  equations: [
+    {
+      "f": "P = ½ · ρ · A · v³ · C<sub>p</sub>",
+      "meaning": "Daya turbin bergantung pada berapa banyak udara yang menabrak bilah dan seberapa cepat udara itu bergerak. Karena kecepatan dipangkatkan tiga, angin 2× lebih kencang menghasilkan daya 8× lebih besar.",
+      "symbols": [
+        [
+          "P",
+          "Daya listrik turbin",
+          "W"
+        ],
+        [
+          "ρ",
+          "Massa jenis udara: massa 1 m³ udara (≈1,2 kg)",
+          "kg/m³"
+        ],
+        [
+          "A",
+          "Luas lingkaran yang disapu bilah",
+          "m²"
+        ],
+        [
+          "v",
+          "Kecepatan angin",
+          "m/s"
+        ],
+        [
+          "C<sub>p</sub>",
+          "Koefisien daya: bagian energi angin yang berhasil ditangkap, paling besar 0,593 (batas Betz)",
+          "tanpa satuan"
+        ]
+      ]
+    },
+    {
+      "f": "A = π · R²",
+      "meaning": "Luas lingkaran sapuan bilah. Bilah 2× lebih panjang membuat luasnya 4× lebih besar, sehingga udara yang ditangkap juga 4× lebih banyak.",
+      "symbols": [
+        [
+          "R",
+          "Panjang satu bilah (jari-jari lingkaran)",
+          "m"
+        ],
+        [
+          "π",
+          "Bilangan pi ≈ 3,14",
+          "tanpa satuan"
+        ]
+      ]
+    }
+  ],
   params: [
     { key: 'v', label: 'Kecepatan angin', min: 2, max: 15, step: 0.5, value: 8, unit: 'm/s' },
     { key: 'R', label: 'Panjang bilah (jari-jari)', min: 10, max: 70, step: 1, value: 57, unit: 'm' },

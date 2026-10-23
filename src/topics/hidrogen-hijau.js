@@ -17,6 +17,81 @@ export default {
     <p>Tantangannya adalah energi. Elektroliser nyata membutuhkan sekitar 50–55 kWh listrik untuk setiap kilogram hidrogen.</p>`,
   concept: 'Katoda: 2H₂O + 2e⁻ → H₂ + 2OH⁻ &nbsp;·&nbsp; n(H₂) = (I · t · η) / (2F)',
   conceptNote: 'F = 96.485 C/mol (konstanta Faraday). η adalah efisiensi arus. Energi listrik = V · I · t.',
+  equations: [
+    {
+      "f": "2H₂O + 2e⁻ → H₂ + 2OH⁻",
+      "meaning": "Di kutub negatif (katoda), molekul air menerima elektron dari listrik lalu melepaskan gas hidrogen. Di kutub positif (anoda) terbentuk gas oksigen.",
+      "symbols": [
+        [
+          "H₂O",
+          "Air",
+          "zat"
+        ],
+        [
+          "e⁻",
+          "Elektron yang dialirkan sumber listrik",
+          "partikel"
+        ],
+        [
+          "H₂",
+          "Gas hidrogen (bahan bakar bersih)",
+          "zat"
+        ],
+        [
+          "OH⁻",
+          "Ion hidroksida yang tertinggal di air",
+          "ion"
+        ]
+      ]
+    },
+    {
+      "f": "n(H₂) = (I · t · η) / (2F)",
+      "meaning": "Jumlah hidrogen sebanding dengan banyaknya listrik yang dialirkan. Setiap molekul H₂ butuh 2 elektron, karena itu ada angka 2 di penyebut.",
+      "symbols": [
+        [
+          "n(H₂)",
+          "Jumlah hidrogen yang terbentuk",
+          "mol"
+        ],
+        [
+          "I",
+          "Arus listrik",
+          "A (ampere)"
+        ],
+        [
+          "t",
+          "Lama listrik dialirkan",
+          "s (detik)"
+        ],
+        [
+          "η",
+          "Efisiensi arus: bagian listrik yang benar-benar dipakai memecah air",
+          "%"
+        ],
+        [
+          "F",
+          "Konstanta Faraday: muatan listrik dari 1 mol elektron = 96.485",
+          "C/mol"
+        ]
+      ]
+    },
+    {
+      "f": "E = V · I · t",
+      "meaning": "Energi listrik yang dipakai sama dengan tegangan × arus × waktu. Inilah yang menentukan biaya membuat hidrogen.",
+      "symbols": [
+        [
+          "E",
+          "Energi listrik",
+          "J atau kWh"
+        ],
+        [
+          "V",
+          "Tegangan sel",
+          "V (volt)"
+        ]
+      ]
+    }
+  ],
   params: [
     { key: 'I', label: 'Arus listrik', min: 1, max: 200, step: 1, value: 50, unit: 'A' },
     { key: 't', label: 'Waktu operasi', min: 0.5, max: 24, step: 0.5, value: 8, unit: 'jam' },

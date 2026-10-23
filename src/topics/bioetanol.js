@@ -16,6 +16,61 @@ export default {
     <p>Ragi bekerja secara anaerob: enzim zimase memecah glukosa menjadi etanol dan CO₂. Enzim adalah protein, sehingga aktivitasnya paling tinggi pada suhu optimum (±30–35 °C) dan turun tajam jika terlalu panas.</p>`,
   concept: 'C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂',
   conceptNote: 'Hasil teoretis: 0,511 g etanol per g glukosa. Massa jenis etanol 0,789 kg/L.',
+  equations: [
+    {
+      "f": "C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂",
+      "meaning": "Ragi memecah satu molekul gula menjadi dua molekul alkohol (etanol) dan dua molekul gas CO₂. Gas inilah gelembung yang terlihat di tangki.",
+      "symbols": [
+        [
+          "C₆H₁₂O₆",
+          "Glukosa (gula)",
+          "zat"
+        ],
+        [
+          "C₂H₅OH",
+          "Etanol, alkohol yang dipakai sebagai bahan bakar",
+          "zat"
+        ],
+        [
+          "CO₂",
+          "Gas karbon dioksida",
+          "zat"
+        ]
+      ]
+    },
+    {
+      "f": "m<sub>etanol</sub> = m<sub>glukosa</sub> × 0,511 × η",
+      "meaning": "Dari setiap 1 kg gula paling banyak didapat 0,511 kg etanol. Efisiensi menunjukkan berapa bagian yang benar-benar tercapai di pabrik.",
+      "symbols": [
+        [
+          "0,511",
+          "Hasil teoretis: kg etanol per kg glukosa",
+          "kg/kg"
+        ],
+        [
+          "η",
+          "Efisiensi fermentasi",
+          "%"
+        ]
+      ]
+    },
+    {
+      "f": "V = m / ρ",
+      "meaning": "Mengubah massa etanol menjadi volume (liter).",
+      "symbols": [
+        [
+          "V",
+          "Volume etanol",
+          "L"
+        ],
+        [
+          "ρ",
+          "Massa jenis etanol = 0,789 kg per liter",
+          "kg/L"
+        ]
+      ]
+    }
+  ],
   params: [
     { key: 'kg', label: 'Glukosa', min: 1, max: 1000, step: 1, value: 500, unit: 'kg' },
     { key: 'eff', label: 'Efisiensi fermentasi', min: 50, max: 100, step: 1, value: 90, unit: '%' },

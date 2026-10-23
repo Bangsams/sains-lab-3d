@@ -126,6 +126,19 @@ h1, h2 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -
 .ghost:hover { border-color: var(--accent); }
 
 .story p { margin: 0 0 12px; max-width: 65ch; }
+.eq-title { font-size: 1.15rem; }
+.eq-list { display: grid; gap: 14px; }
+.eq { display: grid; gap: 8px; }
+.eq-meaning { margin: 0; }
+.symbols { margin: 0; display: grid; gap: 4px; font-size: 0.92rem; }
+.symbols div { display: grid; grid-template-columns: minmax(3.2rem, auto) minmax(0, 1fr); gap: 10px; align-items: baseline; padding: 4px 0; border-bottom: 1px solid var(--line); }
+.symbols div:last-child { border-bottom: 0; }
+.symbols dt { font: 600 0.92rem var(--font-data); color: var(--accent); }
+.symbols dd { margin: 0; }
+.sym-unit { display: inline-block; font: 0.75rem var(--font-data); color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; margin-left: 2px; }
+.eq-details { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+.eq-details summary { cursor: pointer; font-weight: 700; color: var(--accent); }
+.eq-details[open] summary { margin-bottom: 12px; }
 .note { margin: 0; color: var(--muted); font-size: 0.92rem; }
 
 .quiz { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: q; }

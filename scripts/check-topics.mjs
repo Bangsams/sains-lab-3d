@@ -21,6 +21,10 @@ for (const t of TOPICS) {
   if (!/^[a-z0-9-]+$/.test(t.id)) errors.push(`${where} id hanya boleh huruf kecil, angka, dan tanda hubung`);
   if (!SUBJECTS[t.subject]) errors.push(`${where} subject tidak dikenal: ${t.subject}`);
   t.tags.forEach((g) => TAGS[g] || errors.push(`${where} tag tidak dikenal: ${g}`));
+  if (!t.equations?.length) errors.push(`${where} equations (rumus + artinya) wajib ada`);
+  (t.equations || []).forEach((e, i) => {
+    if (!e.f || !e.meaning || !e.symbols?.length) errors.push(`${where} rumus ${i + 1}: f, meaning, dan symbols wajib diisi`);
+  });
   if (typeof t.scene !== 'function') errors.push(`${where} scene() wajib ada`);
   const keys = new Set(t.params.map((p) => p.key));
   for (const p of t.params) {

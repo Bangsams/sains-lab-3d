@@ -22,6 +22,60 @@ export default {
     <p>Pemerintah mendorong bauran bioetanol (misalnya bensin E5) dan kendaraan listrik. Model 3D di samping menunjukkan molekul bahan bakar yang bereaksi dengan O₂ menjadi CO₂ dan H₂O.</p>`,
   concept: 'CₓHᵧOz + (x + y/4 − z/2) O₂ → x CO₂ + (y/2) H₂O',
   conceptNote: 'Massa CO₂ = massa bahan bakar × (x × 44,01) / M<sub>bahan bakar</sub>.',
+  equations: [
+    {
+      "f": "CₓHᵧO<sub>z</sub> + (x + y/4 − z/2) O₂ → x CO₂ + (y/2) H₂O",
+      "meaning": "Bahan bakar bereaksi dengan oksigen dari udara. Setiap atom karbon menjadi satu molekul CO₂, dan setiap dua atom hidrogen menjadi satu molekul air.",
+      "symbols": [
+        [
+          "x, y, z",
+          "Jumlah atom karbon (C), hidrogen (H), dan oksigen (O) dalam satu molekul bahan bakar",
+          "buah"
+        ],
+        [
+          "O₂",
+          "Oksigen yang diambil dari udara",
+          "zat"
+        ],
+        [
+          "CO₂",
+          "Karbon dioksida, gas rumah kaca",
+          "zat"
+        ],
+        [
+          "H₂O",
+          "Uap air",
+          "zat"
+        ]
+      ]
+    },
+    {
+      "f": "m<sub>CO₂</sub> = m<sub>bb</sub> × (x × 44,01) / M",
+      "meaning": "Ubah massa bahan bakar menjadi jumlah molekul (mol), kalikan dengan jumlah atom karbonnya, lalu ubah kembali menjadi massa CO₂.",
+      "symbols": [
+        [
+          "m<sub>CO₂</sub>",
+          "Massa CO₂ yang dihasilkan",
+          "kg"
+        ],
+        [
+          "m<sub>bb</sub>",
+          "Massa bahan bakar yang dibakar",
+          "kg"
+        ],
+        [
+          "M",
+          "Massa molar bahan bakar (massa 1 mol)",
+          "g/mol"
+        ],
+        [
+          "44,01",
+          "Massa molar CO₂",
+          "g/mol"
+        ]
+      ]
+    }
+  ],
   params: [
     { key: 'fuel', label: 'Bahan bakar', type: 'select', value: 1, options: FUELS.map((f, i) => ({ value: i, label: `${f.name}, ${f.f}` })) },
     { key: 'kg', label: 'Massa bahan bakar', min: 0.1, max: 50, step: 0.01, value: 1, unit: 'kg' },

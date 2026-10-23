@@ -14,6 +14,60 @@ export default {
     <p>Pertanyaan bisnisnya: kapan waktu panen terbaik, dan berapa liter minyak yang didapat dari satu reaktor?</p>`,
   concept: 'N(t) = K / [1 + ((K − N₀)/N₀) · e<sup>−rt</sup>] &nbsp;·&nbsp; t<sub>ganda</sub> = ln 2 / r',
   conceptNote: 'r = laju pertumbuhan spesifik (per hari), K = daya dukung (g/L), N₀ = biomassa awal.',
+  equations: [
+    {
+      "f": "N(t) = K / [1 + ((K − N₀)/N₀) · e<sup>−rt</sup>]",
+      "meaning": "Populasi alga mula-mula tumbuh berlipat ganda dengan cepat, lalu melambat dan berhenti di batas maksimum K karena cahaya dan nutrien tidak cukup untuk semua sel.",
+      "symbols": [
+        [
+          "N(t)",
+          "Kepadatan alga pada hari ke-t",
+          "g/L"
+        ],
+        [
+          "K",
+          "Daya dukung: kepadatan paling tinggi yang bisa dicapai",
+          "g/L"
+        ],
+        [
+          "N₀",
+          "Kepadatan alga di awal",
+          "g/L"
+        ],
+        [
+          "r",
+          "Laju pertumbuhan per hari",
+          "per hari"
+        ],
+        [
+          "e",
+          "Bilangan Euler ≈ 2,718",
+          "tanpa satuan"
+        ],
+        [
+          "t",
+          "Waktu",
+          "hari"
+        ]
+      ]
+    },
+    {
+      "f": "t<sub>ganda</sub> = ln 2 / r",
+      "meaning": "Waktu yang dibutuhkan alga untuk menjadi dua kali lipat selama masih tumbuh bebas. Makin besar r, makin cepat berlipat.",
+      "symbols": [
+        [
+          "t<sub>ganda</sub>",
+          "Waktu penggandaan",
+          "hari"
+        ],
+        [
+          "ln 2",
+          "Logaritma natural dari 2 ≈ 0,693",
+          "tanpa satuan"
+        ]
+      ]
+    }
+  ],
   params: [
     { key: 'r', label: 'Laju pertumbuhan r', min: 0.1, max: 1.5, step: 0.01, value: 0.6, unit: '/hari' },
     { key: 'K', label: 'Daya dukung K', min: 0.5, max: 5, step: 0.1, value: 3, unit: 'g/L' },

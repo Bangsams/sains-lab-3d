@@ -19,6 +19,50 @@ export default {
     <p>Sebagai acuan, satu pohon peneduh dewasa menyerap sekitar 22 kg CO₂ per tahun.</p>`,
   concept: '6CO₂ + 6H₂O <span aria-label="dengan cahaya">—cahaya→</span> C₆H₁₂O₆ + 6O₂',
   conceptNote: 'Model laju: r = f(cahaya) × f(CO₂) × f(suhu), dengan suhu optimum ±30 °C. Setiap 44 g CO₂ yang diserap melepas 32 g O₂.',
+  equations: [
+    {
+      "f": "6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂",
+      "meaning": "Daun mengambil karbon dioksida dari udara dan air dari tanah, lalu dengan energi cahaya membuat gula sebagai makanan dan melepaskan oksigen.",
+      "symbols": [
+        [
+          "CO₂",
+          "Karbon dioksida dari udara",
+          "zat"
+        ],
+        [
+          "H₂O",
+          "Air dari akar",
+          "zat"
+        ],
+        [
+          "C₆H₁₂O₆",
+          "Glukosa (gula), makanan tumbuhan",
+          "zat"
+        ],
+        [
+          "O₂",
+          "Oksigen yang dilepas ke udara",
+          "zat"
+        ]
+      ]
+    },
+    {
+      "f": "r = f(cahaya) × f(CO₂) × f(suhu)",
+      "meaning": "Laju fotosintesis dipengaruhi ketiga faktor sekaligus. Jika salah satu faktor sangat kurang, hasil kalinya ikut kecil. Faktor yang paling kurang itulah faktor pembatas.",
+      "symbols": [
+        [
+          "r",
+          "Laju fotosintesis",
+          "relatif"
+        ],
+        [
+          "f(…)",
+          "Nilai 0 sampai 1 yang menunjukkan seberapa mendukung faktor tersebut (1 = ideal)",
+          "tanpa satuan"
+        ]
+      ]
+    }
+  ],
   params: [
     { key: 'I', label: 'Intensitas cahaya', min: 0, max: 2000, step: 10, value: 1200, unit: 'µmol/m²/s' },
     { key: 'co2', label: 'Konsentrasi CO₂', min: 150, max: 1000, step: 5, value: 420, unit: 'ppm' },

@@ -16,6 +16,56 @@ export default {
     <p>Seiring propelan terbakar, massa berkurang, sehingga percepatan roket terus naik walaupun gaya dorongnya tetap.</p>`,
   concept: 'TWR = F / (m · g) &nbsp;·&nbsp; a = F/m − g',
   conceptNote: 'Diagram gaya: panah ke atas = gaya dorong, panah ke bawah = berat. Abaikan hambatan udara di dekat landasan.',
+  equations: [
+    {
+      "f": "W = m · g",
+      "meaning": "Berat adalah gaya tarik Bumi pada roket. Makin besar massanya, makin besar beratnya.",
+      "symbols": [
+        [
+          "W",
+          "Berat roket",
+          "N (newton)"
+        ],
+        [
+          "m",
+          "Massa roket",
+          "kg"
+        ],
+        [
+          "g",
+          "Percepatan gravitasi = 9,81",
+          "m/s²"
+        ]
+      ]
+    },
+    {
+      "f": "TWR = F / (m · g)",
+      "meaning": "Perbandingan dorongan mesin dengan berat roket. Jika lebih dari 1, dorongan menang dan roket terangkat. Jika kurang dari 1, roket tetap diam.",
+      "symbols": [
+        [
+          "TWR",
+          "Rasio dorong-berat (thrust-to-weight ratio)",
+          "tanpa satuan"
+        ],
+        [
+          "F",
+          "Gaya dorong mesin",
+          "N"
+        ]
+      ]
+    },
+    {
+      "f": "a = F/m − g",
+      "meaning": "Hukum Newton II: dorongan dibagi massa memberi percepatan ke atas, lalu dikurangi tarikan gravitasi ke bawah.",
+      "symbols": [
+        [
+          "a",
+          "Percepatan bersih ke atas",
+          "m/s²"
+        ]
+      ]
+    }
+  ],
   params: [
     { key: 'F', label: 'Gaya dorong total', min: 500, max: 9000, step: 50, value: 7600, unit: 'kN' },
     { key: 'm', label: 'Massa roket', min: 50, max: 900, step: 1, value: 549, unit: 'ton' },

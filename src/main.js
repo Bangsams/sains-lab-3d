@@ -114,13 +114,18 @@ function renderTopic(t) {
         </div>
         <section role="tabpanel" id="pane-sim" aria-labelledby="tab-sim">
           <div class="formula">${t.concept}</div>
+          <details class="eq-details">
+            <summary>Apa arti rumus ini?</summary>
+            ${equationsHtml(t)}
+          </details>
           <div class="outputs" id="outputs"></div>
           <form class="controls" id="controls" autocomplete="off"></form>
           <button type="button" class="ghost" id="reset">Kembalikan nilai awal</button>
         </section>
         <section role="tabpanel" id="pane-story" aria-labelledby="tab-story" hidden>
           <div class="story">${t.story}</div>
-          <div class="formula">${t.concept}</div>
+          <h2 class="eq-title">Rumus dan artinya</h2>
+          ${equationsHtml(t)}
           <p class="note">${t.conceptNote}</p>
           <button type="button" class="primary" data-go="quiz">Kerjakan soal →</button>
         </section>
@@ -148,6 +153,18 @@ function renderTopic(t) {
   buildQuiz(t);
   updateOutputs();
   window.scrollTo(0, 0);
+}
+
+// Setiap rumus ditampilkan bersama penjelasan bahasa sehari-hari dan daftar simbolnya.
+function equationsHtml(t) {
+  return `<div class="eq-list">${(t.equations || []).map((e) => `
+    <div class="eq">
+      <div class="formula">${e.f}</div>
+      <p class="eq-meaning"><strong>Artinya:</strong> ${e.meaning}</p>
+      <dl class="symbols">${e.symbols.map(([sym, text, unit]) => `
+        <div><dt>${sym}</dt><dd>${text} <span class="sym-unit">${unit}</span></dd></div>`).join('')}
+      </dl>
+    </div>`).join('')}</div>`;
 }
 
 function buildControls(t) {
