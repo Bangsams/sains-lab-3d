@@ -12,14 +12,15 @@ export function mesh(geo, material, { x = 0, y = 0, z = 0, shadow = true } = {})
 }
 
 export function ground(scene, { size = 30, color = 0xcfd8d3 } = {}) {
-  const g = mesh(new THREE.CircleGeometry(size, 64), mat(color, { roughness: 1 }), { shadow: false });
+  // lantai sedikit digelapkan agar serasi dengan tema langit malam
+  const g = mesh(new THREE.CircleGeometry(size, 64), mat(new THREE.Color(color).multiplyScalar(0.62), { roughness: 1 }), { shadow: false });
   g.rotation.x = -Math.PI / 2;
   scene.add(g);
   return g;
 }
 
 // Label teks yang selalu menghadap kamera.
-export function label(text, { size = 0.5, color = '#10231e', bg = 'rgba(255,255,255,0.88)' } = {}) {
+export function label(text, { size = 0.5, color = '#e8eef9', bg = 'rgba(9,16,32,0.86)' } = {}) {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
   const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ depthTest: false, transparent: true }));
@@ -34,6 +35,7 @@ export function label(text, { size = 0.5, color = '#10231e', bg = 'rgba(255,255,
     ctx.font = font;
     ctx.fillStyle = bg;
     ctx.beginPath(); ctx.roundRect(0, 0, w, 68, 14); ctx.fill();
+    ctx.strokeStyle = 'rgba(95,214,196,0.55)'; ctx.lineWidth = 3; ctx.stroke();
     ctx.fillStyle = color; ctx.textBaseline = 'middle';
     ctx.fillText(t, 18, 36);
     sprite.material.map?.dispose();

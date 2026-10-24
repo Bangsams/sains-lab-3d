@@ -1,4 +1,4 @@
-# Lab Sains 3D
+# Sams Lab
 
 Aplikasi web pembelajaran **Fisika, Kimia, Biologi, dan Teknik Roket & Antariksa**. Soal-soalnya berangkat dari kehidupan sehari-hari, industri, energi, dan keberlanjutan di Indonesia.
 

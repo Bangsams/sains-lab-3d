@@ -102,7 +102,7 @@ export default {
     const thrust = arrow([0, 1, 0], [1.4, 4, 0], 2, 0x0f7b6c);
     const weight = arrow([0, -1, 0], [1.4, 4, 0], 2, 0xc0392b);
     scene.add(thrust, weight);
-    const lt = label('', { size: 0.45, color: '#0b5a4f' }); const lw = label('', { size: 0.45, color: '#8f2a1f' });
+    const lt = label('', { size: 0.45, color: '#7fe3cf' }); const lw = label('', { size: 0.45, color: '#ff9f8a' });
     scene.add(lt, lw);
     const exhaust = particles(160, 0xff9b2e, 0.12, 0.85);
     const smoke = particles(80, 0xd5d8da, 0.35, 0.6);

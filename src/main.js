@@ -34,7 +34,7 @@ window.addEventListener('hashchange', route);
 function renderHome() {
   current = null;
   if (stage) stage.paused = true;
-  document.title = 'Lab Sains 3D';
+  document.title = 'Sams Lab';
   const total = TOPICS.reduce((n, t) => n + t.questions.length, 0);
   const done = TOPICS.reduce((n, t) => n + solved(t.id), 0);
   app.innerHTML = `
@@ -88,7 +88,7 @@ function card(t) {
 // ---------- halaman topik ----------
 function renderTopic(t) {
   current = t;
-  document.title = `${t.title} · Lab Sains 3D`;
+  document.title = `${t.title} · Sams Lab`;
   params = Object.fromEntries(t.params.map((p) => [p.key, p.value]));
   const idx = TOPICS.indexOf(t);
   const next = TOPICS[(idx + 1) % TOPICS.length];

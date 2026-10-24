@@ -3,36 +3,40 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Lab Sains 3D</title>
+<title>Sams Lab</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Simulasi 3D interaktif dan soal studi kasus fisika, kimia, biologi, dan teknik roket tentang energi, industri, dan keberlanjutan.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Familjen+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-/* Tata letak: rak instrumen — kanvas 3D besar di kiri, panel kontrol seperti meja lab di kanan. */
+/* Tata letak: rak instrumen — kanvas 3D besar di kiri, panel kontrol di kanan.
+   Tema tunggal "Observatorium Malam": langit malam berbintang, panel kaca gelap. */
 :root {
-  --bg: #eef1ec; --surface: #fbfcf9; --ink: #14231d; --muted: #56675e; --line: #d2dbd4;
-  --accent: #0f6e62; --accent-ink: #ffffff; --warm: #c4561f;
-  --good: #23784a; --good-bg: #e2f2e7; --bad: #a3321f; --bad-bg: #f8e6e1;
-  --fis: #2f62c4; --kim: #9c3f86; --bio: #3d8536; --aer: #c4561f;
-  --stage-a: #f7faf6; --stage-b: #dfe7e1;
+  --bg: #070c18; --bg-2: #0d1830; --surface: rgba(17, 27, 49, 0.78); --surface-solid: #111b31;
+  --ink: #e8eef9; --muted: #a3b2cc; --line: rgba(140, 170, 220, 0.18);
+  --accent: #5fd6c4; --accent-ink: #04241f; --warm: #ffa36b;
+  --good: #86e0a8; --good-bg: rgba(52, 160, 100, 0.16); --bad: #ffab96; --bad-bg: rgba(220, 90, 60, 0.16);
+  --fis: #93b6ff; --kim: #ef9fdc; --bio: #9ade8b; --aer: #ffa36b;
+  --stage-a: #18284a; --stage-b: #050912;
   --font-display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-data: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: dark;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #0e1613; --surface: #15201c; --ink: #e2ebe5; --muted: #9aaca3; --line: #2a3832;
-  --accent: #52c2ad; --accent-ink: #062b25; --warm: #ff9a63;
-  --good: #7fd6a0; --good-bg: #183327; --bad: #ff9d87; --bad-bg: #3a1e18;
-  --fis: #86a9ff; --kim: #e293d3; --bio: #8fd37d; --aer: #ff9a63;
-  --stage-a: #1c2a25; --stage-b: #0b120f; color-scheme: dark; } }
-:root[data-theme="dark"] {
-  --bg: #0e1613; --surface: #15201c; --ink: #e2ebe5; --muted: #9aaca3; --line: #2a3832;
-  --accent: #52c2ad; --accent-ink: #062b25; --warm: #ff9a63;
-  --good: #7fd6a0; --good-bg: #183327; --bad: #ff9d87; --bad-bg: #3a1e18;
-  --fis: #86a9ff; --kim: #e293d3; --bio: #8fd37d; --aer: #ff9a63;
-  --stage-a: #1c2a25; --stage-b: #0b120f; color-scheme: dark; }
+
+/* Langit: gradasi nebula + tiga lapis bintang (kecil, sedang, terang berkelip). */
+.sky { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
+  background:
+    radial-gradient(60% 45% at 18% 8%, rgba(70, 110, 200, 0.28), transparent 70%),
+    radial-gradient(50% 40% at 88% 30%, rgba(120, 80, 190, 0.18), transparent 70%),
+    radial-gradient(70% 50% at 50% 110%, rgba(40, 150, 140, 0.16), transparent 70%),
+    linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 65%); }
+.sky::before, .sky::after, .sky span { content: ""; position: absolute; top: 0; left: 0; width: 1px; height: 1px; border-radius: 50%; }
+.sky::before { box-shadow: 32.38vw 15.08vh 0 0.4px rgba(255,255,255,0.27), 53.59vw 36.57vh 0 0 rgba(255,236,210,0.31), 8.59vw 41.82vh 0 0 rgba(255,255,255,0.42), 5.91vw 56.55vh 0 0 rgba(255,236,210,0.44), 94.77vw 57.71vh 0 0 rgba(255,255,255,0.54), 4.66vw 85.85vh 0 0 rgba(200,220,255,0.29), 11.78vw 30.85vh 0 0.4px rgba(255,255,255,0.28), 57.12vw 18.79vh 0 0 rgba(255,236,210,0.46), 56.44vw 61.90vh 0 0 rgba(255,236,210,0.41), 77.72vw 46.56vh 0 0 rgba(200,220,255,0.34), 79.44vw 69.90vh 0 0 rgba(255,255,255,0.42), 52.52vw 87.51vh 0 0.4px rgba(200,220,255,0.34), 98.02vw 11.81vh 0 0 rgba(255,255,255,0.48), 15.20vw 48.90vh 0 0 rgba(255,236,210,0.27), 55.81vw 78.91vh 0 0 rgba(200,220,255,0.46), 59.44vw 57.99vh 0 0 rgba(255,255,255,0.50), 94.47vw 47.41vh 0 0.4px rgba(255,255,255,0.27), 70.15vw 64.71vh 0 0.4px rgba(200,220,255,0.34), 38.58vw 66.87vh 0 0 rgba(200,220,255,0.36), 61.09vw 49.37vh 0 0 rgba(200,220,255,0.29), 24.76vw 39.09vh 0 0 rgba(255,255,255,0.30), 40.16vw 27.78vh 0 0 rgba(200,220,255,0.51), 27.84vw 41.53vh 0 0 rgba(255,236,210,0.52), 95.77vw 15.09vh 0 0 rgba(255,255,255,0.32), 23.33vw 48.50vh 0 0.4px rgba(255,255,255,0.33), 0.41vw 41.89vh 0 0 rgba(255,236,210,0.42), 95.31vw 69.05vh 0 0.4px rgba(255,236,210,0.45), 73.98vw 45.66vh 0 0.4px rgba(255,236,210,0.37), 39.90vw 10.35vh 0 0.4px rgba(200,220,255,0.27), 6.73vw 20.88vh 0 0 rgba(255,255,255,0.35), 5.26vw 0.02vh 0 0 rgba(255,236,210,0.28), 36.36vw 2.55vh 0 0 rgba(255,236,210,0.36), 63.44vw 95.55vh 0 0.4px rgba(200,220,255,0.39), 11.54vw 48.81vh 0 0 rgba(200,220,255,0.40), 8.59vw 10.22vh 0 0 rgba(255,236,210,0.33), 82.89vw 16.14vh 0 0 rgba(255,255,255,0.54), 52.83vw 14.66vh 0 0.4px rgba(255,255,255,0.48), 29.81vw 64.29vh 0 0 rgba(255,236,210,0.50), 51.84vw 90.83vh 0 0 rgba(255,255,255,0.41), 77.91vw 32.97vh 0 0 rgba(255,236,210,0.49), 98.49vw 85.26vh 0 0 rgba(200,220,255,0.47), 22.67vw 51.76vh 0 0 rgba(255,236,210,0.26), 2.79vw 27.94vh 0 0 rgba(255,255,255,0.46), 95.65vw 44.72vh 0 0.4px rgba(200,220,255,0.54), 36.46vw 22.05vh 0 0 rgba(200,220,255,0.31), 20.44vw 62.41vh 0 0.4px rgba(255,255,255,0.39), 65.30vw 79.96vh 0 0 rgba(255,236,210,0.29), 38.85vw 71.15vh 0 0 rgba(200,220,255,0.52), 43.39vw 63.58vh 0 0 rgba(255,236,210,0.37), 40.14vw 94.68vh 0 0.4px rgba(255,255,255,0.30), 12.70vw 15.12vh 0 0 rgba(255,236,210,0.29), 82.65vw 98.03vh 0 0.4px rgba(200,220,255,0.30), 54.83vw 2.14vh 0 0.4px rgba(255,236,210,0.28), 74.95vw 13.93vh 0 0 rgba(255,255,255,0.26), 21.28vw 50.12vh 0 0.4px rgba(200,220,255,0.33), 41.90vw 13.11vh 0 0.4px rgba(200,220,255,0.52), 66.25vw 81.50vh 0 0.4px rgba(200,220,255,0.50), 87.82vw 13.08vh 0 0 rgba(255,236,210,0.40), 87.28vw 77.65vh 0 0.4px rgba(255,255,255,0.48), 14.98vw 14.16vh 0 0.4px rgba(255,236,210,0.29), 6.18vw 68.23vh 0 0.4px rgba(255,236,210,0.39), 77.65vw 88.32vh 0 0 rgba(255,255,255,0.31), 4.22vw 9.77vh 0 0 rgba(255,236,210,0.26), 89.40vw 6.34vh 0 0 rgba(255,236,210,0.54), 60.61vw 19.94vh 0 0 rgba(200,220,255,0.40), 80.74vw 50.78vh 0 0 rgba(255,236,210,0.41), 87.60vw 92.78vh 0 0.4px rgba(255,255,255,0.50), 13.71vw 12.16vh 0 0 rgba(200,220,255,0.27), 24.06vw 7.31vh 0 0.4px rgba(200,220,255,0.49), 89.70vw 15.44vh 0 0.4px rgba(255,236,210,0.45), 14.30vw 88.28vh 0 0 rgba(255,255,255,0.47), 9.41vw 88.49vh 0 0 rgba(255,236,210,0.50), 16.15vw 43.15vh 0 0.4px rgba(200,220,255,0.35), 19.57vw 31.85vh 0 0.4px rgba(200,220,255,0.26), 55.41vw 44.05vh 0 0 rgba(200,220,255,0.35), 62.39vw 51.23vh 0 0 rgba(255,255,255,0.55), 78.84vw 97.17vh 0 0 rgba(255,255,255,0.33), 3.96vw 77.90vh 0 0 rgba(255,255,255,0.50), 84.96vw 67.60vh 0 0 rgba(200,220,255,0.29), 91.92vw 57.06vh 0 0.4px rgba(200,220,255,0.28), 5.75vw 68.82vh 0 0 rgba(255,255,255,0.33), 1.68vw 8.86vh 0 0 rgba(255,255,255,0.43), 22.24vw 26.45vh 0 0 rgba(200,220,255,0.25), 99.43vw 41.78vh 0 0 rgba(255,236,210,0.29), 52.69vw 23.84vh 0 0 rgba(255,255,255,0.33), 18.11vw 93.22vh 0 0.4px rgba(200,220,255,0.41), 20.59vw 44.57vh 0 0.4px rgba(255,255,255,0.33), 80.37vw 99.45vh 0 0 rgba(255,255,255,0.26), 50.57vw 97.81vh 0 0.4px rgba(200,220,255,0.32), 44.71vw 65.83vh 0 0.4px rgba(200,220,255,0.45), 54.59vw 88.87vh 0 0.4px rgba(200,220,255,0.46), 98.24vw 34.27vh 0 0.4px rgba(255,236,210,0.44), 40.47vw 34.76vh 0 0 rgba(255,255,255,0.25), 62.54vw 87.99vh 0 0 rgba(255,255,255,0.27), 66.52vw 38.09vh 0 0.4px rgba(255,236,210,0.54), 59.88vw 69.27vh 0 0 rgba(200,220,255,0.31), 26.90vw 0.36vh 0 0 rgba(200,220,255,0.54), 54.71vw 24.44vh 0 0 rgba(255,255,255,0.36), 0.11vw 38.16vh 0 0 rgba(200,220,255,0.40), 20.10vw 50.47vh 0 0 rgba(255,255,255,0.33), 8.98vw 39.95vh 0 0 rgba(200,220,255,0.26), 30.42vw 23.28vh 0 0.4px rgba(255,236,210,0.51), 15.53vw 89.28vh 0 0.4px rgba(200,220,255,0.48), 72.07vw 49.42vh 0 0 rgba(255,236,210,0.44), 14.48vw 82.49vh 0 0.4px rgba(255,236,210,0.44), 73.39vw 81.22vh 0 0 rgba(255,236,210,0.48), 56.85vw 81.29vh 0 0 rgba(255,236,210,0.43), 89.28vw 68.29vh 0 0.4px rgba(255,236,210,0.32), 3.12vw 13.31vh 0 0 rgba(255,255,255,0.36), 45.14vw 5.08vh 0 0 rgba(255,236,210,0.41), 24.46vw 26.38vh 0 0 rgba(255,255,255,0.47), 50.30vw 53.52vh 0 0.4px rgba(255,236,210,0.27), 73.68vw 25.22vh 0 0 rgba(200,220,255,0.32), 75.64vw 23.07vh 0 0.4px rgba(200,220,255,0.40), 38.26vw 47.90vh 0 0.4px rgba(200,220,255,0.48), 61.70vw 64.28vh 0 0 rgba(255,236,210,0.29), 25.39vw 74.32vh 0 0 rgba(255,236,210,0.42), 1.25vw 6.07vh 0 0 rgba(255,236,210,0.28), 21.77vw 48.96vh 0 0.4px rgba(255,236,210,0.34), 46.59vw 76.72vh 0 0.4px rgba(255,255,255,0.34), 8.59vw 47.29vh 0 0 rgba(200,220,255,0.27), 50.66vw 99.46vh 0 0 rgba(200,220,255,0.31), 94.56vw 21.07vh 0 0.4px rgba(255,255,255,0.29), 52.41vw 95.27vh 0 0 rgba(255,236,210,0.50), 50.87vw 88.69vh 0 0.4px rgba(200,220,255,0.32), 89.77vw 48.61vh 0 0 rgba(255,255,255,0.25), 49.17vw 45.08vh 0 0 rgba(255,236,210,0.29), 34.40vw 31.61vh 0 0 rgba(255,255,255,0.35), 33.83vw 39.83vh 0 0 rgba(255,236,210,0.25), 73.99vw 25.32vh 0 0 rgba(200,220,255,0.37), 87.00vw 7.64vh 0 0 rgba(200,220,255,0.51), 28.06vw 5.16vh 0 0.4px rgba(200,220,255,0.44), 14.89vw 97.10vh 0 0 rgba(255,236,210,0.34), 77.32vw 78.51vh 0 0 rgba(255,255,255,0.49), 63.09vw 91.34vh 0 0.4px rgba(255,236,210,0.31), 8.06vw 93.35vh 0 0 rgba(200,220,255,0.43), 13.86vw 86.95vh 0 0 rgba(255,255,255,0.52), 55.01vw 17.08vh 0 0 rgba(200,220,255,0.33), 25.57vw 73.87vh 0 0.4px rgba(200,220,255,0.37), 23.87vw 48.32vh 0 0.4px rgba(200,220,255,0.29), 64.32vw 7.52vh 0 0.4px rgba(200,220,255,0.42), 45.30vw 33.28vh 0 0 rgba(200,220,255,0.29), 19.24vw 9.07vh 0 0 rgba(255,236,210,0.28), 23.91vw 25.84vh 0 0.4px rgba(255,255,255,0.52), 74.97vw 41.28vh 0 0 rgba(255,236,210,0.41), 37.69vw 33.82vh 0 0 rgba(200,220,255,0.33), 96.77vw 12.59vh 0 0.4px rgba(255,236,210,0.44), 86.29vw 21.60vh 0 0 rgba(255,255,255,0.37), 64.58vw 43.18vh 0 0 rgba(255,255,255,0.29), 42.52vw 76.37vh 0 0 rgba(255,236,210,0.40), 7.31vw 93.02vh 0 0.4px rgba(200,220,255,0.54), 24.85vw 10.90vh 0 0 rgba(255,255,255,0.41), 68.21vw 94.15vh 0 0.4px rgba(255,236,210,0.44), 76.48vw 45.73vh 0 0.4px rgba(255,255,255,0.25), 12.57vw 56.94vh 0 0 rgba(255,236,210,0.46), 96.24vw 62.65vh 0 0.4px rgba(255,236,210,0.38), 76.38vw 9.94vh 0 0 rgba(255,236,210,0.53), 19.17vw 26.09vh 0 0.4px rgba(255,255,255,0.25), 30.15vw 46.07vh 0 0 rgba(255,236,210,0.50), 24.24vw 52.63vh 0 0.4px rgba(255,255,255,0.26), 41.18vw 64.96vh 0 0 rgba(255,255,255,0.31), 88.48vw 64.72vh 0 0 rgba(200,220,255,0.32), 42.43vw 37.02vh 0 0 rgba(255,255,255,0.46), 71.83vw 36.23vh 0 0 rgba(255,255,255,0.25), 29.21vw 84.51vh 0 0 rgba(255,255,255,0.40), 20.04vw 76.59vh 0 0 rgba(255,255,255,0.39), 26.50vw 88.93vh 0 0 rgba(255,236,210,0.40), 18.73vw 22.33vh 0 0 rgba(255,236,210,0.27), 59.48vw 92.19vh 0 0 rgba(255,255,255,0.26), 59.61vw 41.54vh 0 0.4px rgba(255,255,255,0.31), 44.96vw 71.20vh 0 0 rgba(255,236,210,0.28), 7.94vw 16.56vh 0 0 rgba(255,255,255,0.45), 52.48vw 46.76vh 0 0 rgba(255,236,210,0.47), 83.91vw 98.50vh 0 0 rgba(255,255,255,0.28), 7.82vw 8.08vh 0 0 rgba(255,255,255,0.42), 75.88vw 38.01vh 0 0 rgba(200,220,255,0.28), 70.53vw 19.57vh 0 0.4px rgba(200,220,255,0.31), 36.42vw 89.70vh 0 0 rgba(255,236,210,0.37), 81.18vw 76.67vh 0 0 rgba(200,220,255,0.26), 6.26vw 92.01vh 0 0 rgba(255,255,255,0.47), 89.86vw 33.91vh 0 0 rgba(200,220,255,0.54), 61.70vw 26.22vh 0 0.4px rgba(255,236,210,0.34), 27.56vw 0.38vh 0 0.4px rgba(255,236,210,0.53), 6.53vw 82.60vh 0 0 rgba(200,220,255,0.46), 46.57vw 77.64vh 0 0 rgba(200,220,255,0.49), 13.27vw 49.65vh 0 0 rgba(255,236,210,0.34), 69.21vw 15.13vh 0 0 rgba(200,220,255,0.51), 46.08vw 78.38vh 0 0.4px rgba(255,255,255,0.40), 39.17vw 15.99vh 0 0 rgba(255,255,255,0.44), 48.17vw 54.46vh 0 0 rgba(200,220,255,0.52), 98.78vw 26.49vh 0 0 rgba(255,255,255,0.28), 49.85vw 70.98vh 0 0 rgba(255,255,255,0.32), 41.68vw 62.03vh 0 0.4px rgba(255,255,255,0.47), 84.70vw 66.44vh 0 0 rgba(200,220,255,0.34), 56.69vw 37.30vh 0 0.4px rgba(200,220,255,0.31), 24.74vw 24.53vh 0 0 rgba(200,220,255,0.52), 57.83vw 32.63vh 0 0 rgba(200,220,255,0.55), 50.73vw 23.14vh 0 0 rgba(255,236,210,0.39), 3.70vw 0.45vh 0 0 rgba(200,220,255,0.52), 4.04vw 29.37vh 0 0 rgba(255,255,255,0.31), 97.30vw 58.32vh 0 0 rgba(200,220,255,0.40), 17.78vw 60.30vh 0 0.4px rgba(255,255,255,0.28), 59.61vw 61.99vh 0 0 rgba(255,255,255,0.36), 14.14vw 20.40vh 0 0 rgba(255,255,255,0.43), 65.16vw 20.34vh 0 0 rgba(200,220,255,0.37), 37.18vw 62.10vh 0 0 rgba(255,255,255,0.26), 49.56vw 48.35vh 0 0 rgba(255,255,255,0.49), 66.40vw 15.46vh 0 0.4px rgba(255,255,255,0.45), 39.78vw 27.12vh 0 0 rgba(255,236,210,0.34), 95.32vw 31.24vh 0 0.4px rgba(200,220,255,0.37), 1.82vw 76.67vh 0 0 rgba(255,236,210,0.31), 72.80vw 20.37vh 0 0 rgba(200,220,255,0.52), 42.38vw 82.04vh 0 0 rgba(255,236,210,0.51), 46.09vw 16.25vh 0 0 rgba(255,255,255,0.42), 64.07vw 90.98vh 0 0 rgba(255,236,210,0.44), 37.08vw 50.45vh 0 0 rgba(200,220,255,0.33), 52.12vw 92.55vh 0 0 rgba(200,220,255,0.40), 80.48vw 96.69vh 0 0 rgba(200,220,255,0.29), 94.31vw 97.55vh 0 0 rgba(200,220,255,0.27), 92.62vw 38.79vh 0 0.4px rgba(255,236,210,0.46); }
+.sky::after { width: 2px; height: 2px; box-shadow: 89.11vw 64.03vh 0 0 rgba(255,236,210,0.62), 84.64vw 82.92vh 0 0 rgba(255,236,210,0.57), 39.97vw 51.79vh 0 0 rgba(200,220,255,0.54), 24.71vw 72.49vh 0 0 rgba(255,255,255,0.77), 84.25vw 67.23vh 0 0.4px rgba(200,220,255,0.54), 59.95vw 55.01vh 0 0.4px rgba(200,220,255,0.69), 30.82vw 24.93vh 0 0 rgba(255,236,210,0.61), 50.36vw 17.88vh 0 0 rgba(255,236,210,0.80), 46.53vw 44.68vh 0 0.4px rgba(200,220,255,0.75), 81.05vw 40.03vh 0 0 rgba(255,255,255,0.61), 36.53vw 80.23vh 0 0.4px rgba(255,236,210,0.70), 4.07vw 13.03vh 0 0.4px rgba(200,220,255,0.73), 51.15vw 5.43vh 0 0.4px rgba(200,220,255,0.70), 78.42vw 2.59vh 0 0 rgba(255,236,210,0.72), 81.50vw 19.37vh 0 0 rgba(200,220,255,0.79), 91.60vw 16.51vh 0 0.4px rgba(255,255,255,0.52), 35.09vw 75.62vh 0 0 rgba(200,220,255,0.77), 27.50vw 81.56vh 0 0 rgba(200,220,255,0.65), 91.99vw 20.83vh 0 0 rgba(255,236,210,0.65), 31.91vw 3.68vh 0 0 rgba(200,220,255,0.55), 93.64vw 67.97vh 0 0 rgba(255,255,255,0.74), 26.43vw 76.83vh 0 0 rgba(255,236,210,0.76), 96.62vw 45.30vh 0 0.4px rgba(255,236,210,0.71), 89.61vw 25.20vh 0 0.4px rgba(255,236,210,0.76), 73.79vw 37.15vh 0 0 rgba(200,220,255,0.67), 36.03vw 76.46vh 0 0 rgba(255,255,255,0.55), 74.36vw 4.83vh 0 0.4px rgba(200,220,255,0.59), 96.60vw 87.03vh 0 0.4px rgba(200,220,255,0.72), 74.71vw 22.16vh 0 0 rgba(255,236,210,0.69), 41.77vw 36.41vh 0 0 rgba(255,255,255,0.65), 61.25vw 4.56vh 0 0 rgba(255,255,255,0.67), 30.37vw 52.31vh 0 0.4px rgba(255,255,255,0.62), 30.12vw 13.37vh 0 0 rgba(255,236,210,0.75), 15.86vw 1.41vh 0 0 rgba(255,236,210,0.54), 9.58vw 63.82vh 0 0.4px rgba(200,220,255,0.62), 26.42vw 1.15vh 0 0.4px rgba(255,236,210,0.77), 59.47vw 57.85vh 0 0.4px rgba(255,236,210,0.72), 24.85vw 90.35vh 0 0 rgba(255,255,255,0.66), 40.60vw 23.77vh 0 0 rgba(255,255,255,0.50), 55.09vw 94.09vh 0 0 rgba(200,220,255,0.56), 60.81vw 50.69vh 0 0.4px rgba(200,220,255,0.74), 17.46vw 30.94vh 0 0 rgba(255,236,210,0.51), 88.94vw 78.30vh 0 0.4px rgba(255,236,210,0.50), 84.44vw 74.52vh 0 0 rgba(255,255,255,0.72), 45.25vw 22.59vh 0 0 rgba(200,220,255,0.57), 3.88vw 33.55vh 0 0.4px rgba(255,236,210,0.78), 26.33vw 5.25vh 0 0.4px rgba(255,236,210,0.70), 68.57vw 91.73vh 0 0 rgba(200,220,255,0.69), 96.51vw 21.70vh 0 0.4px rgba(255,255,255,0.55), 90.47vw 84.17vh 0 0 rgba(255,255,255,0.72), 32.69vw 88.02vh 0 0 rgba(255,236,210,0.57), 90.76vw 63.07vh 0 0.4px rgba(255,236,210,0.75), 53.64vw 47.21vh 0 0.4px rgba(255,236,210,0.50), 2.65vw 95.57vh 0 0 rgba(255,236,210,0.77), 78.92vw 39.16vh 0 0.4px rgba(255,255,255,0.67), 17.15vw 3.29vh 0 0 rgba(255,255,255,0.69), 16.18vw 97.74vh 0 0.4px rgba(255,255,255,0.51), 13.84vw 64.35vh 0 0 rgba(255,236,210,0.52), 4.67vw 85.65vh 0 0 rgba(255,255,255,0.75), 81.96vw 89.13vh 0 0 rgba(255,236,210,0.78); }
+.sky span { width: 2.5px; height: 2.5px; box-shadow: 10.71vw 20.57vh 0 0 rgba(255,255,255,0.86), 84.77vw 81.20vh 0 0.4px rgba(255,255,255,0.97), 63.15vw 28.74vh 0 0 rgba(255,255,255,0.86), 75.74vw 20.50vh 0 0 rgba(200,220,255,0.91), 2.09vw 25.67vh 0 0 rgba(255,255,255,0.96), 36.80vw 32.08vh 0 0.4px rgba(255,236,210,0.92), 28.76vw 74.57vh 0 0 rgba(255,255,255,0.92), 77.30vw 34.68vh 0 0.4px rgba(255,255,255,0.93), 21.66vw 86.22vh 0 0 rgba(255,236,210,0.97), 17.04vw 0.13vh 0 0 rgba(200,220,255,0.96), 97.79vw 0.44vh 0 0 rgba(255,255,255,0.92), 79.68vw 18.45vh 0 0 rgba(255,236,210,0.90), 83.18vw 26.06vh 0 0 rgba(200,220,255,0.97), 93.83vw 23.15vh 0 0 rgba(255,255,255,0.99); animation: twinkle 4s ease-in-out infinite alternate; }
+@keyframes twinkle { from { opacity: 1; } to { opacity: 0.35; } }
 
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 var(--font-body); -webkit-font-smoothing: antialiased; }
@@ -41,8 +45,8 @@ button, input, select { font: inherit; color: inherit; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
-.site-head { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+.site-head { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(7, 12, 24, 0.72); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg-2); }
 .site-head .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
 .brand { display: flex; align-items: center; gap: 10px; font: 700 1.1rem/1 var(--font-display); color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
 .brand svg { flex: none; }
@@ -57,19 +61,19 @@ h1, h2 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -
 .hero h1 { font-size: clamp(1.9rem, 4.2vw, 3.1rem); line-height: 1.05; font-weight: 700; }
 .lede { max-width: 62ch; color: var(--muted); font-size: 1.05rem; margin: 16px 0 0; }
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin: 0; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
-.stats div { background: var(--surface); padding: 14px 16px; display: flex; flex-direction: column-reverse; gap: 4px; }
+.stats div { background: var(--surface-solid); padding: 14px 16px; display: flex; flex-direction: column-reverse; gap: 4px; }
 .stats dt { font-size: 0.8rem; color: var(--muted); line-height: 1.3; }
 .stats dd { margin: 0; font: 600 1.8rem/1 var(--font-data); font-variant-numeric: tabular-nums; }
 
 .filters { display: grid; gap: 10px; margin-bottom: 22px; }
 .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 14px; cursor: pointer; font-size: 0.92rem; }
+.chip { border: 1px solid var(--line); background: var(--surface-solid); border-radius: 999px; padding: 6px 14px; cursor: pointer; font-size: 0.92rem; }
 .chip:hover { border-color: var(--accent); }
-.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-.card { --c: var(--accent); display: flex; flex-direction: column; gap: 10px; padding: 18px 18px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; text-decoration: none; color: inherit; transition: border-color .15s, transform .15s; }
-.card:hover { border-color: var(--c); transform: translateY(-2px); }
+.card { --c: var(--accent); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; flex-direction: column; gap: 10px; padding: 18px 18px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; text-decoration: none; color: inherit; transition: border-color .15s, transform .15s; }
+.card:hover { border-color: var(--c); transform: translateY(-2px); box-shadow: 0 0 0 1px var(--c), 0 10px 30px -12px var(--c); }
 [data-subject="fisika"] { --c: var(--fis); } [data-subject="kimia"] { --c: var(--kim); }
 [data-subject="biologi"] { --c: var(--bio); } [data-subject="aerospace"] { --c: var(--aer); }
 .subj { font: 600 0.75rem/1 var(--font-data); text-transform: uppercase; letter-spacing: 0.07em; color: var(--c); }
@@ -90,23 +94,23 @@ h1, h2 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -
 .topic-head p { margin: 10px 0 0; color: var(--muted); max-width: 70ch; }
 
 .topic { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 20px; align-items: start; }
-.stage { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 70px); height: min(72vh, 680px); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: radial-gradient(120% 90% at 50% 20%, var(--stage-a), var(--stage-b)); }
+.stage { box-shadow: 0 0 60px -20px rgba(95, 214, 196, 0.35);position: sticky; top: calc(env(safe-area-inset-top, 0px) + 70px); height: min(72vh, 680px); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: radial-gradient(120% 90% at 50% 15%, var(--stage-a), var(--stage-b)); }
 .stage-canvas, .stage-canvas canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
 .stage-tools { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; z-index: 2; }
-.stage-tools button { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; font-size: 0.82rem; cursor: pointer; }
+.stage-tools button { background: var(--surface-solid); border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; font-size: 0.82rem; cursor: pointer; }
 .stage-hint { position: absolute; left: 12px; bottom: 8px; margin: 0; font: 0.75rem var(--font-data); color: var(--muted); pointer-events: none; }
 
-.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; min-width: 0; }
+.panel { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; min-width: 0; }
 .tabs { display: flex; border-bottom: 1px solid var(--line); overflow-x: auto; }
 .tabs button { flex: 1; background: none; border: 0; border-bottom: 3px solid transparent; padding: 13px 12px 10px; cursor: pointer; font-weight: 700; color: var(--muted); white-space: nowrap; }
 .tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
 [role="tabpanel"] { padding: 18px; display: grid; gap: 16px; }
 [role="tabpanel"][hidden] { display: none; }
 
-.formula { font: 0.95rem/1.6 var(--font-data); background: var(--bg); border: 1px dashed var(--line); border-radius: 8px; padding: 10px 12px; overflow-x: auto; }
+.formula { font: 0.95rem/1.6 var(--font-data); background: rgba(5, 9, 18, 0.55); border: 1px dashed var(--line); border-radius: 8px; padding: 10px 12px; overflow-x: auto; }
 .outputs { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-.out { background: var(--surface); padding: 10px 12px; display: grid; gap: 2px; min-width: 0; }
-.out.main { grid-column: 1 / -1; background: var(--bg); }
+.out { background: var(--surface-solid); padding: 10px 12px; display: grid; gap: 2px; min-width: 0; }
+.out.main { grid-column: 1 / -1; background: rgba(95, 214, 196, 0.08); }
 .out-label { font-size: 0.8rem; color: var(--muted); }
 .out-value { font: 600 1.05rem/1.25 var(--font-data); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .out.main .out-value { font-size: 1.8rem; color: var(--accent); }
@@ -171,7 +175,7 @@ h1, h2 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -
   .stats dd { font-size: 1.4rem; }
   .outputs { grid-template-columns: minmax(0, 1fr); }
 }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+@media (prefers-reduced-motion: reduce) { .sky span { animation: none; } * { transition: none !important; scroll-behavior: auto !important; } }
 </style>
 <script type="importmap">
 { "imports": {
@@ -181,11 +185,12 @@ h1, h2 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -
 </script>
 </head>
 <body>
+<div class="sky" aria-hidden="true"><span></span></div>
 <header class="site-head">
   <div class="wrap">
     <a class="brand" href="#">
       <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="3.2" fill="var(--accent)"/><ellipse cx="13" cy="13" rx="11" ry="4.6" fill="none" stroke="var(--ink)" stroke-width="1.6"/><ellipse cx="13" cy="13" rx="11" ry="4.6" fill="none" stroke="var(--ink)" stroke-width="1.6" transform="rotate(60 13 13)"/><ellipse cx="13" cy="13" rx="11" ry="4.6" fill="none" stroke="var(--ink)" stroke-width="1.6" transform="rotate(-60 13 13)"/></svg>
-      Lab Sains 3D
+      Sams Lab
     </a>
     <small>Energi · Industri · Keberlanjutan</small>
   </div>
