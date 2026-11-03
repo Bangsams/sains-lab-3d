@@ -1,4 +1,5 @@
 import { mat, mesh, ground, label, particles } from '../lib/helpers.js';
+import lab from '../labs/deploy-vercel.js';
 
 const ANTRE = 5; // detik, menunggu mesin build tersedia (perkiraan)
 
@@ -77,6 +78,7 @@ export default {
       { label: 'Pemakaian per bulan', value: (gbDetik(p) * 30) / 3600, unit: 'GB-jam', digits: 1 },
     ];
   },
+  lab,
   view: { camera: [4, 8, 15], target: [0, 1.5, 0] },
   scene({ THREE, scene }) {
     ground(scene, { color: 0xb5bdd2 });

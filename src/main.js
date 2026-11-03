@@ -1,4 +1,5 @@
 import { Stage } from './lib/engine.js';
+import { mountIde } from './lib/ide.js';
 import { TOPICS, SUBJECTS, TAGS } from './topics/index.js';
 
 const $ = (sel, el = document) => el.querySelector(sel);
@@ -121,6 +122,7 @@ function renderTopic(t) {
           <div class="outputs" id="outputs"></div>
           <form class="controls" id="controls" autocomplete="off"></form>
           <button type="button" class="ghost" id="reset">Kembalikan nilai awal</button>
+          ${t.lab ? '<button type="button" class="primary" data-go="ide">Buka Lab Kode ↓</button>' : ''}
         </section>
         <section role="tabpanel" id="pane-story" aria-labelledby="tab-story" hidden>
           <div class="story">${t.story}</div>
@@ -128,13 +130,15 @@ function renderTopic(t) {
           ${equationsHtml(t)}
           <p class="note">${t.conceptNote}</p>
           <button type="button" class="primary" data-go="quiz">Kerjakan soal →</button>
+          ${t.lab ? '<button type="button" class="ghost" data-go="ide">Coba kodenya di Lab Kode ↓</button>' : ''}
         </section>
         <section role="tabpanel" id="pane-quiz" aria-labelledby="tab-quiz" hidden>
           <ol class="quiz" id="quiz"></ol>
           <a class="next" href="#${next.id}">Topik berikutnya: ${esc(next.title)} →</a>
         </section>
       </div>
-    </div>`;
+    </div>
+    ${t.lab ? '<section class="ide" id="ide" aria-label="Lab kode"></section>' : ''}`;
   $('#stage-slot').prepend(stageEl);
   const st = getStage();
   st.paused = false;
@@ -149,6 +153,10 @@ function renderTopic(t) {
   });
   tabs.forEach((n) => ($(`#tab-${n}`).onclick = () => show(n)));
   $('[data-go="quiz"]').onclick = () => show('quiz');
+  if (t.lab) {
+    mountIde($('#ide'), t.lab, `${STORE_KEY}.ide.${t.id}`);
+    app.querySelectorAll('[data-go="ide"]').forEach((b) => { b.onclick = () => $('#ide').scrollIntoView({ behavior: 'smooth' }); });
+  }
   buildControls(t);
   buildQuiz(t);
   updateOutputs();

@@ -1,4 +1,5 @@
 import { mat, mesh, ground, label, particles } from '../lib/helpers.js';
+import lab from '../labs/integrasi-api.js';
 
 const KUOTA = 60; // permintaan baca per menit per pengguna (kuota default Google Sheets API; service account = satu pengguna)
 
@@ -75,6 +76,7 @@ async function token() {
       { label: 'Permintaan token per jam (token di-cache)', value: 1, unit: 'per instance', digits: 0 },
     ];
   },
+  lab,
   view: { camera: [0, 9, 15], target: [0, 1.5, 0] },
   scene({ THREE, scene }) {
     ground(scene, { color: 0xb5bdd2 });

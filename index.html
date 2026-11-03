@@ -172,6 +172,53 @@ h1, h2 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -
 .site-foot { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; }
 .site-foot .wrap { padding-block: 18px; }
 
+/* ---------- Lab Kode (IDE mini) ---------- */
+.ide { margin-top: 28px; display: grid; gap: 14px; scroll-margin-top: 80px; }
+.ide-head h2 { font-size: clamp(1.3rem, 2.4vw, 1.7rem); }
+.ide-head p { color: var(--muted); max-width: 80ch; margin: 8px 0 0; }
+.ide-head .eyebrow { margin-bottom: 8px; }
+.ide code, .ide-tasks code { font: 0.86em var(--font-data); color: var(--accent); }
+.ide-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+.ide-editor, .ide-console, .ide-tasks { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; min-width: 0; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.ide-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+.ide-bar .ghost, .ide-bar .primary { padding: 6px 12px; font-size: 0.85rem; }
+.ide-bar .primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.ide-file { font: 600 0.82rem var(--font-data); color: var(--ink); }
+.ide-count { font: 0.78rem var(--font-data); color: var(--muted); }
+.ide-count.over { color: var(--bad); font-weight: 700; }
+.ide-actions { margin-left: auto; display: flex; gap: 8px; }
+.ide-code { display: grid; grid-template-columns: auto minmax(0, 1fr); height: min(62vh, 560px); background: rgba(5, 9, 18, 0.72); font: 13px/20px var(--font-data); }
+.ide-gutter { margin: 0; padding: 10px 8px 10px 12px; overflow: hidden; text-align: right; color: rgba(163, 178, 204, 0.5); user-select: none; border-right: 1px solid var(--line); font: inherit; }
+.ide-area { position: relative; min-width: 0; }
+.ide-hl, .ide-area textarea { position: absolute; inset: 0; margin: 0; padding: 10px 12px; font: inherit; white-space: pre; tab-size: 2; overflow: auto; border: 0; }
+/* ruang ekstra seukuran scrollbar textarea agar lapisan warna tetap sejajar saat digulir sampai ujung */
+.ide-hl { pointer-events: none; color: var(--ink); overflow: hidden; padding-bottom: 40px; padding-right: 40px; }
+.ide-gutter { padding-bottom: 40px; }
+.ide-area textarea { resize: none; background: transparent; color: transparent; caret-color: var(--accent); outline: none; }
+.ide-area textarea::selection { background: rgba(95, 214, 196, 0.28); color: transparent; }
+.ide-area textarea:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
+.tk-c { color: #7d8aa6; font-style: italic; } .tk-s { color: var(--good); } .tk-r { color: var(--kim); }
+.tk-k { color: var(--fis); } .tk-n { color: var(--warm); } .tk-p { color: var(--accent); }
+.ide-hint { margin: 0; padding: 8px 12px; font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--line); }
+.ide-side { display: grid; gap: 14px; min-width: 0; }
+.ide-out { height: min(34vh, 300px); overflow: auto; padding: 8px 10px; font: 12.5px/1.55 var(--font-data); background: rgba(5, 9, 18, 0.72); border-radius: 0 0 12px 12px; }
+.ide-line { white-space: pre-wrap; overflow-wrap: anywhere; padding: 1px 0; }
+.ide-line.muted { color: var(--muted); } .ide-line.warn { color: var(--warm); }
+.ide-line.error { color: var(--bad); background: var(--bad-bg); border-radius: 4px; padding: 2px 6px; }
+.ide-goto { font: inherit; font-size: 0.72rem; margin-right: 8px; padding: 0 6px; border-radius: 4px; border: 1px solid var(--bad); background: none; color: var(--bad); cursor: pointer; }
+.ide-tasks { padding: 12px 14px; }
+.ide-tasks h3 { margin: 0 0 8px; font: 700 1rem var(--font-display); }
+.ide-tasks ol { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 0.92rem; }
+.ide-src { margin: 12px 0 0; font-size: 0.8rem; color: var(--muted); }
+/* runner tetap 1×1 px di dalam viewport: iframe yang tersembunyi total diperlambat peramban */
+.ide-frame { position: fixed; left: 0; bottom: 0; width: 1px; height: 1px; border: 0; opacity: 0.01; pointer-events: none; }
+@media (max-width: 900px) {
+  .ide-grid { grid-template-columns: minmax(0, 1fr); }
+  .ide-code { height: 420px; font-size: 12px; }
+  .ide-actions { margin-left: 0; width: 100%; }
+  .ide-actions .primary { flex: 1; }
+}
+
 @media (max-width: 900px) {
   .hero, .topic { grid-template-columns: minmax(0, 1fr); }
   .stage { position: relative; top: 0; height: 58vh; min-height: 300px; }

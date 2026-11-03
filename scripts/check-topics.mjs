@@ -26,6 +26,11 @@ for (const t of TOPICS) {
     if (!e.f || !e.meaning || !e.symbols?.length) errors.push(`${where} rumus ${i + 1}: f, meaning, dan symbols wajib diisi`);
   });
   if (typeof t.scene !== 'function') errors.push(`${where} scene() wajib ada`);
+  if (t.lab) {
+    const n = t.lab.code.split('\n').length;
+    if (n > 100) errors.push(`${where} Lab Kode ${n} baris, maksimal 100`);
+    if (!t.lab.file || !t.lab.tasks?.length || !t.lab.source) errors.push(`${where} lab: file, tasks, dan source wajib diisi`);
+  }
   const keys = new Set(t.params.map((p) => p.key));
   for (const p of t.params) {
     if (p.type !== 'select' && (p.value < p.min || p.value > p.max)) errors.push(`${where} nilai awal ${p.key} di luar rentang`);
@@ -46,4 +51,4 @@ for (const t of TOPICS) {
   });
 }
 if (errors.length) { console.error(errors.join('\n')); process.exit(1); }
-console.log(`OK: ${TOPICS.length} topik, ${TOPICS.reduce((n, t) => n + t.questions.length, 0)} soal.`);
+console.log(`OK: ${TOPICS.length} topik, ${TOPICS.reduce((n, t) => n + t.questions.length, 0)} soal, ${TOPICS.filter((t) => t.lab).length} lab kode.`);

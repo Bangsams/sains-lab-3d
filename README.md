@@ -18,6 +18,8 @@ Setiap topik berisi:
 
 Topik Coding & Cloud memakai studi kasus **Datmin Automation APP** (monitoring & simulasi keadilan penilaian Statistika 2): struktur kode, `vercel.json`, environment variable, service account Google, kuota API, dan pengunduhan PDF per potongan.
 
+Setiap topik Coding & Cloud juga punya **Lab Kode**: IDE mini (nomor baris, pewarnaan sintaks, konsol, maksimal 100 baris) yang berisi potongan **kode asli** proyek penilaian otomatis, beserta tantangan untuk diubah dan dijalankan. Kode dijalankan di iframe sandbox tanpa akses jaringan. Server, Google API, dan tanda tangan RSA diganti tiruan. Kode lab ada di `src/labs/*.code.js` (dibuat dari sumber asli) dan `src/labs/*.js` (tantangan + server tiruan), sedangkan mesin IDE ada di `src/lib/ide.js`.
+
 ## Menjalankan secara lokal
 
 Aplikasi ini berupa situs statis tanpa langkah build (three.js dimuat dari CDN lewat import map).

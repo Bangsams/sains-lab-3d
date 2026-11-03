@@ -1,4 +1,5 @@
 import { mat, mesh, ground, label } from '../lib/helpers.js';
+import lab from '../labs/mesin-penilai.js';
 
 // Contoh rubrik 4 butir (pola sama dengan rubrik post test T-Test di studi kasus).
 // Setiap butir punya tingkat: 0 benar & lengkap, 1 kurang lengkap / tanpa gambar, 2 salah, 3 tidak menjawab.
@@ -81,6 +82,7 @@ lib/auth.js, lib/stat-google.js</code></pre>
       { label: 'Hasil kontrol negatif', value: dn === 0 ? 'TIDAK BERLAKU (butir angka sudah salah)' : dn >= 15 ? 'PEKA (Δ ≥ 15)' : 'KURANG PEKA (Δ < 15)', text: true },
     ];
   },
+  lab,
   view: { camera: [9, 7, 12], target: [0, 2.2, 0] },
   scene({ THREE, scene }) {
     ground(scene, { color: 0xb7bfd6 });

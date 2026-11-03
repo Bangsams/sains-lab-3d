@@ -1,4 +1,5 @@
 import { mat, mesh, ground, label } from '../lib/helpers.js';
+import lab from '../labs/unduh-bertahap.js';
 
 const BATAS = 4.5; // MB, batas ukuran respons fungsi serverless Vercel
 
@@ -71,6 +72,7 @@ const pdf = await pdfjsLib.getDocument({ data: out }).promise;</code></pre>
       { label: 'Batas 4,5 MB per respons', value: sah(p) ? 'Aman' : 'Melebihi batas: FUNCTION_PAYLOAD_TOO_LARGE', text: true },
     ];
   },
+  lab,
   view: { camera: [3, 7, 14], target: [0, 1.5, 0] },
   scene({ THREE, scene }) {
     ground(scene, { color: 0xb5bdd2 });
