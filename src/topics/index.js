@@ -11,12 +11,17 @@ import bioetanol from './bioetanol.js';
 import persamaanRoket from './persamaan-roket.js';
 import orbitSatelit from './orbit-satelit.js';
 import gayaDorong from './gaya-dorong.js';
+import mesinPenilai from './mesin-penilai.js';
+import deployVercel from './deploy-vercel.js';
+import integrasiApi from './integrasi-api.js';
+import unduhBertahap from './unduh-bertahap.js';
 
 export const SUBJECTS = {
   fisika: { name: 'Fisika', short: 'FIS' },
   kimia: { name: 'Kimia', short: 'KIM' },
   biologi: { name: 'Biologi', short: 'BIO' },
   aerospace: { name: 'Teknik Roket & Antariksa', short: 'AER' },
+  coding: { name: 'Coding & Cloud', short: 'DEV' },
 };
 
 export const TAGS = {
@@ -24,6 +29,7 @@ export const TAGS = {
   industri: 'Industri',
   energi: 'Energi',
   keberlanjutan: 'Keberlanjutan',
+  web: 'Aplikasi web',
 };
 
 export const TOPICS = [
@@ -31,4 +37,5 @@ export const TOPICS = [
   hidrogenHijau, emisiBahanBakar, bateraiEv,
   fotosintesis, mikroalga, bioetanol,
   persamaanRoket, orbitSatelit, gayaDorong,
+  mesinPenilai, deployVercel, integrasiApi, unduhBertahap,
 ];

@@ -40,8 +40,8 @@ function renderHome() {
   app.innerHTML = `
     <section class="hero">
       <div class="hero-text">
-        <p class="eyebrow">Fisika · Kimia · Biologi · Teknik Roket</p>
-        <h1>Belajar sains dari panel surya, pabrik, dan landasan roket.</h1>
+        <p class="eyebrow">Fisika · Kimia · Biologi · Teknik Roket · Coding</p>
+        <h1>Belajar sains dari panel surya, pabrik, landasan roket, sampai server cloud.</h1>
         <p class="lede">Setiap topik punya simulasi 3D yang parameternya bisa kamu ubah, cerita atau studi kasus dari Indonesia, dan soal yang langsung menampilkan situasinya dalam bentuk 3D.</p>
       </div>
       <dl class="stats">

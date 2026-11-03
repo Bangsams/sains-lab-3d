@@ -17,7 +17,7 @@
   --ink: #e8eef9; --muted: #a3b2cc; --line: rgba(140, 170, 220, 0.18);
   --accent: #5fd6c4; --accent-ink: #04241f; --warm: #ffa36b;
   --good: #86e0a8; --good-bg: rgba(52, 160, 100, 0.16); --bad: #ffab96; --bad-bg: rgba(220, 90, 60, 0.16);
-  --fis: #93b6ff; --kim: #ef9fdc; --bio: #9ade8b; --aer: #ffa36b;
+  --fis: #93b6ff; --kim: #ef9fdc; --bio: #9ade8b; --aer: #ffa36b; --dev: #ffd36b;
   --stage-a: #18284a; --stage-b: #050912;
   --font-display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -76,6 +76,7 @@ h1, h2 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -
 .card:hover { border-color: var(--c); transform: translateY(-2px); box-shadow: 0 0 0 1px var(--c), 0 10px 30px -12px var(--c); }
 [data-subject="fisika"] { --c: var(--fis); } [data-subject="kimia"] { --c: var(--kim); }
 [data-subject="biologi"] { --c: var(--bio); } [data-subject="aerospace"] { --c: var(--aer); }
+[data-subject="coding"] { --c: var(--dev); }
 .subj { font: 600 0.75rem/1 var(--font-data); text-transform: uppercase; letter-spacing: 0.07em; color: var(--c); }
 .card h2 { font-size: 1.3rem; line-height: 1.15; }
 .card p { margin: 0; color: var(--muted); font-size: 0.95rem; flex: 1; }
@@ -129,7 +130,11 @@ h1, h2 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -
 .ghost { background: none; border: 1px solid var(--line); color: var(--ink); }
 .ghost:hover { border-color: var(--accent); }
 
+.story { min-width: 0; }
 .story p { margin: 0 0 12px; max-width: 65ch; }
+.story pre { margin: 0 0 12px; padding: 10px 12px; background: rgba(5, 9, 18, 0.7); border: 1px solid var(--line); border-radius: 8px; overflow-x: auto; font: 0.8rem/1.5 var(--font-data); }
+.story code { font: 0.86em var(--font-data); color: var(--accent); }
+.story pre code { font-size: inherit; color: var(--ink); }
 .eq-title { font-size: 1.15rem; }
 .eq-list { display: grid; gap: 14px; }
 .eq { display: grid; gap: 8px; }

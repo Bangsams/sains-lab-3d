@@ -1,6 +1,6 @@
 # Sams Lab
 
-Aplikasi web pembelajaran **Fisika, Kimia, Biologi, dan Teknik Roket & Antariksa**. Soal-soalnya berangkat dari kehidupan sehari-hari, industri, energi, dan keberlanjutan di Indonesia.
+Aplikasi web pembelajaran **Fisika, Kimia, Biologi, Teknik Roket & Antariksa, dan Coding & Cloud**. Soal-soalnya berangkat dari kehidupan sehari-hari, industri, energi, dan keberlanjutan di Indonesia.
 
 Setiap topik berisi:
 
@@ -14,6 +14,9 @@ Setiap topik berisi:
 | Kimia | Elektrolisis Hidrogen Hijau · Stoikiometri Emisi Bahan Bakar · Paket Baterai Litium |
 | Biologi | Fotosintesis Hutan Kota · Mikroalga untuk Biofuel · Fermentasi Bioetanol Tebu |
 | Teknik Roket | Persamaan Roket Tsiolkovsky · Orbit Satelit dan Internet · Gaya Dorong dan Lepas Landas |
+| Coding & Cloud | Membuat Kode Mesin Penilai Otomatis · Konfigurasi & Deploy ke Vercel · Integrasi Google Sheets & Drive API · API Unduhan PDF Bertahap |
+
+Topik Coding & Cloud memakai studi kasus **Datmin Automation APP** (monitoring & simulasi keadilan penilaian Statistika 2): struktur kode, `vercel.json`, environment variable, service account Google, kuota API, dan pengunduhan PDF per potongan.
 
 ## Menjalankan secara lokal
 
@@ -38,9 +41,9 @@ Semua konten ada di `src/topics/`. Satu file berisi satu topik:
 ```js
 export default {
   id: 'nama-topik',               // huruf kecil dan tanda hubung, dipakai di URL (#nama-topik)
-  subject: 'fisika',              // fisika | kimia | biologi | aerospace
+  subject: 'fisika',              // fisika | kimia | biologi | aerospace | coding
   title: 'Judul Topik',
-  tags: ['energi', 'industri'],   // sehari-hari | industri | energi | keberlanjutan
+  tags: ['energi', 'industri'],   // sehari-hari | industri | energi | keberlanjutan | web
   summary: 'Ringkasan satu kalimat.',
   story: '<p>Cerita atau studi kasus (HTML).</p>',
   concept: 'Rumus utama (HTML)',
