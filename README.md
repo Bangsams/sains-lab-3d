@@ -1,6 +1,6 @@
 # Sams Lab
 
-Aplikasi web pembelajaran **Fisika, Kimia, Biologi, Teknik Roket & Antariksa, dan Coding & Cloud**. Soal-soalnya berangkat dari kehidupan sehari-hari, industri, energi, dan keberlanjutan di Indonesia.
+Aplikasi web pembelajaran **STEM** (Sains, Teknologi, Engineering, Matematika): **Fisika, Kimia, Biologi, Teknik Roket & Antariksa, Coding & Cloud, Teknik Industri, Semikonduktor & Chip, dan Keamanan Siber**. Pengguna masuk dengan **akun Google**, dan progres serta riwayat soal tersimpan per akun. Soal-soalnya berangkat dari kehidupan sehari-hari, industri, energi, dan keberlanjutan di Indonesia.
 
 Setiap topik berisi:
 
@@ -15,19 +15,41 @@ Setiap topik berisi:
 | Biologi | Fotosintesis Hutan Kota · Mikroalga untuk Biofuel · Fermentasi Bioetanol Tebu |
 | Teknik Roket | Persamaan Roket Tsiolkovsky · Orbit Satelit dan Internet · Gaya Dorong dan Lepas Landas |
 | Coding & Cloud | Membuat Kode Mesin Penilai Otomatis · Konfigurasi & Deploy ke Vercel · Integrasi Google Sheets & Drive API · API Unduhan PDF Bertahap |
+| Teknik Industri | Rantai Pasok & Persediaan (EOQ) · Pengendalian Kualitas (SPC & Cpk) · Perencanaan & Pengendalian Produksi (PPIC) |
+| Semikonduktor | Pembuatan Chip: Wafer, Die & Yield · Cara Kerja Transistor MOSFET · Fotolitografi |
+| Keamanan Siber | Kekuatan Kata Sandi & Hashing · SQL Injection & Validasi Input · Audit Jaringan: Pemindaian Port & Firewall (semua dengan Lab Kode + uji keamanan otomatis) |
+
+Setiap soal berlabel **S / T / E / M**, dan setiap topik punya keempat jenis soal. Soal STEM tambahan untuk topik lama ada di `src/topics/stem-extra.js`.
+
+Di beranda, setiap bidang tampil sebagai dropdown yang bisa dibuka-tutup, dan kepala situs punya **Menu belajar** untuk lompat langsung ke topik mana pun.
 
 Topik Coding & Cloud memakai studi kasus **Datmin Automation APP** (monitoring & simulasi keadilan penilaian Statistika 2): struktur kode, `vercel.json`, environment variable, service account Google, kuota API, dan pengunduhan PDF per potongan.
 
 Setiap topik Coding & Cloud juga punya **Lab Kode**: IDE mini (nomor baris, pewarnaan sintaks, konsol, maksimal 100 baris) yang berisi potongan **kode asli** proyek penilaian otomatis, beserta tantangan untuk diubah dan dijalankan. Kode dijalankan di iframe sandbox tanpa akses jaringan. Server, Google API, dan tanda tangan RSA diganti tiruan. Kode lab ada di `src/labs/*.code.js` (dibuat dari sumber asli) dan `src/labs/*.js` (tantangan + server tiruan), sedangkan mesin IDE ada di `src/lib/ide.js`.
 
+## Akun Google & riwayat soal
+
+- Frontend memakai **Google Identity Services** (tombol "Sign in with Google").
+- `api/session.js` memverifikasi ID token Google lalu membuat cookie sesi HttpOnly bertanda tangan HMAC.
+- `api/progress.js` menyimpan progres dan riwayat jawaban sebagai satu file JSON **privat** per akun di **Vercel Blob** (store `sams-lab-progress`).
+- Progres lama di `localStorage` otomatis dipindahkan ke akun saat pertama kali masuk.
+
+Variabel lingkungan di Vercel:
+
+| Nama | Isi |
+|---|---|
+| `GOOGLE_CLIENT_ID` | OAuth Client ID (Web application) dari Google Cloud Console. Authorized JavaScript origin: `https://sains-lab-3d.vercel.app`. Selama belum diisi, aplikasi berjalan dalam mode tamu. |
+| `BLOB_READ_WRITE_TOKEN` | Dibuat otomatis saat Blob store dihubungkan ke proyek. |
+| `SESSION_SECRET` | Opsional. Jika kosong, kunci sesi diturunkan dari token Blob. |
+
 ## Menjalankan secara lokal
 
-Aplikasi ini berupa situs statis tanpa langkah build (three.js dimuat dari CDN lewat import map).
+Situs statis tanpa langkah build (three.js dimuat dari CDN lewat import map), ditambah fungsi di folder `api/`.
 
 ```bash
-npm install        # hanya untuk skrip pemeriksaan
-npm run dev        # buka http://localhost:5173
-npm run check      # validasi semua topik dan soal
+npm install
+npm run dev        # http://localhost:5173 · login lokal tanpa Google, progres disimpan di memori
+npm run check      # validasi semua topik, soal, dan label STEM
 ```
 
 ## Deploy ke Vercel
@@ -43,7 +65,7 @@ Semua konten ada di `src/topics/`. Satu file berisi satu topik:
 ```js
 export default {
   id: 'nama-topik',               // huruf kecil dan tanda hubung, dipakai di URL (#nama-topik)
-  subject: 'fisika',              // fisika | kimia | biologi | aerospace | coding
+  subject: 'fisika',              // fisika | kimia | biologi | aerospace | coding | industri | semikonduktor | siber
   title: 'Judul Topik',
   tags: ['energi', 'industri'],   // sehari-hari | industri | energi | keberlanjutan | web
   summary: 'Ringkasan satu kalimat.',
@@ -61,8 +83,8 @@ export default {
     return { update(p, t, dt) { /* animasi per frame */ } };
   },
   questions: [
-    { type: 'num', kind: 'Hitung', prompt: '…', preset: { v: 3 }, answer: 6, tolerance: 0.02, unit: 'm', explain: '…' },
-    { type: 'mcq', kind: 'Konsep', prompt: '…', options: ['A', 'B'], answer: 1, explain: '…' },
+    { stem: 'M', type: 'num', kind: 'Hitung', prompt: '…', preset: { v: 3 }, answer: 6, tolerance: 0.02, unit: 'm', explain: '…' },
+    { stem: 'S', type: 'mcq', kind: 'Konsep', prompt: '…', options: ['A', 'B'], answer: 1, explain: '…' },
   ],
 };
 ```
@@ -73,4 +95,4 @@ Lalu daftarkan di `src/topics/index.js` dan jalankan `npm run check`. Fungsi ban
 
 ## Catatan
 
-Angka memakai model yang disederhanakan untuk pembelajaran (misalnya faktor emisi jaringan 0,85 kg CO₂/kWh dan nilai kalor bawah bahan bakar). Progres soal disimpan di `localStorage` peramban.
+Angka memakai model yang disederhanakan untuk pembelajaran (misalnya faktor emisi jaringan 0,85 kg CO₂/kWh dan nilai kalor bawah bahan bakar). Progres soal disimpan per akun Google (atau di `localStorage` saat mode tamu).

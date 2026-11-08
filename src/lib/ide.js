@@ -145,7 +145,8 @@ function prelude() {
 
 function buildDoc(lab, code) {
   const safe = (s) => s.replace(/<\/script/gi, '<\\/script');
-  const setup = lab.setup ? `(${lab.setup.toString()})(globalThis);` : '';
+  // setup boleh satu fungsi atau daftar fungsi; masing-masing dijalankan di iframe lewat toString()
+  const setup = [].concat(lab.setup || []).map((f) => `(${f.toString()})(globalThis);`).join('\n');
   const head = '<!doctype html><meta charset="utf-8">'
     + '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; script-src \'unsafe-inline\'">'
     + `<script>(${prelude.toString()})();\n${safe(setup)}<\/script>\n<script>\n`;

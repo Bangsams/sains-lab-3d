@@ -9,10 +9,10 @@ const out = await build({
   plugins: [{ name: 'stub-three', setup(b) { b.onResolve({ filter: /^three/ }, () => ({ path: 'three', namespace: 'stub' })); b.onLoad({ filter: /.*/, namespace: 'stub' }, () => ({ contents: 'export default {}; export const MeshStandardMaterial = class {};' })); } }],
 });
 const mod = await import('data:text/javascript;base64,' + Buffer.from(out.outputFiles[0].text).toString('base64'));
-const { TOPICS, SUBJECTS, TAGS } = mod;
+const { TOPICS, SUBJECTS, TAGS, GROUPS, STEM } = mod;
 const errors = [];
 const ids = new Set();
-const files = readdirSync('src/topics').filter((f) => f !== 'index.js');
+const files = readdirSync('src/topics').filter((f) => f !== 'index.js' && f !== 'stem-extra.js');
 if (files.length !== TOPICS.length) errors.push(`Ada ${files.length} file topik tetapi ${TOPICS.length} terdaftar di index.js`);
 for (const t of TOPICS) {
   const where = `[${t.id}]`;
@@ -48,7 +48,10 @@ for (const t of TOPICS) {
     if (q.type === 'mcq' && !(q.answer >= 0 && q.answer < q.options.length)) errors.push(`${w}: indeks jawaban salah`);
     if (q.type === 'num' && !(Number.isFinite(q.answer) && q.tolerance >= 0)) errors.push(`${w}: jawaban/toleransi angka tidak valid`);
     if (!q.explain) errors.push(`${w}: pembahasan kosong`);
+    if (!STEM[q.stem]) errors.push(`${w}: label STEM (S/T/E/M) wajib diisi`);
   });
 }
+Object.keys(SUBJECTS).forEach((k) => GROUPS.some((g) => g.subjects.includes(k)) || errors.push(`bidang ${k} belum masuk GROUPS`));
+TOPICS.forEach((t) => { const have = new Set(t.questions.map((q) => q.stem)); ['S', 'T', 'E', 'M'].forEach((k) => have.has(k) || errors.push(`[${t.id}] belum punya soal ${STEM[k].name}`)); });
 if (errors.length) { console.error(errors.join('\n')); process.exit(1); }
 console.log(`OK: ${TOPICS.length} topik, ${TOPICS.reduce((n, t) => n + t.questions.length, 0)} soal, ${TOPICS.filter((t) => t.lab).length} lab kode.`);
