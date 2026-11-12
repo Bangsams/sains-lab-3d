@@ -54,6 +54,7 @@ const pdf = await pdfjsLib.getDocument({ data: out }).promise;</code></pre>
         ['B', 'Kecepatan unduh', 'Mbps'],
       ],
     },
+    {"f":"MB/s = Mbps / 8","meaning":"Laju jaringan ditulis dalam megabit per detik; 8 bit = 1 byte.","symbols":[["Mbps","Megabit per detik","Mbit/s"]]},
   ],
   params: [
     { key: 'S', label: 'Ukuran PDF', min: 0.5, max: 40, step: 0.5, value: 12, unit: 'MB' },

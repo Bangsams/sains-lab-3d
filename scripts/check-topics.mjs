@@ -2,6 +2,7 @@
 // three.js tidak dimuat; hanya data dan fungsi compute yang diuji.
 import { readdirSync, readFileSync } from 'node:fs';
 import { build } from 'esbuild';
+import { PARTS, boardFrom, runner } from '../src/lib/circuit.js';
 
 const out = await build({
   stdin: { contents: "export * from './src/topics/index.js';", resolveDir: '.', loader: 'js' },
@@ -31,6 +32,24 @@ for (const t of TOPICS) {
     if (n > 100) errors.push(`${where} Lab Kode ${n} baris, maksimal 100`);
     if (!t.lab.file || !t.lab.tasks?.length || !t.lab.source) errors.push(`${where} lab: file, tasks, dan source wajib diisi`);
   }
+  if (t.wiring) {
+    for (const task of t.wiring.tasks) {
+      const w = `${where} lab rangkaian "${task.id}"`;
+      const ids = new Set(task.parts.map((p) => p.id));
+      task.parts.forEach((p) => PARTS[p.type] || errors.push(`${w}: komponen ${p.type} tidak dikenal`));
+      for (const s of task.steps) for (const k of [s.a, s.b]) {
+        const [cid, tid] = k.split('.');
+        const part = task.parts.find((p) => p.id === cid);
+        if (!ids.has(cid) || !PARTS[part.type].terminals.some((x) => x.id === tid)) errors.push(`${w}: terminal ${k} tidak ada`);
+      }
+      // rangkaian contoh harus lulus, papan kosong harus gagal
+      const sol = boardFrom({ parts: task.parts, solution: task.steps.map((s) => [s.a, s.b]) });
+      const good = task.check(runner(sol, { cmd: true }), sol);
+      if (!good.ok) errors.push(`${w}: rangkaian contoh tidak lulus pemeriksaan: ${good.msg}`);
+      const empty = { comps: sol.comps, wires: [] };
+      if (task.check(runner(empty, { cmd: true }), empty).ok) errors.push(`${w}: papan tanpa kabel ikut lulus`);
+    }
+  }
   const keys = new Set(t.params.map((p) => p.key));
   for (const p of t.params) {
     if (p.type !== 'select' && (p.value < p.min || p.value > p.max)) errors.push(`${where} nilai awal ${p.key} di luar rentang`);
@@ -54,4 +73,4 @@ for (const t of TOPICS) {
 Object.keys(SUBJECTS).forEach((k) => GROUPS.some((g) => g.subjects.includes(k)) || errors.push(`bidang ${k} belum masuk GROUPS`));
 TOPICS.forEach((t) => { const have = new Set(t.questions.map((q) => q.stem)); ['S', 'T', 'E', 'M'].forEach((k) => have.has(k) || errors.push(`[${t.id}] belum punya soal ${STEM[k].name}`)); });
 if (errors.length) { console.error(errors.join('\n')); process.exit(1); }
-console.log(`OK: ${TOPICS.length} topik, ${TOPICS.reduce((n, t) => n + t.questions.length, 0)} soal, ${TOPICS.filter((t) => t.lab).length} lab kode.`);
+console.log(`OK: ${TOPICS.length} topik, ${TOPICS.reduce((n, t) => n + t.questions.length, 0)} soal, ${TOPICS.filter((t) => t.lab).length} lab kode, ${TOPICS.reduce((n, t) => n + (t.wiring?.tasks.length || 0), 0)} percobaan lab rangkaian.`);

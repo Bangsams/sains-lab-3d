@@ -1,6 +1,6 @@
 # Sams Lab
 
-Aplikasi web pembelajaran **STEM** (Sains, Teknologi, Engineering, Matematika): **Fisika, Kimia, Biologi, Teknik Roket & Antariksa, Coding & Cloud, Teknik Industri, Semikonduktor & Chip, dan Keamanan Siber**. Pengguna masuk dengan **akun Google**, dan progres serta riwayat soal tersimpan per akun. Soal-soalnya berangkat dari kehidupan sehari-hari, industri, energi, dan keberlanjutan di Indonesia.
+Aplikasi web pembelajaran **STEM** (Sains, Teknologi, Engineering, Matematika): **Fisika, Kimia, Biologi, Teknik Roket & Antariksa, Coding & Cloud, Teknik Industri, Teknik Listrik, Semikonduktor & Chip, Keamanan Siber, Ekonomi Mikro & Makro, dan Pasar Keuangan**. Pengguna masuk dengan **akun Google**, dan progres serta riwayat soal tersimpan per akun. Soal-soalnya berangkat dari kehidupan sehari-hari, industri, energi, dan keberlanjutan di Indonesia.
 
 Setiap topik berisi:
 
@@ -15,7 +15,10 @@ Setiap topik berisi:
 | Biologi | Fotosintesis Hutan Kota · Mikroalga untuk Biofuel · Fermentasi Bioetanol Tebu |
 | Teknik Roket | Persamaan Roket Tsiolkovsky · Orbit Satelit dan Internet · Gaya Dorong dan Lepas Landas |
 | Coding & Cloud | Membuat Kode Mesin Penilai Otomatis · Konfigurasi & Deploy ke Vercel · Integrasi Google Sheets & Drive API · API Unduhan PDF Bertahap |
-| Teknik Industri | Rantai Pasok & Persediaan (EOQ) · Pengendalian Kualitas (SPC & Cpk) · Perencanaan & Pengendalian Produksi (PPIC) |
+| Teknik Industri | Rantai Pasok & Persediaan (EOQ) · Pengendalian Kualitas (SPC & Cpk) · Perencanaan & Pengendalian Produksi (PPIC) · OEE & Pengukuran Waktu Kerja · Peramalan Permintaan · Teori Antrian |
+| Teknik Listrik | Rangkaian Lampu Seri & Paralel · Transmisi Tegangan Tinggi & Trafo · Motor Listrik & Kendali IoT (semua dengan Lab Rangkaian seret & sambung) |
+| Ekonomi | Permintaan, Penawaran & Harga (mikro) · PDB, Inflasi & Multiplier (makro) |
+| Pasar Keuangan | Memilih Aset Terbaik (rata-rata, σ, Sharpe, CAPM, CAGR) · Analisis Fundamental Saham (EPS, PER, PBV, ROE, DER, margin of safety) |
 | Semikonduktor | Pembuatan Chip: Wafer, Die & Yield · Cara Kerja Transistor MOSFET · Fotolitografi |
 | Keamanan Siber | Kekuatan Kata Sandi & Hashing · SQL Injection & Validasi Input · Audit Jaringan: Pemindaian Port & Firewall (semua dengan Lab Kode + uji keamanan otomatis) |
 
@@ -26,6 +29,14 @@ Di beranda, setiap bidang tampil sebagai dropdown yang bisa dibuka-tutup, dan ke
 Topik Coding & Cloud memakai studi kasus **Datmin Automation APP** (monitoring & simulasi keadilan penilaian Statistika 2): struktur kode, `vercel.json`, environment variable, service account Google, kuota API, dan pengunduhan PDF per potongan.
 
 Setiap topik Coding & Cloud juga punya **Lab Kode**: IDE mini (nomor baris, pewarnaan sintaks, konsol, maksimal 100 baris) yang berisi potongan **kode asli** proyek penilaian otomatis, beserta tantangan untuk diubah dan dijalankan. Kode dijalankan di iframe sandbox tanpa akses jaringan. Server, Google API, dan tanda tangan RSA diganti tiruan. Kode lab ada di `src/labs/*.code.js` (dibuat dari sumber asli) dan `src/labs/*.js` (tantangan + server tiruan), sedangkan mesin IDE ada di `src/lib/ide.js`.
+
+## Lab Rangkaian (Teknik Listrik)
+
+Topik Teknik Listrik punya **Lab Rangkaian**: komponen (baterai, PLN 220 V, generator 11 kV, saklar, MCB/PMT, lampu, motor, trafo, saluran transmisi, modul step-down, ESP32, relay) diseret dari kotak komponen ke papan, lalu kabel ditarik dari terminal ke terminal (atau ketuk terminal pertama lalu terminal kedua). Setiap perubahan langsung disimulasikan dengan analisis nodal (`src/lib/circuit.js`): lampu menyala sesuai daya, motor berputar, MCB trip saat arus berlebih, lampu putus jika tegangannya terlalu tinggi, dan GPIO ESP32 memberi peringatan jika arusnya > 40 mA. Panel **Petunjuk wiring** mencentang sambungan yang sudah benar, tombol *Tunjukkan langkah berikutnya* menyorot terminal yang harus disambung, dan *Periksa rangkaian* menguji rangkaian dengan beberapa keadaan (saklar ON/OFF, perintah IoT ON/OFF, satu lampu putus). UI lab ada di `src/lib/wiring.js`; percobaan didefinisikan di properti `wiring` setiap topik. `npm run check` memastikan rangkaian contoh setiap percobaan lulus dan papan kosong gagal.
+
+## Aturan soal
+
+Setiap soal hitungan hanya boleh memakai rumus yang tercantum di `equations` topiknya (tampil di "Apa arti rumus ini?" dan "Rumus dan artinya"), termasuk konversi satuan dan rumus bantu seperti n = m/Mr.
 
 ## Akun Google & riwayat soal
 
@@ -65,9 +76,9 @@ Semua konten ada di `src/topics/`. Satu file berisi satu topik:
 ```js
 export default {
   id: 'nama-topik',               // huruf kecil dan tanda hubung, dipakai di URL (#nama-topik)
-  subject: 'fisika',              // fisika | kimia | biologi | aerospace | coding | industri | semikonduktor | siber
+  subject: 'fisika',              // fisika | kimia | biologi | aerospace | coding | industri | listrik | semikonduktor | siber | ekonomi | keuangan
   title: 'Judul Topik',
-  tags: ['energi', 'industri'],   // sehari-hari | industri | energi | keberlanjutan | web
+  tags: ['energi', 'industri'],   // sehari-hari | industri | energi | keberlanjutan | web | ekonomi
   summary: 'Ringkasan satu kalimat.',
   story: '<p>Cerita atau studi kasus (HTML).</p>',
   concept: 'Rumus utama (HTML)',

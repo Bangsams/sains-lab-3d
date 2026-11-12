@@ -90,7 +90,10 @@ export default {
           "V (volt)"
         ]
       ]
-    }
+    },
+    {"f":"Q = I · t = n(H₂) · 2F","meaning":"Muatan listrik total = arus × waktu. Setiap mol H₂ butuh 2 mol elektron (2F coulomb). Jadi waktu yang dibutuhkan t = Q / I.","symbols":[["Q","Muatan listrik","C (coulomb)"]]},
+    {"f":"m = n · M &nbsp;·&nbsp; M(H₂) = 2,016 g/mol","meaning":"Mengubah jumlah mol menjadi massa: mol dikali massa molar.","symbols":[["m","Massa zat","g"],["n","Jumlah zat","mol"],["M","Massa molar","g/mol"]]},
+    {"f":"E = V · Q &nbsp;·&nbsp; 1 kWh = 3,6 × 10⁶ J","meaning":"Energi listrik = tegangan sel × muatan yang dialirkan (sama dengan V · I · t).","symbols":[["E","Energi listrik","J atau kWh"]]},
   ],
   params: [
     { key: 'I', label: 'Arus listrik', min: 1, max: 200, step: 1, value: 50, unit: 'A' },

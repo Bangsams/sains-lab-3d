@@ -58,6 +58,8 @@ export default {
         ['M', 'Memori fungsi', 'GB'],
       ],
     },
+    {"f":"t<sub>pp</sub> = 2 · d / v","meaning":"Waktu pulang-pergi sinyal = dua kali jarak dibagi kecepatan rambat di serat optik.","symbols":[["d","Jarak ke server","km"],["v","Kecepatan cahaya di serat optik ≈ 200.000","km/s"]]},
+    {"f":"GB·jam = GB·s / 3600","meaning":"Konversi pemakaian fungsi dari GB-detik ke GB-jam.","symbols":[["3600","Detik dalam satu jam","s"]]},
   ],
   params: [
     { key: 'S', label: 'Ukuran unggahan', min: 1, max: 200, step: 1, value: 25, unit: 'MB' },

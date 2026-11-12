@@ -31,6 +31,7 @@ export default {
       f: 'Biaya per chip baik = Biaya wafer / (DPW · Y)', meaning: 'Biaya wafer dibagi rata hanya ke die yang berhasil.',
       symbols: [['Biaya wafer', 'Biaya memproses satu wafer', 'USD']],
     },
+    {"f":"1 cm² = 100 mm² &nbsp;·&nbsp; chip baik = ⌊DPW · Y⌋","meaning":"D₀ biasanya per cm² sehingga luas die harus diubah ke cm². Jumlah chip yang berfungsi = die per wafer × yield, dibulatkan ke bawah.","symbols":[["⌊ ⌋","Pembulatan ke bawah","fungsi"]]},
   ],
   params: [
     { key: 'd', label: 'Diameter wafer', min: 150, max: 450, step: 50, value: 300, unit: 'mm' },

@@ -73,7 +73,8 @@ export default {
           "ton"
         ]
       ]
-    }
+    },
+    {"f":"m₀ / m<sub>f</sub> = e<sup>Δv / (I<sub>sp</sub> · g₀)</sup> &nbsp;·&nbsp; fraksi propelan = 1 − m<sub>f</sub>/m₀","meaning":"Persamaan roket dibalik: jika Δv yang dibutuhkan diketahui, rasio massa yang diperlukan dapat dihitung. Fraksi propelan menunjukkan bagian massa awal yang berupa bahan bakar.","symbols":[["e","Bilangan Euler ≈ 2,718","tanpa satuan"]]},
   ],
   params: [
     { key: 'isp', label: 'Impuls spesifik Isp', min: 200, max: 460, step: 1, value: 311, unit: 's' },

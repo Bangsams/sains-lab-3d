@@ -30,6 +30,7 @@ export default {
       f: 'TC = (D/Q)·S + (Q/2)·H', meaning: 'Biaya total persediaan setahun = banyaknya pesanan × biaya pesan + rata-rata stok × biaya simpan.',
       symbols: [['TC', 'Biaya persediaan total setahun', 'Rp'], ['D/Q', 'Banyaknya pesanan per tahun', 'kali'], ['Q/2', 'Rata-rata stok di gudang', 'unit']],
     },
+    { f: 'T = 365 / (D/Q)', meaning: 'Jarak antar pesanan: jumlah hari setahun dibagi banyaknya pesanan per tahun.', symbols: [['T', 'Jarak antar pesanan', 'hari']] },
   ],
   params: [
     { key: 'D', label: 'Permintaan per tahun', min: 1000, max: 50000, step: 100, value: 12000, unit: 'unit' },
@@ -133,5 +134,12 @@ export default {
       options: ['Menjadi dua kali', 'Menjadi setengahnya', 'Menjadi sekitar 0,71 kali (1/√2): pesan lebih sedikit tetapi lebih sering', 'Tidak berubah'], answer: 2,
       explain: 'Q* ∝ 1/√H. Jika H dikali 2, Q* dikali 1/√2 ≈ 0,707. Coba geser slider biaya simpan ke 12.000 dan bandingkan.',
     },
+    {"stem":"M","type":"num","kind":"Hitung","prompt":"Toko bangunan menjual 14.600 sak semen per tahun. Biaya sekali pesan Rp 400.000 dan biaya simpan Rp 4.000 per sak per tahun. Berapa EOQ-nya?","preset":{"D":14600,"S":400000,"H":4000},"answer":1708.8007490635061,"tolerance":0.01,"unit":"sak","explain":"Q* = √(2 × 14.600 × 400.000 / 4.000) = √2.920.000 ≈ 1.709 sak."},
+    {"stem":"M","type":"num","kind":"Hitung","prompt":"Dari data gudang Bekasi (D = 12.000, EOQ ≈ 1.414 unit), berapa hari jarak antar pesanan? (1 tahun = 365 hari)","preset":{"D":12000,"S":500000,"H":6000},"answer":43.01566252218164,"tolerance":0.01,"unit":"hari","explain":"Banyak pesanan = D/Q = 12.000/1.414,2 ≈ 8,49 kali per tahun. Jarak = 365/8,49 ≈ 43 hari."},
+    {"stem":"E","type":"num","kind":"Studi kasus","prompt":"Manajer gudang Bekasi lebih suka memesan 3.000 unit sekaligus (D = 12.000, S = Rp 500.000, H = Rp 6.000). Berapa rupiah biaya total per tahun lebih mahal dibanding memesan sebanyak EOQ?","preset":{"D":12000,"S":500000,"H":6000},"answer":2514718.6257614307,"tolerance":0.01,"unit":"Rp","explain":"TC(3.000) = (12.000/3.000) × 500.000 + (3.000/2) × 6.000 = 2.000.000 + 9.000.000 = Rp 11.000.000. TC(EOQ) ≈ Rp 8.485.281. Selisih ≈ Rp 2.514.719 per tahun."},
+    {"stem":"M","type":"num","kind":"Hitung","prompt":"Toko semen tadi (D = 14.600 sak/tahun) menunggu kiriman 7 hari dan menyimpan stok pengaman 150 sak. Pada sisa stok berapa ia harus memesan lagi?","preset":{"D":14600,"L":7,"ss":150},"answer":430,"tolerance":0.001,"unit":"sak","explain":"d = 14.600/365 = 40 sak/hari. ROP = 40 × 7 + 150 = 430 sak."},
+    {"stem":"M","type":"mcq","kind":"Hitung","prompt":"Permintaan tahunan naik 4 kali lipat, sedangkan S dan H tetap. EOQ menjadi …","preset":{"D":48000},"options":["4 kali","2 kali","16 kali","Tetap"],"answer":1,"explain":"Q* ∝ √D. √4 = 2, jadi EOQ menjadi 2 kali. Jumlah pesanan per tahun (D/Q) juga naik 2 kali."},
+    {"stem":"S","type":"mcq","kind":"Konsep","prompt":"Asumsi apa dalam model EOQ dasar yang paling sering tidak terpenuhi di dunia nyata?","options":["Biaya pesan tetap per pesanan","Permintaan konstan dan pasti sepanjang tahun","Barang dapat disimpan","Ada pemasok"],"answer":1,"explain":"EOQ menganggap pemakaian harian selalu sama. Permintaan nyata naik-turun (musim, promosi), sehingga perlu safety stock dan peninjauan berkala."},
+    {"stem":"T","type":"mcq","kind":"Teknologi","prompt":"Dalam Vendor Managed Inventory (VMI), siapa yang memutuskan kapan dan berapa banyak barang dikirim ke gudang pembeli?","options":["Pembeli, lewat telepon","Pemasok, berdasarkan data stok dan penjualan pembeli yang dibagikan secara elektronik (EDI/API)","Bank","Kurir"],"answer":1,"explain":"Pemasok melihat data stok pembeli secara langsung lalu mengisi ulang sebelum mencapai ROP. Ini juga meredam efek cambuk karena pemasok melihat permintaan nyata."},
   ],
 };

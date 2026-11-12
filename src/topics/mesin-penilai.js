@@ -64,6 +64,8 @@ lib/auth.js, lib/stat-google.js</code></pre>
         ['Δ<sub>variasi</sub>', 'Penurunan nilai akibat cara menulis, bukan isi', 'poin'],
       ],
     },
+    {"f":"Poin rubrik (lengkap / kurang / salah / tidak menjawab)","meaning":"Hipotesis 10 / 8 / 5 / 3 · t-hitung 25 / 20 / 13 / 8 · Signifikansi 25 / 20 / 13 / 8 · Kesimpulan 40 / 35 / 20 / 13. \"Benar tanpa screenshot\" dinilai pada tingkat kurang lengkap.","symbols":[["poin<sub>salah,i</sub>","Poin tingkat \"salah\" setiap butir","poin"]]},
+    {"f":"Akurasi = (jumlah cocok / jumlah uji) × 100%","meaning":"Persentase berkas yang nilainya sama dengan penilai manusia.","symbols":[["jumlah cocok","Berkas yang nilainya sama","berkas"]]},
   ],
   params: [
     { key: 'hip', label: 'Butir 1 · Hipotesis H0/H1', type: 'select', value: 0, options: levelOpts(RUBRIK[0], ['Benar & lengkap', 'Kurang lengkap', 'Salah', 'Tidak menjawab']) },

@@ -24,6 +24,16 @@ import fotolitografi from './fotolitografi.js';
 import kataSandi from './kata-sandi.js';
 import injeksiSql from './injeksi-sql.js';
 import jaringanFirewall from './jaringan-firewall.js';
+import oeeStudiKerja from './oee-studi-kerja.js';
+import peramalanPermintaan from './peramalan-permintaan.js';
+import antrianLayanan from './antrian-layanan.js';
+import keseimbanganPasar from './keseimbangan-pasar.js';
+import pdbInflasi from './pdb-inflasi.js';
+import pilihAset from './pilih-aset.js';
+import analisisFundamental from './analisis-fundamental.js';
+import rangkaianLampu from './rangkaian-lampu.js';
+import transmisiTeganganTinggi from './transmisi-tegangan-tinggi.js';
+import motorIot from './motor-iot.js';
 import { LABELS, EXTRA } from './stem-extra.js';
 
 export const SUBJECTS = {
@@ -35,6 +45,9 @@ export const SUBJECTS = {
   industri: { name: 'Teknik Industri', short: 'TI' },
   semikonduktor: { name: 'Semikonduktor & Chip', short: 'SEM' },
   siber: { name: 'Keamanan Siber', short: 'SIB' },
+  ekonomi: { name: 'Ekonomi Mikro & Makro', short: 'EKO' },
+  keuangan: { name: 'Pasar Keuangan & Investasi', short: 'FIN' },
+  listrik: { name: 'Teknik Listrik', short: 'LIS' },
 };
 
 // Pengelompokan bidang untuk menu dropdown di beranda dan kepala situs.
@@ -42,6 +55,8 @@ export const GROUPS = [
   { name: 'Sains dasar', subjects: ['fisika', 'kimia', 'biologi'] },
   { name: 'Teknologi & rekayasa', subjects: ['aerospace', 'coding'] },
   { name: 'Teknik industri', subjects: ['industri'] },
+  { name: 'Teknik listrik', subjects: ['listrik'] },
+  { name: 'Ekonomi & keuangan', subjects: ['ekonomi', 'keuangan'] },
   { name: 'Semikonduktor', subjects: ['semikonduktor'] },
   { name: 'Keamanan siber', subjects: ['siber'] },
 ];
@@ -60,6 +75,7 @@ export const TAGS = {
   energi: 'Energi',
   keberlanjutan: 'Keberlanjutan',
   web: 'Aplikasi web',
+  ekonomi: 'Ekonomi & keuangan',
 };
 
 const ALL = [
@@ -68,7 +84,9 @@ const ALL = [
   fotosintesis, mikroalga, bioetanol,
   persamaanRoket, orbitSatelit, gayaDorong,
   mesinPenilai, deployVercel, integrasiApi, unduhBertahap,
-  rantaiPasok, kendaliMutu, ppic,
+  rantaiPasok, kendaliMutu, ppic, oeeStudiKerja, peramalanPermintaan, antrianLayanan,
+  rangkaianLampu, transmisiTeganganTinggi, motorIot,
+  keseimbanganPasar, pdbInflasi, pilihAset, analisisFundamental,
   fabrikasiWafer, transistorMosfet, fotolitografi,
   kataSandi, injeksiSql, jaringanFirewall,
 ];

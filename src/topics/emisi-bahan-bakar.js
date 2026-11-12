@@ -74,7 +74,8 @@ export default {
           "g/mol"
         ]
       ]
-    }
+    },
+    {"f":"m = ρ · V","meaning":"Mengubah volume bahan bakar (liter) menjadi massa (kg) memakai massa jenisnya.","symbols":[["ρ","Massa jenis bensin ≈ 0,74","kg/L"],["V","Volume bahan bakar","L"]]},
   ],
   params: [
     { key: 'fuel', label: 'Bahan bakar', type: 'select', value: 1, options: FUELS.map((f, i) => ({ value: i, label: `${f.name}, ${f.f}` })) },

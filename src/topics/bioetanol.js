@@ -69,7 +69,9 @@ export default {
           "kg/L"
         ]
       ]
-    }
+    },
+    {"f":"n = m / Mr &nbsp;·&nbsp; m = n · Mr","meaning":"Mengubah massa menjadi mol dan sebaliknya. Mr glukosa = 180 (180,16), etanol = 46 (46,07), CO₂ = 44.","symbols":[["n","Jumlah zat","mol"],["Mr","Massa molekul relatif","g/mol"]]},
+    {"f":"n<sub>etanol</sub> = n<sub>CO₂</sub> = 2 · n<sub>glukosa</sub>","meaning":"Dari koefisien reaksi: 1 mol glukosa menghasilkan 2 mol etanol dan 2 mol CO₂.","symbols":[["n<sub>glukosa</sub>","Mol glukosa yang difermentasi","mol"]]},
   ],
   params: [
     { key: 'kg', label: 'Glukosa', min: 1, max: 1000, step: 1, value: 500, unit: 'kg' },

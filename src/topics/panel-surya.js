@@ -77,7 +77,10 @@ export default {
           "tanpa satuan"
         ]
       ]
-    }
+    },
+    {"f":"cos θ = sin(α + β)","meaning":"Faktor sudut dihitung dari elevasi matahari dan kemiringan panel. Sinar tegak lurus (faktor = 1) saat α + β = 90°.","symbols":[["α","Elevasi matahari di atas cakrawala","°"],["β","Kemiringan panel terhadap lantai","°"]]},
+    {"f":"E<sub>tahun</sub> = E<sub>harian</sub> × 365 &nbsp;·&nbsp; CO₂ = E<sub>tahun</sub> × FE","meaning":"Energi setahun = energi harian dikali jumlah hari. Emisi yang dihindari = energi yang tidak lagi diambil dari PLN dikali faktor emisi jaringan.","symbols":[["E<sub>tahun</sub>","Energi listrik setahun","kWh"],["FE","Faktor emisi jaringan listrik (≈0,85)","kg CO₂/kWh"],["CO₂","Emisi yang dihindari","kg"]]},
+    {"f":"n<sub>min</sub> = ⌈E<sub>target</sub> / E<sub>1 panel</sub>⌉","meaning":"Jumlah panel minimum = kebutuhan energi dibagi energi satu panel, lalu dibulatkan ke atas.","symbols":[["E<sub>1 panel</sub>","A · η · PSH · PR untuk satu panel","kWh/hari"],["⌈ ⌉","Pembulatan ke atas","fungsi"]]},
   ],
   params: [
     { key: 'G', label: 'Iradiasi matahari', min: 100, max: 1100, step: 10, value: 800, unit: 'W/m²' },

@@ -66,7 +66,10 @@ export default {
           "tanpa satuan"
         ]
       ]
-    }
+    },
+    {"f":"dN/dt = r · N · (1 − N/K)","meaning":"Laju pertumbuhan model logistik. Saat N masih kecil, faktor (1 − N/K) ≈ 1 sehingga tumbuh cepat. Saat N mendekati K, faktor itu mendekati 0 sehingga pertumbuhan melambat.","symbols":[["dN/dt","Laju pertambahan biomassa","g/L per hari"]]},
+    {"f":"N(t) ≈ N₀ · e<sup>rt</sup> (fase eksponensial)","meaning":"Selama N masih jauh di bawah K, biomassa tumbuh berlipat seperti bunga majemuk.","symbols":[["e<sup>rt</sup>","Faktor pelipatan setelah t hari","kali"]]},
+    {"f":"m<sub>biomassa</sub> = X · V &nbsp;·&nbsp; m<sub>lipid</sub> = f<sub>lipid</sub> · m<sub>biomassa</sub>","meaning":"Massa alga yang dipanen = kepadatan × volume reaktor. Massa minyak (lipid) = persentase lipid × massa alga.","symbols":[["X","Kepadatan biomassa","g/L"],["V","Volume reaktor","L"],["f<sub>lipid</sub>","Kandungan lipid","%"]]},
   ],
   params: [
     { key: 'r', label: 'Laju pertumbuhan r', min: 0.1, max: 1.5, step: 0.01, value: 0.6, unit: '/hari' },

@@ -58,6 +58,7 @@ async function token() {
         ['R<sub>cache</sub>', 'Baca per menit setelah ada cache', 'baca/menit'],
       ],
     },
+    {"f":"U<sub>maks</sub> = kuota / [(60 / Δt) · (1 + N)]","meaning":"Rumus R dibalik: jumlah halaman terbanyak yang boleh terbuka agar baca per menit tidak melebihi kuota.","symbols":[["kuota","Batas baca Google Sheets","baca/menit"]]},
   ],
   params: [
     { key: 'U', label: 'Dashboard yang dibuka', min: 1, max: 40, step: 1, value: 5, unit: 'halaman' },

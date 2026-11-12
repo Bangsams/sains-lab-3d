@@ -1,5 +1,6 @@
 import { Stage } from './lib/engine.js';
 import { mountIde } from './lib/ide.js';
+import { mountWiring } from './lib/wiring.js';
 import { account, initAccount, solvedCount, isSolved, recordAnswer, logout, mountGoogleButton } from './lib/account.js';
 import { TOPICS, SUBJECTS, TAGS, GROUPS, STEM } from './topics/index.js';
 
@@ -8,6 +9,7 @@ const app = $('#app');
 const fmt = (v, d = 0) => Number(v).toLocaleString('id-ID', { minimumFractionDigits: d, maximumFractionDigits: d });
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 const IDE_KEY = 'sainslab3d.v1.ide';
+const WIRE_KEY = 'sainslab3d.v1.wiring';
 
 // ---------- penyimpanan kecil di peramban: bidang yang sedang dibuka di beranda ----------
 const ui = (() => { try { return JSON.parse(localStorage.getItem('sainslab3d.ui')) || {}; } catch { return {}; } })();
@@ -121,7 +123,7 @@ function renderHome() {
     <section class="hero">
       <div class="hero-text">
         <p class="eyebrow">Sains · Teknologi · Engineering · Matematika</p>
-        <h1>Belajar STEM dari panel surya, pabrik, chip, sampai keamanan siber.</h1>
+        <h1>Belajar STEM dari panel surya, pabrik, chip, listrik, pasar, sampai keamanan siber.</h1>
         <p class="lede">${hello}Pilih bidang di bawah untuk membuka daftar topiknya. Setiap topik punya simulasi 3D, studi kasus dari Indonesia, dan soal berlabel S, T, E, atau M.</p>
       </div>
       <dl class="stats">
@@ -131,7 +133,7 @@ function renderHome() {
       </dl>
     </section>
     <section class="filters" aria-label="Saring topik">
-      <label class="field"><span>Cari topik</span><input type="search" id="f-q" placeholder="mis. chip, kualitas, roket" value="${esc(filter.q)}"></label>
+      <label class="field"><span>Cari topik</span><input type="search" id="f-q" placeholder="mis. chip, antrian, saham, motor" value="${esc(filter.q)}"></label>
       <label class="field"><span>Konteks</span>
         <select id="f-tag"><option value="all">Semua konteks</option>${Object.entries(TAGS).map(([k, s]) => `<option value="${k}"${filter.tag === k ? ' selected' : ''}>${esc(s)}</option>`).join('')}</select></label>
       <span class="filter-actions">
@@ -189,7 +191,7 @@ function card(t) {
     <a class="card" href="#${t.id}" data-subject="${t.subject}">
       <h3>${esc(t.title)}</h3>
       <p>${esc(t.summary)}</p>
-      <span class="tags">${t.tags.map((g) => `<span>${TAGS[g]}</span>`).join('')}${t.lab ? '<span class="lab-tag">Lab kode</span>' : ''}</span>
+      <span class="tags">${t.tags.map((g) => `<span>${TAGS[g]}</span>`).join('')}${t.lab ? '<span class="lab-tag">Lab kode</span>' : ''}${t.wiring ? '<span class="lab-tag">Lab rangkaian</span>' : ''}</span>
       <span class="progress" aria-label="${s} dari ${n} soal benar"><span style="width:${(s / n) * 100}%"></span></span>
       <span class="progress-text">${s}/${n} soal benar</span>
     </a>`;
@@ -265,6 +267,7 @@ function renderTopic(t) {
           </details>
           <button type="button" class="ghost" id="reset">Kembalikan nilai awal</button>
           ${t.lab ? '<button type="button" class="primary" data-go="ide">Buka Lab Kode ↓</button>' : ''}
+          ${t.wiring ? '<button type="button" class="primary" data-go="wiring">Buka Lab Rangkaian ↓</button>' : ''}
         </section>
         <section role="tabpanel" id="pane-story" aria-labelledby="tab-story" hidden>
           <div class="story">${t.story}</div>
@@ -272,6 +275,7 @@ function renderTopic(t) {
           <p class="note">${t.conceptNote}</p>
           <button type="button" class="primary" data-go="quiz">Kerjakan soal →</button>
           ${t.lab ? '<button type="button" class="ghost" data-go="ide">Coba kodenya di Lab Kode ↓</button>' : ''}
+          ${t.wiring ? '<button type="button" class="ghost" data-go="wiring">Rakit di Lab Rangkaian ↓</button>' : ''}
         </section>
         <section role="tabpanel" id="pane-quiz" aria-labelledby="tab-quiz" hidden>
           <label class="field stem-filter"><span>Tampilkan soal</span>
@@ -281,7 +285,8 @@ function renderTopic(t) {
         </section>
       </div>
     </div>
-    ${t.lab ? '<section class="ide" id="ide" aria-label="Lab kode"></section>' : ''}`;
+    ${t.lab ? '<section class="ide" id="ide" aria-label="Lab kode"></section>' : ''}
+    ${t.wiring ? '<section class="wiring" id="wiring" aria-label="Lab rangkaian"></section>' : ''}`;
   $('#stage-slot').prepend(stageEl);
   const st = getStage();
   st.paused = false;
@@ -299,6 +304,10 @@ function renderTopic(t) {
   if (t.lab) {
     mountIde($('#ide'), t.lab, `${IDE_KEY}.${t.id}`);
     app.querySelectorAll('[data-go="ide"]').forEach((b) => { b.onclick = () => $('#ide').scrollIntoView({ behavior: 'smooth' }); });
+  }
+  if (t.wiring) {
+    mountWiring($('#wiring'), t.wiring, `${WIRE_KEY}.${t.id}`);
+    app.querySelectorAll('[data-go="wiring"]').forEach((b) => { b.onclick = () => $('#wiring').scrollIntoView({ behavior: 'smooth' }); });
   }
   $('#stem-filter').addEventListener('change', (e) => {
     app.querySelectorAll('.q').forEach((li) => { li.hidden = e.target.value !== 'all' && li.dataset.stem !== e.target.value; });

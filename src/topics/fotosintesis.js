@@ -61,7 +61,11 @@ export default {
           "tanpa satuan"
         ]
       ]
-    }
+    },
+    {"f":"n = m / Mr &nbsp;·&nbsp; m = n · Mr","meaning":"Mengubah massa zat menjadi jumlah mol dan sebaliknya. Mr CO₂ = 44, O₂ = 32, glukosa = 180.","symbols":[["n","Jumlah zat","mol"],["m","Massa zat","g atau kg"],["Mr","Massa molekul relatif","g/mol"]]},
+    {"f":"m<sub>O₂</sub> = m<sub>CO₂</sub> × 32 / 44","meaning":"Dari persamaan reaksi, 6 mol CO₂ diserap dan 6 mol O₂ dilepas (1 : 1). Karena mol sama, massa O₂ = massa CO₂ × (Mr O₂ / Mr CO₂).","symbols":[["32/44","Perbandingan Mr O₂ terhadap Mr CO₂","tanpa satuan"]]},
+    {"f":"Jumlah pohon = ⌈CO₂ total / serapan per pohon⌉","meaning":"Banyaknya pohon yang dibutuhkan = emisi yang ingin diserap dibagi serapan satu pohon, dibulatkan ke atas.","symbols":[["⌈ ⌉","Pembulatan ke atas","fungsi"]]},
+    {"f":"NDVI = (NIR − Merah) / (NIR + Merah)","meaning":"Indeks kehijauan dari citra satelit. Daun sehat menyerap cahaya merah dan memantulkan inframerah dekat, sehingga NDVI mendekati 1.","symbols":[["NIR","Pantulan inframerah dekat","relatif"],["Merah","Pantulan cahaya merah","relatif"]]},
   ],
   params: [
     { key: 'I', label: 'Intensitas cahaya', min: 0, max: 2000, step: 10, value: 1200, unit: 'µmol/m²/s' },

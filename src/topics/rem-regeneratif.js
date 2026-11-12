@@ -68,7 +68,8 @@ export default {
           "m/s²"
         ]
       ]
-    }
+    },
+    {"f":"v<sub>m/s</sub> = v<sub>km/jam</sub> / 3,6 &nbsp;·&nbsp; E<sub>Wh</sub> = E<sub>J</sub> / 3600","meaning":"Konversi satuan: km/jam ke m/s dibagi 3,6; joule ke watt-jam dibagi 3600.","symbols":[["3,6","1 m/s = 3,6 km/jam","faktor"],["3600","1 Wh = 3600 J","J/Wh"]]},
   ],
   params: [
     { key: 'm', label: 'Massa kendaraan', min: 150, max: 15000, step: 50, value: 1800, unit: 'kg' },

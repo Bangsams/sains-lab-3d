@@ -33,6 +33,7 @@ export default {
       f: 't = 2<sup>H</sup> / (2 · laju)', meaning: 'Rata-rata penyerang menemukan sandi setelah mencoba separuh dari semua kemungkinan.',
       symbols: [['t', 'Waktu rata-rata brute force', 'detik'], ['laju', 'Tebakan per detik (bergantung perangkat & fungsi hash)', 'tebakan/s']],
     },
+    {"f":"Kombinasi = N<sup>L</sup> = 2<sup>H</sup>","meaning":"Jumlah semua kemungkinan sandi. Menambah satu karakter mengalikan kombinasi dengan N.","symbols":[["N<sup>L</sup>","N dipangkatkan L","kemungkinan"]]},
   ],
   params: [
     { key: 'L', label: 'Panjang kata sandi', min: 4, max: 24, step: 1, value: 8, unit: 'karakter' },
