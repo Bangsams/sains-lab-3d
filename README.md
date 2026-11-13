@@ -1,6 +1,6 @@
 # Sams Lab
 
-Aplikasi web pembelajaran **STEM** (Sains, Teknologi, Engineering, Matematika): **Fisika, Kimia, Biologi, Teknik Roket & Antariksa, Coding & Cloud, Teknik Industri, Teknik Listrik, Semikonduktor & Chip, Keamanan Siber, Ekonomi Mikro & Makro, dan Pasar Keuangan**. Pengguna masuk dengan **akun Google**, dan progres serta riwayat soal tersimpan per akun. Soal-soalnya berangkat dari kehidupan sehari-hari, industri, energi, dan keberlanjutan di Indonesia.
+Aplikasi web pembelajaran **STEM** (Sains, Teknologi, Engineering, Matematika): **Fisika, Kimia, Biologi, Teknik Roket & Antariksa, Coding & Cloud, Teknik Industri, Teknik Listrik, Semikonduktor & Chip, Keamanan Siber, Ekonomi Mikro & Makro, Pasar Keuangan, dan Sejarah Dunia Singkat**. Pengguna masuk dengan **akun Google**, dan progres serta riwayat soal tersimpan per akun. Soal-soalnya berangkat dari kehidupan sehari-hari, industri, energi, dan keberlanjutan di Indonesia.
 
 Setiap topik berisi:
 
@@ -20,6 +20,7 @@ Setiap topik berisi:
 | Ekonomi | Permintaan, Penawaran & Harga (mikro) · PDB, Inflasi & Multiplier (makro) |
 | Pasar Keuangan | Memilih Aset Terbaik (rata-rata, σ, Sharpe, CAPM, CAGR) · Analisis Fundamental Saham (EPS, PER, PBV, ROE, DER, margin of safety) |
 | Semikonduktor | Pembuatan Chip: Wafer, Die & Yield · Cara Kerja Transistor MOSFET · Fotolitografi |
+| Sejarah Dunia Singkat | Garis Waktu Peradaban Dunia · Mesir Kuno: Membangun Piramida Giza · Penjelajahan Samudra & Jalur Rempah Nusantara · Revolusi Industri sampai Era Digital |
 | Keamanan Siber | Kekuatan Kata Sandi & Hashing · SQL Injection & Validasi Input · Audit Jaringan: Pemindaian Port & Firewall (semua dengan Lab Kode + uji keamanan otomatis) |
 
 Setiap soal berlabel **S / T / E / M**, dan setiap topik punya keempat jenis soal. Soal STEM tambahan untuk topik lama ada di `src/topics/stem-extra.js`.

@@ -34,6 +34,10 @@ import analisisFundamental from './analisis-fundamental.js';
 import rangkaianLampu from './rangkaian-lampu.js';
 import transmisiTeganganTinggi from './transmisi-tegangan-tinggi.js';
 import motorIot from './motor-iot.js';
+import garisWaktuPeradaban from './garis-waktu-peradaban.js';
+import piramidaGiza from './piramida-giza.js';
+import jalurRempah from './jalur-rempah.js';
+import revolusiIndustriDigital from './revolusi-industri-digital.js';
 import { LABELS, EXTRA } from './stem-extra.js';
 
 export const SUBJECTS = {
@@ -48,6 +52,7 @@ export const SUBJECTS = {
   ekonomi: { name: 'Ekonomi Mikro & Makro', short: 'EKO' },
   keuangan: { name: 'Pasar Keuangan & Investasi', short: 'FIN' },
   listrik: { name: 'Teknik Listrik', short: 'LIS' },
+  sejarah: { name: 'Sejarah Dunia Singkat', short: 'SEJ' },
 };
 
 // Pengelompokan bidang untuk menu dropdown di beranda dan kepala situs.
@@ -59,6 +64,7 @@ export const GROUPS = [
   { name: 'Ekonomi & keuangan', subjects: ['ekonomi', 'keuangan'] },
   { name: 'Semikonduktor', subjects: ['semikonduktor'] },
   { name: 'Keamanan siber', subjects: ['siber'] },
+  { name: 'Sejarah dunia', subjects: ['sejarah'] },
 ];
 
 // Setiap soal berlabel satu huruf STEM.
@@ -76,6 +82,7 @@ export const TAGS = {
   keberlanjutan: 'Keberlanjutan',
   web: 'Aplikasi web',
   ekonomi: 'Ekonomi & keuangan',
+  sejarah: 'Sejarah & peradaban',
 };
 
 const ALL = [
@@ -89,6 +96,7 @@ const ALL = [
   keseimbanganPasar, pdbInflasi, pilihAset, analisisFundamental,
   fabrikasiWafer, transistorMosfet, fotolitografi,
   kataSandi, injeksiSql, jaringanFirewall,
+  garisWaktuPeradaban, piramidaGiza, jalurRempah, revolusiIndustriDigital,
 ];
 
 // Soal lama diberi label STEM, lalu soal STEM tambahan ditaruh di belakang (indeks lama tetap).

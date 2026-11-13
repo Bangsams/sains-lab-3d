@@ -123,7 +123,7 @@ function renderHome() {
     <section class="hero">
       <div class="hero-text">
         <p class="eyebrow">Sains · Teknologi · Engineering · Matematika</p>
-        <h1>Belajar STEM dari panel surya, pabrik, chip, listrik, pasar, sampai keamanan siber.</h1>
+        <h1>Belajar STEM dari panel surya, pabrik, chip, listrik, pasar, keamanan siber, sampai sejarah dunia.</h1>
         <p class="lede">${hello}Pilih bidang di bawah untuk membuka daftar topiknya. Setiap topik punya simulasi 3D, studi kasus dari Indonesia, dan soal berlabel S, T, E, atau M.</p>
       </div>
       <dl class="stats">
@@ -133,7 +133,7 @@ function renderHome() {
       </dl>
     </section>
     <section class="filters" aria-label="Saring topik">
-      <label class="field"><span>Cari topik</span><input type="search" id="f-q" placeholder="mis. chip, antrian, saham, motor" value="${esc(filter.q)}"></label>
+      <label class="field"><span>Cari topik</span><input type="search" id="f-q" placeholder="mis. chip, antrian, saham, piramida" value="${esc(filter.q)}"></label>
       <label class="field"><span>Konteks</span>
         <select id="f-tag"><option value="all">Semua konteks</option>${Object.entries(TAGS).map(([k, s]) => `<option value="${k}"${filter.tag === k ? ' selected' : ''}>${esc(s)}</option>`).join('')}</select></label>
       <span class="filter-actions">
