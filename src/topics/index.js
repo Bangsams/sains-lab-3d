@@ -34,10 +34,15 @@ import analisisFundamental from './analisis-fundamental.js';
 import rangkaianLampu from './rangkaian-lampu.js';
 import transmisiTeganganTinggi from './transmisi-tegangan-tinggi.js';
 import motorIot from './motor-iot.js';
-import garisWaktuPeradaban from './garis-waktu-peradaban.js';
-import piramidaGiza from './piramida-giza.js';
-import jalurRempah from './jalur-rempah.js';
-import revolusiIndustriDigital from './revolusi-industri-digital.js';
+// Sejarah: bacaan santai (teks + soal pemahaman, tanpa hitungan)
+import sejarah1 from './sejarah-1-awal-manusia.js';
+import sejarah2 from './sejarah-2-peradaban-sungai.js';
+import sejarah3 from './sejarah-3-zaman-klasik.js';
+import sejarah4 from './sejarah-4-abad-pertengahan.js';
+import sejarah5 from './sejarah-5-renaisans-penjelajahan.js';
+import sejarah6 from './sejarah-6-zaman-revolusi.js';
+import sejarah7 from './sejarah-7-perang-dunia.js';
+import sejarah8 from './sejarah-8-dunia-modern.js';
 import { LABELS, EXTRA } from './stem-extra.js';
 
 export const SUBJECTS = {
@@ -96,7 +101,7 @@ const ALL = [
   keseimbanganPasar, pdbInflasi, pilihAset, analisisFundamental,
   fabrikasiWafer, transistorMosfet, fotolitografi,
   kataSandi, injeksiSql, jaringanFirewall,
-  garisWaktuPeradaban, piramidaGiza, jalurRempah, revolusiIndustriDigital,
+  sejarah1, sejarah2, sejarah3, sejarah4, sejarah5, sejarah6, sejarah7, sejarah8,
 ];
 
 // Soal lama diberi label STEM, lalu soal STEM tambahan ditaruh di belakang (indeks lama tetap).

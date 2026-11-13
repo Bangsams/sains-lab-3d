@@ -22,6 +22,17 @@ for (const t of TOPICS) {
   if (!/^[a-z0-9-]+$/.test(t.id)) errors.push(`${where} id hanya boleh huruf kecil, angka, dan tanda hubung`);
   if (!SUBJECTS[t.subject]) errors.push(`${where} subject tidak dikenal: ${t.subject}`);
   t.tags.forEach((g) => TAGS[g] || errors.push(`${where} tag tidak dikenal: ${g}`));
+  if (t.reading) {
+    if (!t.article || !t.period || !t.minutes) errors.push(`${where} bacaan: article, period, dan minutes wajib diisi`);
+    if (t.params?.length || t.equations?.length || t.scene) errors.push(`${where} bacaan tidak boleh berisi rumus, parameter, atau simulasi`);
+    t.questions.forEach((q, i) => {
+      if (q.type !== 'mcq') errors.push(`${where} soal ${i + 1}: bacaan hanya boleh soal pilihan ganda dari teks`);
+      if (!(q.answer >= 0 && q.answer < q.options.length)) errors.push(`${where} soal ${i + 1}: indeks jawaban salah`);
+      if (!q.explain) errors.push(`${where} soal ${i + 1}: pembahasan kosong`);
+    });
+    if (t.questions.length < 3) errors.push(`${where} bacaan butuh minimal 3 soal`);
+    continue;
+  }
   if (!t.equations?.length) errors.push(`${where} equations (rumus + artinya) wajib ada`);
   (t.equations || []).forEach((e, i) => {
     if (!e.f || !e.meaning || !e.symbols?.length) errors.push(`${where} rumus ${i + 1}: f, meaning, dan symbols wajib diisi`);
@@ -71,6 +82,6 @@ for (const t of TOPICS) {
   });
 }
 Object.keys(SUBJECTS).forEach((k) => GROUPS.some((g) => g.subjects.includes(k)) || errors.push(`bidang ${k} belum masuk GROUPS`));
-TOPICS.forEach((t) => { const have = new Set(t.questions.map((q) => q.stem)); ['S', 'T', 'E', 'M'].forEach((k) => have.has(k) || errors.push(`[${t.id}] belum punya soal ${STEM[k].name}`)); });
+TOPICS.filter((t) => !t.reading).forEach((t) => { const have = new Set(t.questions.map((q) => q.stem)); ['S', 'T', 'E', 'M'].forEach((k) => have.has(k) || errors.push(`[${t.id}] belum punya soal ${STEM[k].name}`)); });
 if (errors.length) { console.error(errors.join('\n')); process.exit(1); }
-console.log(`OK: ${TOPICS.length} topik, ${TOPICS.reduce((n, t) => n + t.questions.length, 0)} soal, ${TOPICS.filter((t) => t.lab).length} lab kode, ${TOPICS.reduce((n, t) => n + (t.wiring?.tasks.length || 0), 0)} percobaan lab rangkaian.`);
+console.log(`OK: ${TOPICS.length} topik (${TOPICS.filter((t) => t.reading).length} bacaan sejarah), ${TOPICS.reduce((n, t) => n + t.questions.length, 0)} soal, ${TOPICS.filter((t) => t.lab).length} lab kode, ${TOPICS.reduce((n, t) => n + (t.wiring?.tasks.length || 0), 0)} percobaan lab rangkaian.`);

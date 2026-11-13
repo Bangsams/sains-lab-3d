@@ -32,7 +32,7 @@ function route() {
   const id = location.hash.slice(1);
   if (id === 'riwayat') return renderHistory();
   const topic = TOPICS.find((t) => t.id === id);
-  if (topic) renderTopic(topic); else renderHome();
+  if (topic) (topic.reading ? renderReading(topic) : renderTopic(topic)); else renderHome();
 }
 window.addEventListener('hashchange', route);
 
@@ -100,7 +100,7 @@ function renderLogin() {
       <div class="login-btn" id="gbtn"></div>
       <p class="login-err" id="login-err" role="alert" hidden></p>
       <dl class="stats">
-        <div><dt>Simulasi 3D</dt><dd>${TOPICS.length}</dd></div>
+        <div><dt>Simulasi 3D</dt><dd>${TOPICS.filter((t) => !t.reading).length}</dd></div>
         <div><dt>Soal</dt><dd>${total}</dd></div>
         <div><dt>Bidang</dt><dd>${Object.keys(SUBJECTS).length}</dd></div>
       </dl>
@@ -124,10 +124,10 @@ function renderHome() {
       <div class="hero-text">
         <p class="eyebrow">Sains · Teknologi · Engineering · Matematika</p>
         <h1>Belajar STEM dari panel surya, pabrik, chip, listrik, pasar, keamanan siber, sampai sejarah dunia.</h1>
-        <p class="lede">${hello}Pilih bidang di bawah untuk membuka daftar topiknya. Setiap topik punya simulasi 3D, studi kasus dari Indonesia, dan soal berlabel S, T, E, atau M.</p>
+        <p class="lede">${hello}Pilih bidang di bawah untuk membuka daftar topiknya. Setiap topik STEM punya simulasi 3D, studi kasus dari Indonesia, dan soal berlabel S, T, E, atau M. Bidang Sejarah Dunia Singkat berisi bacaan santai dengan soal pemahaman.</p>
       </div>
       <dl class="stats">
-        <div><dt>Simulasi 3D</dt><dd>${TOPICS.length}</dd></div>
+        <div><dt>Simulasi 3D</dt><dd>${TOPICS.filter((t) => !t.reading).length}</dd></div>
         <div><dt>Soal</dt><dd>${total}</dd></div>
         <div><dt>Soal kamu jawab benar</dt><dd>${done}</dd></div>
       </dl>
@@ -191,7 +191,7 @@ function card(t) {
     <a class="card" href="#${t.id}" data-subject="${t.subject}">
       <h3>${esc(t.title)}</h3>
       <p>${esc(t.summary)}</p>
-      <span class="tags">${t.tags.map((g) => `<span>${TAGS[g]}</span>`).join('')}${t.lab ? '<span class="lab-tag">Lab kode</span>' : ''}${t.wiring ? '<span class="lab-tag">Lab rangkaian</span>' : ''}</span>
+      <span class="tags">${t.tags.map((g) => `<span>${TAGS[g]}</span>`).join('')}${t.lab ? '<span class="lab-tag">Lab kode</span>' : ''}${t.wiring ? '<span class="lab-tag">Lab rangkaian</span>' : ''}${t.reading ? `<span class="read-tag">Bacaan ${t.minutes} menit</span>` : ''}</span>
       <span class="progress" aria-label="${s} dari ${n} soal benar"><span style="width:${(s / n) * 100}%"></span></span>
       <span class="progress-text">${s}/${n} soal benar</span>
     </a>`;
@@ -206,7 +206,7 @@ function renderHistory() {
   const byTopic = Object.fromEntries(TOPICS.map((t) => [t.id, t]));
   const tried = hist.length, right = hist.filter((h) => h.ok).length;
   const stemDone = Object.fromEntries(Object.keys(STEM).map((k) => [k, [0, 0]]));
-  TOPICS.forEach((t) => t.questions.forEach((q, i) => { stemDone[q.stem][1]++; if (isSolved(t.id, i)) stemDone[q.stem][0]++; }));
+  TOPICS.forEach((t) => t.questions.forEach((q, i) => { if (!q.stem) return; stemDone[q.stem][1]++; if (isSolved(t.id, i)) stemDone[q.stem][0]++; }));
   app.innerHTML = `
     <nav class="crumbs"><a href="#">← Beranda</a><span>Riwayat soal</span></nav>
     <header class="topic-head"><h1>Riwayat soal${account.user ? ` · ${esc(account.user.name)}` : ''}</h1>
@@ -221,7 +221,7 @@ function renderHistory() {
           <td>${new Date(h.at).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' })}</td>
           <td>${t ? `<a href="#${t.id}">${esc(t.title)}</a>` : esc(h.topic)}</td>
           <td>${h.q + 1}${q ? ` · ${esc(q.kind)}` : ''}</td>
-          <td>${q ? `<span class="stem-badge" data-stem="${q.stem}">${q.stem}</span>` : ''}</td>
+          <td>${q?.stem ? `<span class="stem-badge" data-stem="${q.stem}">${q.stem}</span>` : q ? 'Bacaan' : ''}</td>
           <td class="ans">${esc(h.answer)}</td>
           <td class="${h.ok ? 'ok' : 'no'}">${h.ok ? 'Benar' : 'Salah'}</td></tr>`;
       }).join('')}</tbody></table></div>` : '<p class="empty">Belum ada soal yang dikerjakan. Buka salah satu topik lalu jawab soalnya.</p>'}`;
@@ -318,6 +318,37 @@ function renderTopic(t) {
   window.scrollTo(0, 0);
 }
 
+// ---------- halaman bacaan (sejarah): teks santai + soal pemahaman dari teks ----------
+function renderReading(t) {
+  current = t;
+  if (stage) stage.paused = true;
+  document.title = `${t.title} · Sams Lab`;
+  const list = TOPICS.filter((x) => x.subject === t.subject);
+  const idx = list.indexOf(t);
+  const prev = list[idx - 1], next = list[idx + 1];
+  app.innerHTML = `
+    <nav class="crumbs"><a href="#">← Semua topik</a><span>${SUBJECTS[t.subject].name} · bacaan ${idx + 1} dari ${list.length}</span></nav>
+    <header class="topic-head" data-subject="${t.subject}">
+      <p class="eyebrow">${esc(t.period)} · ±${t.minutes} menit membaca</p>
+      <h1>${esc(t.title)}</h1>
+      <p>${esc(t.summary)}</p>
+    </header>
+    <div class="reading-wrap" data-subject="${t.subject}">
+      <article class="reading story">${t.article}</article>
+      <section class="reading-quiz" aria-labelledby="rq-title">
+        <h2 id="rq-title">Cek pemahaman</h2>
+        <p class="note">Semua jawaban ada di bacaan di atas. Tidak ada hitungan.</p>
+        <ol class="quiz" id="quiz"></ol>
+      </section>
+      <nav class="reading-nav">
+        ${prev ? `<a href="#${prev.id}">← ${esc(prev.title)}</a>` : '<span></span>'}
+        ${next ? `<a href="#${next.id}">${esc(next.title)} →</a>` : '<a href="#">Kembali ke beranda →</a>'}
+      </nav>
+    </div>`;
+  buildQuiz(t);
+  window.scrollTo(0, 0);
+}
+
 // Setiap rumus ditampilkan bersama penjelasan bahasa sehari-hari dan daftar simbolnya.
 function equationsHtml(t) {
   return `<div class="eq-list">${(t.equations || []).map((e) => `
@@ -383,9 +414,9 @@ function updateOutputs() {
 function buildQuiz(t) {
   $('#quiz').innerHTML = t.questions.map((q, i) => `
     <li class="q" id="q${i}" data-stem="${q.stem}">
-      <div class="q-head"><span class="stem-badge" data-stem="${q.stem}" title="${STEM[q.stem].name}">${q.stem}</span><span class="kind">${q.kind}</span>${isSolved(t.id, i) ? '<span class="ok-badge">Sudah benar</span>' : ''}</div>
+      <div class="q-head">${q.stem ? `<span class="stem-badge" data-stem="${q.stem}" title="${STEM[q.stem].name}">${q.stem}</span>` : ''}<span class="kind">${q.kind}</span>${isSolved(t.id, i) ? '<span class="ok-badge">Sudah benar</span>' : ''}</div>
       <p class="q-prompt">${esc(q.prompt)}</p>
-      <button type="button" class="ghost show3d" data-i="${i}">Tampilkan situasi ini di 3D</button>
+      ${t.reading ? '' : `<button type="button" class="ghost show3d" data-i="${i}">Tampilkan situasi ini di 3D</button>`}
       <form class="answer" data-i="${i}">
         ${q.type === 'mcq'
           ? `<fieldset><legend class="sr">Pilihan jawaban</legend>${q.options.map((o, k) => `
@@ -404,7 +435,7 @@ function buildQuiz(t) {
   }));
   quiz.querySelectorAll('.answer').forEach((f) => {
     // menyentuh soal langsung menyesuaikan model 3D dengan kondisi soal
-    f.addEventListener('focusin', () => setParams(t.questions[f.dataset.i].preset || {}), { once: true });
+    if (!t.reading) f.addEventListener('focusin', () => setParams(t.questions[f.dataset.i].preset || {}), { once: true });
     f.addEventListener('submit', (e) => {
       e.preventDefault();
       const i = Number(f.dataset.i), q = t.questions[i];

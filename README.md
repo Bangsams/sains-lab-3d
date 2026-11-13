@@ -20,10 +20,11 @@ Setiap topik berisi:
 | Ekonomi | Permintaan, Penawaran & Harga (mikro) · PDB, Inflasi & Multiplier (makro) |
 | Pasar Keuangan | Memilih Aset Terbaik (rata-rata, σ, Sharpe, CAPM, CAGR) · Analisis Fundamental Saham (EPS, PER, PBV, ROE, DER, margin of safety) |
 | Semikonduktor | Pembuatan Chip: Wafer, Die & Yield · Cara Kerja Transistor MOSFET · Fotolitografi |
-| Sejarah Dunia Singkat | Garis Waktu Peradaban Dunia · Mesir Kuno: Membangun Piramida Giza · Penjelajahan Samudra & Jalur Rempah Nusantara · Revolusi Industri sampai Era Digital |
 | Keamanan Siber | Kekuatan Kata Sandi & Hashing · SQL Injection & Validasi Input · Audit Jaringan: Pemindaian Port & Firewall (semua dengan Lab Kode + uji keamanan otomatis) |
 
-Setiap soal berlabel **S / T / E / M**, dan setiap topik punya keempat jenis soal. Soal STEM tambahan untuk topik lama ada di `src/topics/stem-extra.js`.
+**Sejarah Dunia Singkat** berbeda dari bidang lain: isinya bacaan santai (tanpa simulasi 3D, rumus, atau hitungan) dengan soal pilihan ganda yang jawabannya ada di teks. Ada 8 bacaan berurutan: Awal Manusia & Revolusi Pertanian · Peradaban Sungai · Zaman Klasik · Abad Pertengahan · Renaisans & Jalur Rempah · Zaman Revolusi · Dua Perang Dunia & Kemerdekaan · Perang Dingin sampai Era Digital. Bacaan didefinisikan dengan `reading: true`, `period`, `minutes`, dan `article` (HTML) di `src/topics/sejarah-*.js`.
+
+Setiap soal STEM berlabel **S / T / E / M**, dan setiap topik punya keempat jenis soal. Soal STEM tambahan untuk topik lama ada di `src/topics/stem-extra.js`.
 
 Di beranda, setiap bidang tampil sebagai dropdown yang bisa dibuka-tutup, dan kepala situs punya **Menu belajar** untuk lompat langsung ke topik mana pun.
 
