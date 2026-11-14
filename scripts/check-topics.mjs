@@ -1,6 +1,7 @@
 // Pemeriksaan struktur semua topik. Jalankan: npm run check
 // three.js tidak dimuat; hanya data dan fungsi compute yang diuji.
-import { readdirSync, readFileSync } from 'node:fs';
+import { readdirSync, readFileSync, existsSync } from 'node:fs';
+import FIGS from '../src/lib/figures-data.js';
 import { build } from 'esbuild';
 import { PARTS, boardFrom, runner } from '../src/lib/circuit.js';
 
@@ -83,5 +84,9 @@ for (const t of TOPICS) {
 }
 Object.keys(SUBJECTS).forEach((k) => GROUPS.some((g) => g.subjects.includes(k)) || errors.push(`bidang ${k} belum masuk GROUPS`));
 TOPICS.filter((t) => !t.reading).forEach((t) => { const have = new Set(t.questions.map((q) => q.stem)); ['S', 'T', 'E', 'M'].forEach((k) => have.has(k) || errors.push(`[${t.id}] belum punya soal ${STEM[k].name}`)); });
+for (const [k, f] of Object.entries(FIGS)) {
+  if (!existsSync(f.src)) errors.push(`gambar sejarah ${k}: file ${f.src} tidak ada`);
+  if (!f.license || !f.page) errors.push(`gambar sejarah ${k}: lisensi dan sumber wajib diisi`);
+}
 if (errors.length) { console.error(errors.join('\n')); process.exit(1); }
 console.log(`OK: ${TOPICS.length} topik (${TOPICS.filter((t) => t.reading).length} bacaan sejarah), ${TOPICS.reduce((n, t) => n + t.questions.length, 0)} soal, ${TOPICS.filter((t) => t.lab).length} lab kode, ${TOPICS.reduce((n, t) => n + (t.wiring?.tasks.length || 0), 0)} percobaan lab rangkaian.`);

@@ -8,7 +8,7 @@ import { pathToFileURL, fileURLToPath } from 'node:url';
 process.env.DEV_LOGIN ??= '1';
 const PORT = Number(process.env.PORT || 5173);
 const ROOT = fileURLToPath(new URL('..', import.meta.url)); // folder proyek, dari mana pun dijalankan
-const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml' };
+const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml' };
 
 createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);

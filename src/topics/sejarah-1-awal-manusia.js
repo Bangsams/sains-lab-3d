@@ -1,4 +1,6 @@
 // Bacaan sejarah: hanya teks + soal pemahaman (tanpa rumus, simulasi, atau hitungan).
+import { fig, pair } from '../lib/figures.js';
+
 export default {
   id: 'sejarah-awal-manusia',
   subject: 'sejarah',
@@ -15,12 +17,15 @@ export default {
 
     <h2>Nusantara, rumah manusia purba</h2>
     <p>Jauh sebelum <em>Homo sapiens</em> datang, Jawa sudah dihuni manusia purba lain. Pada 1891 dokter Belanda <strong>Eugène Dubois</strong> menemukan fosil di Trinil, tepi Bengawan Solo, yang kemudian dikenal sebagai "Manusia Jawa" (<em>Pithecanthropus erectus</em>, kini <em>Homo erectus</em>). Situs Sangiran di Jawa Tengah menyimpan begitu banyak fosil sehingga diakui UNESCO sebagai Warisan Dunia.</p>
+    ${pair(fig('trinil', 'Tempurung kepala "Manusia Jawa" temuan Eugène Dubois di Trinil, kini di Museum Naturalis, Leiden.'), fig('floresiensis', 'Tengkorak Homo floresiensis ("hobbit") dari Liang Bua, Flores, dalam koleksi museum.'))}
     <p>Pada 2003 tim peneliti Indonesia–Australia menemukan kerangka manusia bertubuh sangat kecil di gua <strong>Liang Bua, Flores</strong>. Spesies ini dinamai <em>Homo floresiensis</em> dan dijuluki "hobbit". Penemuan itu menunjukkan bahwa pada masa lalu beberapa jenis manusia pernah hidup di bumi pada waktu yang hampir bersamaan.</p>
     <div class="fact"><strong>Tahukah kamu?</strong> Beberapa lukisan gua tertua di dunia ada di Maros–Pangkep, Sulawesi Selatan. Salah satunya, gambar babi kutil di Leang Tedongnge, berumur setidaknya 45.000 tahun: lebih tua daripada lukisan gua terkenal di Eropa.</div>
+    ${fig('maros', 'Cap tangan purba di dinding Gua Leang Pettakere, Maros, Sulawesi Selatan.')}
 
     <h2>Revolusi pertanian</h2>
     <p>Sekitar 10.000 SM terjadi perubahan terbesar dalam cara hidup manusia. Di <strong>Bulan Sabit Subur</strong>, wilayah melengkung dari Mesir dan Levant sampai Irak, orang mulai menanam gandum dan jelai serta memelihara kambing dan domba. Pertanian juga ditemukan secara terpisah di tempat lain: padi dan jewawut di Tiongkok, jagung di Meksiko, serta talas dan pisang di dataran tinggi Papua.</p>
     <p>Karena ladang harus dijaga, manusia mulai <strong>menetap</strong>. Muncullah desa seperti Yerikho dan Çatalhöyük. Panen yang bisa disimpan menghasilkan kelebihan makanan, sehingga tidak semua orang harus bertani. Ada yang menjadi pembuat tembikar, pedagang, pendeta, atau pemimpin. Dari desa-desa inilah kelak tumbuh kota, kerajaan, dan peradaban.</p>
+    ${fig('catalhoyuk', 'Situs penggalian Çatalhöyük di Turki, salah satu permukiman petani tertua di dunia.')}
     <p>Pertanian juga membawa masalah baru: kerja lebih berat, penyakit menular lebih mudah menyebar di permukiman padat, dan muncul perebutan tanah. Meski begitu, tanpa revolusi pertanian tidak akan ada kota, tulisan, maupun sejarah tertulis.</p>`,
   questions: [
     { type: 'mcq', kind: 'Pemahaman bacaan', prompt: 'Menurut bacaan, di benua mana Homo sapiens pertama kali muncul?', options: ['Asia', 'Eropa', 'Afrika', 'Australia'], answer: 2, explain: 'Fosil Homo sapiens tertua yang dikenal berasal dari Jebel Irhoud, Maroko, Afrika.' },

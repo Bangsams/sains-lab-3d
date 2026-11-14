@@ -87,6 +87,15 @@ details.subject .grid { padding: 0 16px 16px; }
 .reading h2 { font-size: 1.25rem; margin: 26px 0 10px; color: var(--c); }
 .reading h2:first-child { margin-top: 0; }
 .reading p { max-width: 70ch; }
+.reading .hist-fig { margin: 20px 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: rgba(5, 9, 18, 0.55); }
+.reading .hist-fig img { display: block; width: 100%; height: auto; max-height: 440px; object-fit: contain; background: #0b1220; }
+.reading .hist-fig figcaption { padding: 10px 14px 12px; font-size: 0.9rem; line-height: 1.5; color: var(--ink); }
+.reading .hist-fig .credit { display: block; margin-top: 4px; font-size: 0.74rem; color: var(--muted); }
+.reading .hist-fig .credit a { color: inherit; }
+.reading .fig-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+.reading .fig-pair .hist-fig { margin: 0; }
+.reading .fig-pair .hist-fig img { height: 260px; max-height: none; }
+@media (max-width: 640px) { .reading .fig-pair { grid-template-columns: 1fr; } }
 .reading .fact { margin: 18px 0; padding: 12px 16px; border-left: 4px solid var(--c); border-radius: 8px; background: rgba(224, 176, 122, 0.08); }
 .reading .fact strong { color: var(--c); }
 .reading-quiz h2 { margin: 0 0 6px; font-size: 1.3rem; }
