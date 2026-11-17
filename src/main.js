@@ -3,6 +3,7 @@ import { mountIde } from './lib/ide.js';
 import { mountWiring } from './lib/wiring.js';
 import { account, initAccount, solvedCount, isSolved, recordAnswer, logout, mountGoogleButton } from './lib/account.js';
 import { TOPICS, SUBJECTS, TAGS, GROUPS, STEM } from './topics/index.js';
+// Kunci penyimpanan progres soal: topik yang soalnya disusun ulang memakai progressKey baru.const pk = (t) => t.progressKey || t.id;
 
 const $ = (sel, el = document) => el.querySelector(sel);
 const app = $('#app');
@@ -116,7 +117,7 @@ function renderHome() {
   if (stage) stage.paused = true;
   document.title = 'Sams Lab';
   const total = TOPICS.reduce((n, t) => n + t.questions.length, 0);
-  const done = TOPICS.reduce((n, t) => n + solvedCount(t.id), 0);
+  const done = TOPICS.reduce((n, t) => n + solvedCount(pk(t)), 0);
   const hello = account.user ? `Halo, ${esc(account.user.name.split(' ')[0])}. ` : '';
   app.innerHTML = `
     ${account.mode === 'guest' && account.reason ? `<p class="banner">${esc(account.reason)}</p>` : ''}
@@ -165,7 +166,7 @@ function drawGroups() {
       if (!list.length) return '';
       shown += list.length;
       const all = TOPICS.filter((t) => t.subject === k);
-      const n = all.reduce((s, t) => s + t.questions.length, 0), d = all.reduce((s, t) => s + solvedCount(t.id), 0);
+      const n = all.reduce((s, t) => s + t.questions.length, 0), d = all.reduce((s, t) => s + solvedCount(pk(t)), 0);
       const open = searching || ui.open[k];
       return `
         <details class="subject" data-subject="${k}"${open ? ' open' : ''}>
@@ -186,7 +187,7 @@ function drawGroups() {
 }
 
 function card(t) {
-  const s = solvedCount(t.id), n = t.questions.length;
+  const s = solvedCount(pk(t)), n = t.questions.length;
   return `
     <a class="card" href="#${t.id}" data-subject="${t.subject}">
       <h3>${esc(t.title)}</h3>
@@ -203,10 +204,11 @@ function renderHistory() {
   if (stage) stage.paused = true;
   document.title = 'Riwayat soal · Sams Lab';
   const hist = [...account.record.history].reverse();
-  const byTopic = Object.fromEntries(TOPICS.map((t) => [t.id, t]));
+  const byTopic = Object.fromEntries(TOPICS.map((t) => [pk(t), t]));
+  const byOldId = Object.fromEntries(TOPICS.filter((t) => pk(t) !== t.id).map((t) => [t.id, t]));
   const tried = hist.length, right = hist.filter((h) => h.ok).length;
   const stemDone = Object.fromEntries(Object.keys(STEM).map((k) => [k, [0, 0]]));
-  TOPICS.forEach((t) => t.questions.forEach((q, i) => { if (!q.stem) return; stemDone[q.stem][1]++; if (isSolved(t.id, i)) stemDone[q.stem][0]++; }));
+  TOPICS.forEach((t) => t.questions.forEach((q, i) => { if (!q.stem) return; stemDone[q.stem][1]++; if (isSolved(pk(t), i)) stemDone[q.stem][0]++; }));
   app.innerHTML = `
     <nav class="crumbs"><a href="#">← Beranda</a><span>Riwayat soal</span></nav>
     <header class="topic-head"><h1>Riwayat soal${account.user ? ` · ${esc(account.user.name)}` : ''}</h1>
@@ -216,7 +218,7 @@ function renderHistory() {
     <div class="table-wrap"><table class="hist">
       <thead><tr><th>Waktu</th><th>Topik</th><th>Soal</th><th>STEM</th><th>Jawaban</th><th>Hasil</th></tr></thead>
       <tbody>${hist.slice(0, 300).map((h) => {
-        const t = byTopic[h.topic], q = t?.questions[h.q];
+        const t = byTopic[h.topic] || byOldId[h.topic], q = byTopic[h.topic]?.questions[h.q];
         return `<tr>
           <td>${new Date(h.at).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' })}</td>
           <td>${t ? `<a href="#${t.id}">${esc(t.title)}</a>` : esc(h.topic)}</td>
@@ -414,7 +416,7 @@ function updateOutputs() {
 function buildQuiz(t) {
   $('#quiz').innerHTML = t.questions.map((q, i) => `
     <li class="q" id="q${i}" data-stem="${q.stem}">
-      <div class="q-head">${q.stem ? `<span class="stem-badge" data-stem="${q.stem}" title="${STEM[q.stem].name}">${q.stem}</span>` : ''}<span class="kind">${q.kind}</span>${isSolved(t.id, i) ? '<span class="ok-badge">Sudah benar</span>' : ''}</div>
+      <div class="q-head">${q.stem ? `<span class="stem-badge" data-stem="${q.stem}" title="${STEM[q.stem].name}">${q.stem}</span>` : ''}<span class="kind">${q.kind}</span>${isSolved(pk(t), i) ? '<span class="ok-badge">Sudah benar</span>' : ''}</div>
       <p class="q-prompt">${esc(q.prompt)}</p>
       ${t.reading ? '' : `<button type="button" class="ghost show3d" data-i="${i}">Tampilkan situasi ini di 3D</button>`}
       <form class="answer" data-i="${i}">
@@ -452,7 +454,7 @@ function buildQuiz(t) {
         correct = q.integer ? Math.round(v) === q.answer : Math.abs(v - q.answer) <= Math.abs(q.answer) * q.tolerance + 1e-9;
         given = raw.trim();
       }
-      recordAnswer(t.id, i, correct, given);
+      recordAnswer(pk(t), i, correct, given);
       const ans = q.type === 'mcq' ? q.options[q.answer] : `${fmt(q.answer, q.answer % 1 ? 2 : 0)} ${q.unit || ''}`;
       feedback(i, correct, correct ? `Benar. ${q.explain}` : `Belum tepat. Jawaban yang benar: ${ans}. ${q.explain}`);
     });

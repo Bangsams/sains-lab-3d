@@ -12,6 +12,8 @@ const pct = (v) => `${(v * 100).toFixed(1).replace('.', ',')}%`;
 export default {
   id: 'oee-studi-kerja',
   subject: 'industri',
+  // Soal disusun ulang (maks. 6); kunci progres baru agar progres lama tidak menempel ke soal yang salah.
+  progressKey: 'oee-studi-kerja-v2',
   title: 'OEE & Pengukuran Waktu Kerja',
   tags: ['industri'],
   summary: 'Ukur seberapa efektif mesin bekerja (Availability × Performance × Quality) dan tetapkan waktu baku operator dengan rating dan kelonggaran.',
@@ -113,50 +115,14 @@ export default {
       explain: 'Q = 679/700 = 97%. OEE = 0,875 × 0,8333 × 0,97 ≈ 70,7%, masih di bawah kelas dunia 85%.',
     },
     {
-      stem: 'E', type: 'mcq', kind: 'Engineering',
-      prompt: 'Dari A = 87,5%, P = 83,3%, dan Q = 97%, perbaikan mana yang paling besar dampaknya terhadap OEE?',
-      options: ['Menambah inspeksi kualitas', 'Mengurangi macet kecil dan menyetel kecepatan mesin (kerugian performance terbesar)', 'Menambah jam lembur', 'Mengganti semua operator'], answer: 1,
-      explain: 'Kerugian terbesar ada di performance (16,7%), disusul availability (12,5%) dan quality (3%). Total Productive Maintenance menyasar macet kecil, pelumasan, dan penyetelan.',
-    },
-    {
-      stem: 'M', type: 'num', kind: 'Hitung',
-      prompt: 'Operator pengemasan rata-rata membutuhkan 50 detik per karton dengan rating 110%. Berapa detik waktu normalnya?',
-      preset: { obs: 50, rating: 110 }, answer: 55, tolerance: 0.001, unit: 'detik',
-      explain: 'Wn = 50 × 1,10 = 55 detik. Operator ini lebih cepat dari normal, jadi operator rata-rata butuh 55 detik.',
-    },
-    {
-      stem: 'M', type: 'num', kind: 'Hitung',
-      prompt: 'Waktu normal 55 detik dan kelonggaran 15%. Berapa detik waktu bakunya?',
-      preset: { obs: 50, rating: 110, allow: 15 }, answer: 55 * 1.15, tolerance: 0.001, unit: 'detik',
-      explain: 'Wb = 55 × (1 + 0,15) = 63,25 detik per karton.',
-    },
-    {
-      stem: 'E', type: 'num', kind: 'Studi kasus',
-      prompt: 'Dengan waktu baku 63,25 detik dan waktu kerja efektif 420 menit, berapa karton target standar per shift? (bulatkan ke bawah)',
-      preset: { obs: 50, rating: 110, allow: 15 }, answer: Math.floor(25200 / 63.25), tolerance: 0.001, unit: 'karton',
-      explain: 'Output standar = 25.200 / 63,25 = 398,4 → 398 karton. Target ini adil karena memperhitungkan kecepatan normal dan kelonggaran.',
-    },
-    {
-      stem: 'S', type: 'mcq', kind: 'Konsep',
-      prompt: 'Mengapa waktu baku harus diberi kelonggaran (allowance) dan tidak langsung memakai waktu tercepat operator?',
-      options: ['Agar perusahaan membayar lebih', 'Karena manusia butuh waktu untuk kebutuhan pribadi, pulih dari kelelahan, dan menghadapi hambatan tak terhindarkan; target tanpa kelonggaran tidak bisa dipertahankan sepanjang shift', 'Karena mesin lebih lambat dari manusia', 'Karena stopwatch tidak akurat'], answer: 1,
-      explain: 'Ergonomi kerja: kelelahan menumpuk sepanjang shift. Target yang realistis menjaga kesehatan operator dan kualitas produk.',
-    },
-    {
-      stem: 'T', type: 'mcq', kind: 'Teknologi',
-      prompt: 'Pabrik ingin menghitung OEE secara otomatis setiap jam tanpa pencatatan manual. Teknologi apa yang paling cocok?',
-      options: ['Formulir kertas di samping mesin', 'Sensor IoT (penghitung siklus, status mesin ON/OFF) yang terhubung ke Manufacturing Execution System (MES) dan papan andon', 'Rapat harian', 'Kamera CCTV tanpa analitik'], answer: 1,
-      explain: 'Sensor menghitung output dan mencatat setiap henti beserta durasinya, sehingga A, P, dan Q terhitung real time dan masalah segera terlihat di layar andon.',
-    },
-    {
-      stem: 'M', type: 'num', kind: 'Hitung',
-      prompt: 'Mesin pengisi botol: waktu rencana 480 menit, henti 30 menit, siklus ideal 20 detik, output 1.200 botol dengan 24 cacat. Berapa persen OEE-nya?',
+      stem: 'T', type: 'num', kind: 'Teknologi',
+      prompt: 'Sensor IoT yang terhubung ke MES mencatat data shift ini. Mesin pengisi botol: waktu rencana 480 menit, henti 30 menit, siklus ideal 20 detik, output 1.200 botol dengan 24 cacat. Berapa persen OEE-nya?',
       preset: { plan: 480, down: 30, ideal: 20, out: 1200, defect: 24 }, answer: (450 / 480) * ((20 * 1200) / (450 * 60)) * (1176 / 1200) * 100, tolerance: 0.01, unit: '%',
       explain: 'A = 450/480 = 93,75%. P = (20 × 1.200)/(450 × 60) = 24.000/27.000 = 88,9%. Q = 1.176/1.200 = 98%. OEE = 0,9375 × 0,889 × 0,98 ≈ 81,7%.',
     },
     {
-      stem: 'M', type: 'num', kind: 'Hitung',
-      prompt: 'Lima pengukuran stopwatch operator: 48, 52, 50, 47, dan 53 detik. Rating operator 90% dan kelonggaran 10%. Berapa detik waktu bakunya?',
+      stem: 'S', type: 'num', kind: 'Konsep',
+      prompt: 'Kelonggaran diberikan karena tubuh butuh pulih dari kelelahan. Lima pengukuran stopwatch operator: 48, 52, 50, 47, dan 53 detik. Rating operator 90% dan kelonggaran 10%. Berapa detik waktu bakunya?',
       preset: { obs: 50, rating: 90, allow: 10 }, answer: 50 * 0.9 * 1.1, tolerance: 0.001, unit: 'detik',
       explain: 'Ws = 250/5 = 50 detik. Wn = 50 × 0,90 = 45 detik (operator lebih lambat dari normal). Wb = 45 × 1,10 = 49,5 detik.',
     },
@@ -165,24 +131,6 @@ export default {
       prompt: 'Dengan waktu baku 49,5 detik dan waktu kerja efektif 420 menit, berapa karton target standar per shift? (bulatkan ke bawah)',
       preset: { obs: 50, rating: 90, allow: 10 }, answer: Math.floor(25200 / 49.5), tolerance: 0, unit: 'karton',
       explain: '25.200 / 49,5 = 509,1 → 509 karton per shift.',
-    },
-    {
-      stem: 'S', type: 'mcq', kind: 'Konsep',
-      prompt: 'Mesin tetap berjalan, tetapi kecepatannya diturunkan karena operator takut macet. Dalam "six big losses", kerugian ini masuk komponen OEE yang mana?',
-      options: ['Availability', 'Performance (reduced speed)', 'Quality', 'Tidak memengaruhi OEE'], answer: 1,
-      explain: 'Berhenti → availability; lambat atau macet kecil → performance; cacat dan produk awal setelah setel ulang → quality.',
-    },
-    {
-      stem: 'E', type: 'mcq', kind: 'Engineering',
-      prompt: 'Ganti cetakan mesin press memakan 60 menit setiap hari. Metode apa yang paling tepat untuk memangkasnya?',
-      options: ['Menambah stok cetakan di gudang', 'SMED (Single-Minute Exchange of Die): ubah kegiatan internal menjadi eksternal (disiapkan saat mesin masih jalan) dan sederhanakan penjepitan', 'Menurunkan kecepatan mesin', 'Menambah inspeksi akhir'], answer: 1,
-      explain: 'SMED dapat memangkas waktu ganti cetakan hingga di bawah 10 menit, langsung menaikkan availability dan memungkinkan lot produksi lebih kecil.',
-    },
-    {
-      stem: 'T', type: 'mcq', kind: 'Teknologi',
-      prompt: 'Pabrik memasang sensor getaran dan suhu pada bantalan motor mesin press. Apa tujuan utamanya?',
-      options: ['Menghitung gaji operator', 'Predictive maintenance: mendeteksi tanda kerusakan lebih awal agar perbaikan dijadwalkan sebelum mesin mogok mendadak', 'Mengukur kualitas produk', 'Menyalakan lampu otomatis'], answer: 1,
-      explain: 'Kerusakan bantalan biasanya didahului kenaikan getaran. Perbaikan terencana jauh lebih singkat daripada henti mendadak, sehingga availability naik.',
     },
   ],
 };
