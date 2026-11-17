@@ -141,5 +141,41 @@ export default {
     {"stem":"M","type":"mcq","kind":"Hitung","prompt":"Permintaan tahunan naik 4 kali lipat, sedangkan S dan H tetap. EOQ menjadi …","preset":{"D":48000},"options":["4 kali","2 kali","16 kali","Tetap"],"answer":1,"explain":"Q* ∝ √D. √4 = 2, jadi EOQ menjadi 2 kali. Jumlah pesanan per tahun (D/Q) juga naik 2 kali."},
     {"stem":"S","type":"mcq","kind":"Konsep","prompt":"Asumsi apa dalam model EOQ dasar yang paling sering tidak terpenuhi di dunia nyata?","options":["Biaya pesan tetap per pesanan","Permintaan konstan dan pasti sepanjang tahun","Barang dapat disimpan","Ada pemasok"],"answer":1,"explain":"EOQ menganggap pemakaian harian selalu sama. Permintaan nyata naik-turun (musim, promosi), sehingga perlu safety stock dan peninjauan berkala."},
     {"stem":"T","type":"mcq","kind":"Teknologi","prompt":"Dalam Vendor Managed Inventory (VMI), siapa yang memutuskan kapan dan berapa banyak barang dikirim ke gudang pembeli?","options":["Pembeli, lewat telepon","Pemasok, berdasarkan data stok dan penjualan pembeli yang dibagikan secara elektronik (EDI/API)","Bank","Kurir"],"answer":1,"explain":"Pemasok melihat data stok pembeli secara langsung lalu mengisi ulang sebelum mencapai ROP. Ini juga meredam efek cambuk karena pemasok melihat permintaan nyata."},
+    {
+      stem: 'M', type: 'num', kind: 'Hitung',
+      prompt: 'Distributor air mineral menjual 9.000 karton per tahun. Biaya sekali pesan Rp 250.000 dan biaya simpan Rp 5.000 per karton per tahun. Berapa EOQ-nya?',
+      preset: { D: 9000, S: 250000, H: 5000 }, answer: Math.sqrt((2 * 9000 * 250000) / 5000), tolerance: 0.01, unit: 'karton',
+      explain: 'Q* = √(2 × 9.000 × 250.000 / 5.000) = √900.000 ≈ 949 karton.',
+    },
+    {
+      stem: 'M', type: 'num', kind: 'Hitung',
+      prompt: 'Untuk distributor tadi (D = 9.000, S = Rp 250.000, H = Rp 5.000), berapa biaya total persediaan per tahun jika memesan sebanyak EOQ?',
+      preset: { D: 9000, S: 250000, H: 5000 }, answer: Math.sqrt(2 * 9000 * 250000 * 5000), tolerance: 0.01, unit: 'Rp',
+      explain: 'Pada EOQ, biaya pesan = biaya simpan, dan TC = √(2DSH) = √(2 × 9.000 × 250.000 × 5.000) ≈ Rp 4.743.416 per tahun.',
+    },
+    {
+      stem: 'M', type: 'num', kind: 'Studi kasus',
+      prompt: 'Pemakaian harian berfluktuasi dengan simpangan baku 8 unit/hari dan waktu tunggu pemasok 9 hari. Untuk tingkat layanan 95% (Z = 1,65), berapa stok pengaman yang diperlukan?',
+      answer: 1.65 * 8 * Math.sqrt(9), tolerance: 0.01, unit: 'unit',
+      explain: 'SS = Z × σ_d × √L = 1,65 × 8 × √9 = 1,65 × 8 × 3 = 39,6 ≈ 40 unit.',
+    },
+    {
+      stem: 'S', type: 'mcq', kind: 'Konsep',
+      prompt: 'Dalam analisis ABC persediaan, barang kelas A biasanya adalah …',
+      options: ['Barang yang paling banyak jumlah jenisnya tetapi nilainya kecil', 'Sekitar 20% jenis barang yang menyumbang ±80% nilai pemakaian tahunan, sehingga perlu dikendalikan paling ketat', 'Barang yang sudah kedaluwarsa', 'Barang yang selalu dipesan setahun sekali'], answer: 1,
+      explain: 'Prinsip Pareto: sedikit jenis barang bernilai tinggi (A) dikontrol ketat dan sering dihitung; kelas C yang banyak tetapi murah cukup dikontrol sederhana.',
+    },
+    {
+      stem: 'E', type: 'mcq', kind: 'Engineering',
+      prompt: 'Pemasok menawarkan diskon 3% jika memesan minimal 2.000 unit, padahal EOQ hanya 1.414 unit. Bagaimana cara memutuskannya?',
+      options: ['Selalu ambil diskon', 'Bandingkan biaya total (harga beli + biaya pesan + biaya simpan) pada EOQ dan pada 2.000 unit, lalu pilih yang paling murah', 'Selalu pakai EOQ', 'Pesan 1.000 unit saja'], answer: 1,
+      explain: 'Model diskon kuantitas: penghematan harga beli harus lebih besar dari tambahan biaya simpan karena stok rata-rata lebih tinggi.',
+    },
+    {
+      stem: 'T', type: 'mcq', kind: 'Teknologi',
+      prompt: 'Pusat distribusi ritel langsung memindahkan barang dari truk pemasok ke truk pengiriman toko tanpa menyimpannya di rak. Strategi ini disebut …',
+      options: ['Cross-docking', 'Dropshipping', 'Safety stock', 'Make to stock'], answer: 0,
+      explain: 'Cross-docking memangkas biaya simpan dan waktu tinggal barang. Butuh WMS dan jadwal kedatangan truk yang terkoordinasi rapat.',
+    },
   ],
 };

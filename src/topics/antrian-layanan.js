@@ -139,5 +139,41 @@ export default {
       options: ['Tidak ada bedanya', 'Teller yang kosong langsung mengambil pelanggan berikutnya, sehingga tidak ada teller menganggur sementara antrean lain panjang; waktu tunggu rata-rata dan variasinya lebih kecil', 'Teller bekerja lebih lambat', 'Pelanggan bisa memilih teller favorit'], answer: 1,
       explain: 'Ini model M/M/c dengan antrean gabungan (pooling). Antrean terpisah di simulasi ini adalah kasus terburuk; antrean gabungan selalu lebih baik atau sama.',
     },
+    {
+      stem: 'M', type: 'num', kind: 'Hitung',
+      prompt: 'Loket tiket: λ = 40 orang/jam dan μ = 50 orang/jam dengan satu petugas. Berapa rata-rata jumlah orang yang mengantre (Lq)?',
+      preset: { lambda: 40, mu: 50, c: 1 }, answer: 0.8 ** 2 / (1 - 0.8), tolerance: 0.01, unit: 'orang',
+      explain: 'ρ = 40/50 = 0,8. Lq = ρ²/(1 − ρ) = 0,64/0,2 = 3,2 orang.',
+    },
+    {
+      stem: 'M', type: 'num', kind: 'Hitung',
+      prompt: 'Masih dengan λ = 40/jam dan μ = 50/jam, berapa menit rata-rata waktu menunggu (Wq)?',
+      preset: { lambda: 40, mu: 50, c: 1 }, answer: (0.8 / (50 - 40)) * 60, tolerance: 0.01, unit: 'menit',
+      explain: 'Wq = ρ/(μ − λ) = 0,8/10 = 0,08 jam = 4,8 menit.',
+    },
+    {
+      stem: 'M', type: 'num', kind: 'Hitung',
+      prompt: 'Rata-rata 60 nasabah datang per jam ke sebuah bank, dan setiap nasabah rata-rata berada di dalam bank 15 menit. Menurut hukum Little, berapa rata-rata jumlah nasabah di dalam bank?',
+      answer: 60 * 0.25, tolerance: 0.001, unit: 'orang',
+      explain: 'L = λ × W = 60 orang/jam × 0,25 jam = 15 orang. Hukum Little berlaku untuk hampir semua sistem antrean yang stabil.',
+    },
+    {
+      stem: 'E', type: 'num', kind: 'Studi kasus', integer: true,
+      prompt: 'Gerbang tol: λ = 90 kendaraan/jam, μ = 40/jam per gardu, setiap gardu berantrean sendiri. Pengelola ingin Wq paling lama 3 menit. Berapa gardu minimum yang harus dibuka?',
+      preset: { lambda: 90, mu: 40, c: 4 }, answer: 4, tolerance: 0, unit: 'gardu',
+      explain: 'c = 2: ρ > 1 (tak stabil). c = 3: λ/c = 30, ρ = 0,75, Wq = 0,75/10 = 0,075 jam = 4,5 menit ✗. c = 4: λ/c = 22,5, ρ = 0,5625, Wq = 0,5625/17,5 ≈ 0,032 jam ≈ 1,9 menit ✓.',
+    },
+    {
+      stem: 'S', type: 'mcq', kind: 'Konsep',
+      prompt: 'Kasir mampu melayani 30 orang/jam, dan hanya 25 orang/jam yang datang. Mengapa antrean tetap bisa terbentuk?',
+      options: ['Karena kasir malas', 'Karena kedatangan dan lama pelayanan acak: kadang beberapa orang datang berdekatan atau satu transaksi lama, sehingga sementara waktu kedatangan melebihi kapasitas', 'Karena rumusnya salah', 'Antrean tidak mungkin terbentuk'], answer: 1,
+      explain: 'Variabilitas adalah penyebab antrean. Jika kedatangan dan layanan teratur sempurna (tiap 2,4 menit dan 2 menit), tidak ada yang menunggu sama sekali.',
+    },
+    {
+      stem: 'T', type: 'mcq', kind: 'Teknologi',
+      prompt: 'Rumah sakit menerapkan aplikasi antrean online dengan pemilihan jam kedatangan. Bagaimana teknologi ini mengurangi waktu tunggu?',
+      options: ['Menambah dokter', 'Meratakan kedatangan pasien sepanjang hari sehingga λ pada jam sibuk turun dan ρ tidak mendekati 100%', 'Mempercepat pemeriksaan dokter', 'Tidak berpengaruh'], answer: 1,
+      explain: 'Antrean virtual dan sistem janji temu memecah puncak kedatangan. Pasien juga menunggu di rumah, bukan di ruang tunggu.',
+    },
   ],
 };

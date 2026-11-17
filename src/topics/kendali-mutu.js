@@ -153,5 +153,35 @@ export default {
     {"stem":"S","type":"mcq","kind":"Konsep","prompt":"Apa beda variasi penyebab umum (common cause) dan penyebab khusus (special cause)?","options":["Tidak ada bedanya","Penyebab umum adalah variasi acak bawaan proses; penyebab khusus adalah kejadian tertentu (pahat patah, bahan beda) yang membuat titik keluar batas kendali","Penyebab umum selalu karena operator","Penyebab khusus tidak bisa dihilangkan"],"answer":1,"explain":"Penyebab khusus dicari dan dihilangkan oleh operator/teknisi. Penyebab umum hanya berkurang jika sistemnya diperbaiki (mesin, metode, bahan), biasanya oleh manajemen."},
     {"stem":"E","type":"mcq","kind":"Engineering","prompt":"Hasil studi kemampuan: Cp = 0,8 dan Cpk = 0,8 (rata-rata sudah di tengah). Tindakan apa yang tepat?","preset":{"sigma":0.025,"tol":0.06,"mu":50},"options":["Cukup menyetel rata-rata ke tengah","Mengurangi variasi proses (perbaikan mesin, jig, bahan) atau meninjau ulang toleransi bersama desainer, karena Cp sendiri sudah < 1","Menghentikan inspeksi","Menambah ukuran sampel saja"],"answer":1,"explain":"Cp < 1 berarti sebaran ±3σ lebih lebar dari toleransi walaupun di tengah. Menggeser rata-rata tidak cukup; variasinya harus diperkecil."},
     {"stem":"T","type":"mcq","kind":"Teknologi","prompt":"Peta kendali digital menandai 7 titik berturut-turut di atas garis tengah, walaupun semuanya masih di dalam batas kendali. Mengapa sistem memberi peringatan?","options":["Karena perangkat lunaknya rusak","Pola berurutan seperti itu sangat kecil peluangnya jika proses acak (≈0,8%), jadi menandakan pergeseran rata-rata (aturan Western Electric/Nelson)","Karena titik harus selalu di bawah garis tengah","Karena n terlalu kecil"],"answer":1,"explain":"Peluang satu titik di atas garis tengah 50%. Tujuh berturut-turut = 0,5⁷ ≈ 0,78%. Aturan pola mendeteksi pergeseran kecil lebih cepat daripada menunggu titik keluar ±3σ."},
+    {
+      stem: 'M', type: 'num', kind: 'Hitung',
+      prompt: 'Peta kendali p untuk proporsi kemasan cacat memakai sampel n = 100 dengan rata-rata proporsi cacat p̄ = 4%. Berapa persen batas kendali atas (UCL)?',
+      answer: (0.04 + 3 * Math.sqrt((0.04 * 0.96) / 100)) * 100, tolerance: 0.01, unit: '%',
+      explain: 'UCL = p̄ + 3√(p̄(1 − p̄)/n) = 0,04 + 3√(0,04 × 0,96/100) = 0,04 + 3 × 0,0196 ≈ 0,0988 = 9,88%.',
+    },
+    {
+      stem: 'M', type: 'num', kind: 'Hitung',
+      prompt: 'Dari 500 unit ponsel yang diperiksa, masing-masing punya 4 peluang cacat (layar, baterai, kamera, casing). Ditemukan 6 cacat. Berapa DPMO-nya?',
+      answer: (6 / (500 * 4)) * 1e6, tolerance: 0.001, unit: 'DPMO',
+      explain: 'DPMO = cacat / (unit × peluang) × 1.000.000 = 6 / 2.000 × 10⁶ = 3.000.',
+    },
+    {
+      stem: 'S', type: 'mcq', kind: 'Konsep',
+      prompt: 'Proses "Six Sigma" sering disebut hanya menghasilkan 3,4 cacat per sejuta peluang. Apa artinya?',
+      options: ['Proses punya 6 cacat per sejuta', 'Jarak dari rata-rata ke batas spesifikasi terdekat sebesar 6σ (dengan asumsi pergeseran 1,5σ), sehingga cacat sangat jarang', 'Proses diperiksa 6 kali', 'Cp = 6'], answer: 1,
+      explain: 'Six Sigma setara Cp = 2. Dengan pergeseran jangka panjang 1,5σ, jarak efektif 4,5σ memberi ≈ 3,4 DPMO.',
+    },
+    {
+      stem: 'E', type: 'mcq', kind: 'Engineering',
+      prompt: 'Tim QC mencatat 8 jenis cacat; 2 jenis di antaranya menyumbang 75% dari semua cacat. Alat apa yang membantu menentukan prioritas perbaikan?',
+      options: ['Histogram tinggi badan operator', 'Diagram Pareto: urutkan jenis cacat dari terbanyak, lalu fokus pada beberapa jenis teratas', 'Peta kendali x̄ saja', 'Undian'], answer: 1,
+      explain: 'Diagram Pareto memperlihatkan "sedikit yang vital". Setelah itu akar masalahnya dicari dengan diagram tulang ikan (fishbone) dan 5 Why.',
+    },
+    {
+      stem: 'T', type: 'mcq', kind: 'Teknologi',
+      prompt: 'Komponen mesin berbentuk rumit harus diukur di banyak titik 3D dengan ketelitian mikrometer. Alat apa yang dipakai?',
+      options: ['Penggaris baja', 'CMM (Coordinate Measuring Machine) dengan probe sentuh atau pemindai laser', 'Timbangan digital', 'Termometer inframerah'], answer: 1,
+      explain: 'CMM membandingkan titik-titik ukur dengan model CAD dan langsung melaporkan penyimpangan, sehingga datanya bisa dipakai untuk SPC.',
+    },
   ],
 };

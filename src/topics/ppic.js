@@ -145,5 +145,41 @@ export default {
     {"stem":"M","type":"num","kind":"Hitung","prompt":"Menjelang musim kemarau permintaan kipas naik 20% menjadi 480 per shift (waktu tersedia tetap 420 menit). Berapa detik takt time baru?","preset":{"demand":480,"shift":480,"brk":60},"answer":52.5,"tolerance":0.001,"unit":"detik","explain":"Takt = 25.200/480 = 52,5 detik. Semua stasiun kini harus ≤ 52,5 detik."},
     {"stem":"S","type":"mcq","kind":"Konsep","prompt":"Dalam sistem tarik (pull) dengan kartu kanban, kapan stasiun hulu boleh memproduksi?","options":["Kapan saja agar mesin tidak menganggur","Hanya ketika kartu kanban kembali karena stasiun hilir sudah memakai barangnya","Sesuai ramalan bulanan saja","Saat gudang kosong total"],"answer":1,"explain":"Kanban membatasi WIP: produksi hanya mengganti apa yang sudah dipakai. Ini mencegah penumpukan barang setengah jadi dan membuat masalah cepat terlihat."},
     {"stem":"T","type":"mcq","kind":"Teknologi","prompt":"Operator menarik tali andon saat ada masalah di stasiunnya. Apa fungsi sistem andon digital di lini perakitan?","options":["Memutar musik","Menyalakan lampu/layar penanda lokasi masalah, memanggil pemimpin tim, dan mencatat durasi henti untuk analisis","Menghitung gaji","Mengunci pintu pabrik"],"answer":1,"explain":"Andon adalah alat jidoka: masalah dihentikan di sumbernya. Data henti yang tercatat dipakai untuk perbaikan berkelanjutan (kaizen)."},
+    {
+      stem: 'M', type: 'num', kind: 'Hitung',
+      prompt: 'Lini kipas memakai 5 stasiun dengan waktu bottleneck 63 detik dan total waktu kerja 300 detik. Berapa persen balance delay (waktu menganggur)?',
+      preset: { work: 300, N: 5, bott: 63 }, answer: (1 - 300 / (5 * 63)) * 100, tolerance: 0.01, unit: '%',
+      explain: 'Balance delay = 1 − efisiensi = 1 − 300/315 ≈ 4,8%.',
+    },
+    {
+      stem: 'M', type: 'num', kind: 'Hitung', integer: true,
+      prompt: 'Kebutuhan kotor motor kipas minggu ini 500 unit. Persediaan di tangan 120 unit, penerimaan terjadwal 80 unit, dan stok pengaman 50 unit. Berapa kebutuhan bersih (net requirement) menurut MRP?',
+      answer: 500 - 120 - 80 + 50, tolerance: 0, unit: 'unit',
+      explain: 'Net = kebutuhan kotor − persediaan − penerimaan terjadwal + stok pengaman = 500 − 120 − 80 + 50 = 350 unit.',
+    },
+    {
+      stem: 'E', type: 'num', kind: 'Studi kasus', integer: true,
+      prompt: 'Satu kipas butuh 3 bilah. Pabrik akan merakit 400 kipas, dan di gudang ada 200 bilah. Berapa bilah yang harus dipesan?',
+      answer: 400 * 3 - 200, tolerance: 0, unit: 'bilah',
+      explain: 'Kebutuhan kotor dari bill of materials = 400 × 3 = 1.200 bilah. Dikurangi stok 200 → pesan 1.000 bilah.',
+    },
+    {
+      stem: 'M', type: 'num', kind: 'Hitung', integer: true,
+      prompt: 'Motor kipas harus tiba pada minggu ke-6, dan lead time pemasok 2 minggu. Pada minggu ke berapa pesanan harus dilepas (planned order release)?',
+      answer: 4, tolerance: 0, unit: '',
+      explain: 'Lead time offsetting: 6 − 2 = minggu ke-4.',
+    },
+    {
+      stem: 'S', type: 'mcq', kind: 'Konsep',
+      prompt: 'Apa isi Master Production Schedule (MPS)?',
+      options: ['Daftar gaji karyawan', 'Rencana jumlah produk jadi yang akan dibuat per periode (mis. per minggu), yang menjadi masukan utama MRP', 'Denah tata letak pabrik', 'Jadwal perawatan mesin saja'], answer: 1,
+      explain: 'MPS menerjemahkan ramalan dan pesanan menjadi rencana produksi produk jadi. MRP lalu memecahnya menjadi kebutuhan komponen memakai bill of materials.',
+    },
+    {
+      stem: 'T', type: 'mcq', kind: 'Teknologi',
+      prompt: 'Sebelum mengubah susunan stasiun di lini nyata, insinyur ingin menguji beberapa skenario penyeimbangan tanpa menghentikan produksi. Teknologi apa yang tepat?',
+      options: ['Mencoba langsung di lini', 'Simulasi diskret / digital twin lini perakitan yang memakai data waktu siklus nyata', 'Spreadsheet nilai siswa', 'Kamera CCTV'], answer: 1,
+      explain: 'Digital twin memodelkan stasiun, buffer, dan variasi waktu sehingga output dan bottleneck tiap skenario bisa dibandingkan sebelum diterapkan.',
+    },
   ],
 };

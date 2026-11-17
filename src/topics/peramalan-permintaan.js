@@ -125,5 +125,41 @@ export default {
       options: ['Perkiraan manual manajer toko', 'Data transaksi kasir (POS) yang dikumpulkan otomatis ke cloud, lalu model statistik/machine learning yang juga memakai cuaca, hari libur, dan promosi', 'Undian', 'Rata-rata tahun lalu tanpa pembaruan'], answer: 1,
       explain: 'Data POS real time + variabel luar (cuaca, Lebaran, promo) membuat ramalan per toko per produk lebih tepat, lalu langsung memicu pemesanan ulang.',
     },
+    {
+      stem: 'M', type: 'num', kind: 'Hitung',
+      prompt: 'Rata-rata bergerak tertimbang memberi bobot 0,5 untuk Desember (130), 0,3 untuk November (140), dan 0,2 untuk Oktober (160). Berapa ramalan Januari?',
+      answer: 0.5 * 130 + 0.3 * 140 + 0.2 * 160, tolerance: 0.001, unit: 'unit',
+      explain: 'F = 0,5 × 130 + 0,3 × 140 + 0,2 × 160 = 65 + 42 + 32 = 139 unit. Bobot terbesar diberikan ke data terbaru.',
+    },
+    {
+      stem: 'M', type: 'num', kind: 'Hitung',
+      prompt: 'Ramalan November 150 unit dan penjualan aktual November 140 unit. Dengan α = 0,5, berapa ramalan Desember?',
+      preset: { alpha: 0.5 }, answer: 0.5 * 140 + 0.5 * 150, tolerance: 0.001, unit: 'unit',
+      explain: 'F = 0,5 × 140 + 0,5 × 150 = 70 + 75 = 145 unit.',
+    },
+    {
+      stem: 'M', type: 'num', kind: 'Hitung',
+      prompt: 'Kesalahan ramalan (D − F) empat bulan terakhir: +12, +8, +15, dan +5 unit. Berapa tracking signal-nya (RSFE / MAD)?',
+      answer: (12 + 8 + 15 + 5) / ((12 + 8 + 15 + 5) / 4), tolerance: 0.001, unit: '',
+      explain: 'RSFE = 12 + 8 + 15 + 5 = 40. MAD = 40/4 = 10. TS = 40/10 = 4. Batas umum ±4, jadi ramalan sudah perlu ditinjau.',
+    },
+    {
+      stem: 'S', type: 'mcq', kind: 'Konsep',
+      prompt: 'Tracking signal terus bernilai positif besar. Apa artinya?',
+      options: ['Ramalan sangat akurat', 'Ramalan bias: secara konsisten terlalu rendah dibanding permintaan aktual', 'Ramalan secara konsisten terlalu tinggi', 'Data tidak cukup'], answer: 1,
+      explain: 'Kesalahan e = D − F positif berarti aktual lebih besar dari ramalan. Jika terus menumpuk ke satu arah, model tertinggal dari tren dan perlu diganti atau α dinaikkan.',
+    },
+    {
+      stem: 'E', type: 'num', kind: 'Studi kasus',
+      prompt: 'Indeks musiman penjualan AC bulan Juni adalah 1,3. Ramalan rata-rata bulanan tahun depan 170 unit. Berapa ramalan penjualan Juni tahun depan?',
+      answer: 1.3 * 170, tolerance: 0.001, unit: 'unit',
+      explain: 'Ramalan Juni = indeks × rata-rata = 1,3 × 170 = 221 unit. Indeks > 1 berarti bulan itu di atas rata-rata (musim kemarau).',
+    },
+    {
+      stem: 'E', type: 'mcq', kind: 'Engineering',
+      prompt: 'Penjualan AC punya tren naik setiap tahun sekaligus pola musiman kemarau-hujan. Metode mana yang paling cocok?',
+      options: ['Rata-rata bergerak 3 bulan', 'Holt–Winters (pemulusan eksponensial dengan komponen level, tren, dan musiman)', 'Pemulusan eksponensial tunggal dengan α kecil', 'Memakai penjualan bulan lalu saja'], answer: 1,
+      explain: 'MA dan pemulusan tunggal tidak menangkap tren dan musim. Holt–Winters memperbarui ketiga komponen itu setiap periode.',
+    },
   ],
 };
