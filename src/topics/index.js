@@ -16,6 +16,7 @@ import deployVercel from './deploy-vercel.js';
 import integrasiApi from './integrasi-api.js';
 import unduhBertahap from './unduh-bertahap.js';
 import rantaiPasok from './rantai-pasok.js';
+import stokPengaman from './stok-pengaman.js';
 import kendaliMutu from './kendali-mutu.js';
 import ppic from './ppic.js';
 import fabrikasiWafer from './fabrikasi-wafer.js';
@@ -96,7 +97,7 @@ const ALL = [
   fotosintesis, mikroalga, bioetanol,
   persamaanRoket, orbitSatelit, gayaDorong,
   mesinPenilai, deployVercel, integrasiApi, unduhBertahap,
-  rantaiPasok, kendaliMutu, ppic, oeeStudiKerja, peramalanPermintaan, antrianLayanan,
+  rantaiPasok, stokPengaman, kendaliMutu, ppic, oeeStudiKerja, peramalanPermintaan, antrianLayanan,
   rangkaianLampu, transmisiTeganganTinggi, motorIot,
   keseimbanganPasar, pdbInflasi, pilihAset, analisisFundamental,
   fabrikasiWafer, transistorMosfet, fotolitografi,
