@@ -3,7 +3,8 @@ import { mountIde } from './lib/ide.js';
 import { mountWiring } from './lib/wiring.js';
 import { account, initAccount, solvedCount, isSolved, recordAnswer, logout, mountGoogleButton } from './lib/account.js';
 import { TOPICS, SUBJECTS, TAGS, GROUPS, STEM } from './topics/index.js';
-// Kunci penyimpanan progres soal: topik yang soalnya disusun ulang memakai progressKey baru.const pk = (t) => t.progressKey || t.id;
+// Kunci penyimpanan progres soal: topik yang soalnya disusun ulang memakai progressKey baru.
+const pk = (t) => t.progressKey || t.id;
 
 const $ = (sel, el = document) => el.querySelector(sel);
 const app = $('#app');
